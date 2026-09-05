@@ -4,10 +4,76 @@ export interface PosterMatch {
   awayNumber: number;
 }
 
+export type PosterFillOrder = 'rows' | 'columns';
+
+export interface PairingPosterLayout {
+  rows: number;
+  columns: number;
+  fillOrder: PosterFillOrder;
+}
+
 export interface PairingPosterInput {
   tournamentName: string;
   roundNumber: number;
   matches: PosterMatch[];
+  layout?: PairingPosterLayout;
+}
+
+export interface PairingPosterDimensions {
+  width: number;
+  height: number;
+}
+
+function tableCountLimit(tableCount: number): number {
+  return Math.max(1, Number.isSafeInteger(tableCount) ? tableCount : 1);
+}
+
+function validDimension(value: number, fallback: number, tableCount: number): number {
+  return Number.isSafeInteger(value) && value > 0
+    ? Math.min(value, tableCountLimit(tableCount))
+    : fallback;
+}
+
+/** Returns the adaptive grid used before a viewer preference is chosen. */
+export function defaultPairingPosterLayout(tableCount: number): PairingPosterLayout {
+  const count = tableCountLimit(tableCount);
+  const columns = count >= 32 ? 5 : count >= 12 ? 4 : count >= 5 ? 3 : Math.min(2, count);
+  return { rows: Math.ceil(count / columns), columns, fillOrder: 'rows' };
+}
+
+/** Reconciles a saved transient preference to a new round without dropping a table. */
+export function reconcilePairingPosterLayout(tableCount: number, layout?: PairingPosterLayout): PairingPosterLayout {
+  const count = tableCountLimit(tableCount);
+  const fallback = defaultPairingPosterLayout(count);
+  if (!layout) return fallback;
+  const rows = validDimension(layout.rows, fallback.rows, count);
+  const columns = validDimension(layout.columns, fallback.columns, count);
+  const fillOrder = layout.fillOrder === 'columns' ? 'columns' : 'rows';
+  if (rows * columns >= count) return { rows, columns, fillOrder };
+  return { rows, columns: Math.ceil(count / rows), fillOrder };
+}
+
+export function pairingPosterLayoutForRows(tableCount: number, rows: number, fillOrder: PosterFillOrder): PairingPosterLayout {
+  const safeRows = validDimension(rows, defaultPairingPosterLayout(tableCount).rows, tableCount);
+  return { rows: safeRows, columns: Math.ceil(tableCountLimit(tableCount) / safeRows), fillOrder };
+}
+
+export function pairingPosterLayoutForColumns(tableCount: number, columns: number, fillOrder: PosterFillOrder): PairingPosterLayout {
+  const safeColumns = validDimension(columns, defaultPairingPosterLayout(tableCount).columns, tableCount);
+  return { rows: Math.ceil(tableCountLimit(tableCount) / safeColumns), columns: safeColumns, fillOrder };
+}
+
+export function pairingPosterDimensions(tableCount: number, layout: PairingPosterLayout): PairingPosterDimensions {
+  const safeLayout = reconcilePairingPosterLayout(tableCount, layout);
+  const cardWidth = 276;
+  const cardHeight = 88;
+  const gutter = 16;
+  const margin = 32;
+  const headerHeight = 94;
+  return {
+    width: margin * 2 + cardWidth * safeLayout.columns + gutter * (safeLayout.columns - 1),
+    height: headerHeight + safeLayout.rows * cardHeight + Math.max(0, safeLayout.rows - 1) * gutter + margin,
+  };
 }
 
 function escapeXml(value: string | number): string {
@@ -28,18 +94,17 @@ function shorten(value: string, limit = 56): string {
 /** Creates a standalone, data-only SVG with no external resources or executable content. */
 export function createPairingPoster(input: PairingPosterInput): string {
   const matchCount = input.matches.length;
-  const columns = matchCount >= 32 ? 5 : matchCount >= 12 ? 4 : matchCount >= 5 ? 3 : Math.min(2, Math.max(1, matchCount));
+  const layout = reconcilePairingPosterLayout(matchCount, input.layout);
+  const { rows, columns } = layout;
   const cardWidth = 276;
   const cardHeight = 88;
   const gutter = 16;
   const margin = 32;
   const headerHeight = 94;
-  const rows = Math.max(1, Math.ceil(matchCount / columns));
-  const width = margin * 2 + cardWidth * columns + gutter * (columns - 1);
-  const height = headerHeight + rows * cardHeight + Math.max(0, rows - 1) * gutter + margin;
+  const { width, height } = pairingPosterDimensions(matchCount, layout);
   const cards = input.matches.map((match, index) => {
-    const column = index % columns;
-    const row = Math.floor(index / columns);
+    const column = layout.fillOrder === 'columns' ? Math.floor(index / rows) : index % columns;
+    const row = layout.fillOrder === 'columns' ? index % rows : Math.floor(index / columns);
     const x = margin + column * (cardWidth + gutter);
     const y = headerHeight + row * (cardHeight + gutter);
     return `<g>

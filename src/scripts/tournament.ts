@@ -1,4 +1,11 @@
-import { createPairingPoster } from '../lib/pairing-poster';
+import {
+  createPairingPoster,
+  pairingPosterDimensions,
+  pairingPosterLayoutForColumns,
+  pairingPosterLayoutForRows,
+  reconcilePairingPosterLayout,
+  type PairingPosterLayout,
+} from '../lib/pairing-poster';
 import {
   allResultsConfirmed,
   createPairs,
@@ -182,6 +189,10 @@ export function mountTournament(root: HTMLElement): void {
   let pairingViewer: HTMLElement | null = null;
   let pairingPosterUrl: string | null = null;
   let pairingPosterSvg = '';
+  let pairingPosterRevision = 0;
+  let pairingResizeObserver: ResizeObserver | null = null;
+  let pairingUpdateFit: (() => void) | null = null;
+  let pairingPreferences: { layout: PairingPosterLayout; zoomPercent: number } | null = null;
 
   let storageRead = false;
   try {
@@ -446,6 +457,7 @@ export function mountTournament(root: HTMLElement): void {
     pairingViewer?.classList.toggle('pairing-viewer--fullscreen', isFullscreen);
     const button = pairingDialog?.querySelector<HTMLButtonElement>('[data-action="toggle-fullscreen"]');
     if (button) button.textContent = isFullscreen ? 'Surt de pantalla completa' : 'Pantalla completa';
+    window.requestAnimationFrame(() => pairingUpdateFit?.());
   }
 
   function disposePairingDialog(restoreFocus = true): void {
@@ -464,11 +476,15 @@ export function mountTournament(root: HTMLElement): void {
       return;
     }
     document.removeEventListener('fullscreenchange', syncFullscreenControls);
+    pairingResizeObserver?.disconnect();
+    pairingResizeObserver = null;
+    pairingUpdateFit = null;
     pairingDialog = null;
     pairingLaunchButton = null;
     pairingViewer = null;
     pairingPosterUrl = null;
     pairingPosterSvg = '';
+    pairingPosterRevision += 1;
     dialog?.remove();
     if (posterUrl) URL.revokeObjectURL(posterUrl);
     if (restoreFocus && launcher?.isConnected) window.requestAnimationFrame(() => launcher.focus());
@@ -492,8 +508,8 @@ export function mountTournament(root: HTMLElement): void {
     else disposePairingDialog();
   }
 
-  function openPosterInNewTab(dialog: HTMLDialogElement | null, viewer: HTMLElement | null, posterSvg: string): void {
-    if (!dialog || !viewer || !posterSvg || !isCurrentPairingDialog(dialog, viewer)) return;
+  function openPosterInNewTab(dialog: HTMLDialogElement | null, viewer: HTMLElement | null, posterSvg: string, revision: number): void {
+    if (!dialog || !viewer || !posterSvg || !isCurrentPairingDialog(dialog, viewer) || pairingPosterRevision !== revision) return;
     const popup = window.open('', '_blank');
     if (!popup || popup.closed) {
       showPosterFallback(dialog, viewer, 'El navegador ha blocat la pestanya nova. Torna-ho a provar amb «Obre la imatge».');
@@ -505,10 +521,10 @@ export function mountTournament(root: HTMLElement): void {
       const image = popupDocument.createElement('img');
       image.alt = 'Pòster dels emparellaments';
       image.addEventListener('load', () => {
-        if (isCurrentPairingDialog(dialog, viewer)) setFullscreenFeedback('El pòster ja es mostra a la pestanya nova.', dialog);
+        if (isCurrentPairingDialog(dialog, viewer) && pairingPosterRevision === revision) setFullscreenFeedback('El pòster ja es mostra a la pestanya nova.', dialog);
       });
       image.addEventListener('error', () => {
-        if (isCurrentPairingDialog(dialog, viewer)) {
+        if (isCurrentPairingDialog(dialog, viewer) && pairingPosterRevision === revision) {
           showPosterFallback(dialog, viewer, 'No s’ha pogut carregar el pòster a la pestanya nova. Pots tornar-ho a provar.');
         }
       });
@@ -521,8 +537,8 @@ export function mountTournament(root: HTMLElement): void {
     }
   }
 
-  function togglePosterFullscreen(dialog = pairingDialog, viewer = pairingViewer, posterSvg = pairingPosterSvg): void {
-    if (!dialog || !viewer || !posterSvg || !isCurrentPairingDialog(dialog, viewer)) return;
+  function togglePosterFullscreen(dialog = pairingDialog, viewer = pairingViewer): void {
+    if (!dialog || !viewer || !pairingPosterSvg || !isCurrentPairingDialog(dialog, viewer)) return;
     if (document.fullscreenElement === viewer) {
       if (document.exitFullscreen) {
         void document.exitFullscreen().catch(() => {
@@ -533,7 +549,7 @@ export function mountTournament(root: HTMLElement): void {
     }
     if (!viewer.requestFullscreen) {
       showPosterFallback(dialog, viewer, 'La pantalla completa no està disponible.');
-      openPosterInNewTab(dialog, viewer, posterSvg);
+      openPosterInNewTab(dialog, viewer, pairingPosterSvg, pairingPosterRevision);
       return;
     }
     void viewer.requestFullscreen().catch(() => {
@@ -543,20 +559,15 @@ export function mountTournament(root: HTMLElement): void {
 
   function openPairingDialog(selected: Round, launcher: HTMLButtonElement): void {
     disposePairingDialog(false);
-    pairingPosterSvg = createPairingPoster({
-      tournamentName: state.setup.name,
-      roundNumber: selected.number,
-      matches: selected.matches.map((match, index) => {
-        const home = pairFor(match.homeId);
-        const away = pairFor(match.awayId);
-        return {
-          tableNumber: index + 1,
-          homeNumber: home.number,
-          awayNumber: away.number,
-        };
-      }),
+    const posterMatches = selected.matches.map((match, index) => {
+      const home = pairFor(match.homeId);
+      const away = pairFor(match.awayId);
+      return { tableNumber: index + 1, homeNumber: home.number, awayNumber: away.number };
     });
-    pairingPosterUrl = URL.createObjectURL(new Blob([pairingPosterSvg], { type: 'image/svg+xml' }));
+    let layout = reconcilePairingPosterLayout(posterMatches.length, pairingPreferences?.layout);
+    let zoomPercent = Math.min(200, Math.max(25, pairingPreferences?.zoomPercent ?? 100));
+    let dimensions = pairingPosterDimensions(posterMatches.length, layout);
+    let posterImage: HTMLImageElement | null = null;
     pairingLaunchButton = launcher;
     const dialog = document.createElement('dialog');
     dialog.className = 'pairing-dialog';
@@ -566,25 +577,137 @@ export function mountTournament(root: HTMLElement): void {
     dialog.innerHTML = `<div class="pairing-dialog__header"><div><p class="eyebrow">${drawLabel}</p><h2 id="pairing-dialog-title">Emparellaments · Ronda ${selected.number}</h2></div><button class="icon-button" type="button" data-action="close-pairings" aria-label="Tanca els emparellaments" autofocus>×</button></div>
       <p id="pairing-dialog-description" class="quiet">Pòster amb l’ordre desat de les taules de ${escapeHtml(state.setup.name)}.</p>
       <div class="pairing-viewer" data-pairing-viewer aria-describedby="pairing-dialog-description">
+        <div class="pairing-viewer__toolbar" aria-label="Presentació del pòster">
+          <label>Files<input data-poster-rows value="${layout.rows}" inputmode="numeric" aria-label="Files del pòster"></label>
+          <label>Columnes<input data-poster-columns value="${layout.columns}" inputmode="numeric" aria-label="Columnes del pòster"></label>
+          <label>Ordre<select data-poster-order aria-label="Ordre d’ompliment"><option value="rows" ${layout.fillOrder === 'rows' ? 'selected' : ''}>Per files</option><option value="columns" ${layout.fillOrder === 'columns' ? 'selected' : ''}>Per columnes</option></select></label>
+          <div class="pairing-zoom" aria-label="Mida del pòster"><span>Mida</span><button class="icon-button" type="button" data-action="zoom-out" aria-label="Redueix la mida del pòster">−</button><output data-poster-zoom>${zoomPercent}%</output><button class="icon-button" type="button" data-action="zoom-in" aria-label="Augmenta la mida del pòster">+</button><button class="button button--small button--quiet" type="button" data-action="fit-poster">Ajusta a la pantalla</button></div>
+        </div>
         <div class="pairing-viewer__actions"><button class="button button--small" type="button" data-action="toggle-fullscreen">Pantalla completa</button><button class="button button--small" type="button" data-action="open-poster" hidden>Obre la imatge</button><p class="field-message" data-fullscreen-feedback role="status" aria-live="polite"></p></div>
-        <div class="pairing-poster-scroll"><img src="${pairingPosterUrl}" alt="Pòster dels emparellaments de la ronda ${selected.number} de ${escapeHtml(state.setup.name)}."></div>
+        <div class="pairing-poster-scroll" data-poster-scroll></div>
       </div>
       <div class="sr-only"><h3>Versió de text dels emparellaments</h3>${renderPairingTextAlternative(selected)}</div>`;
     document.body.append(dialog);
     pairingDialog = dialog;
     pairingViewer = dialog.querySelector<HTMLElement>('[data-pairing-viewer]');
     const viewer = pairingViewer;
-    const posterSvg = pairingPosterSvg;
+    const scroll = dialog.querySelector<HTMLElement>('[data-poster-scroll]');
+    const rowInput = dialog.querySelector<HTMLInputElement>('[data-poster-rows]');
+    const columnInput = dialog.querySelector<HTMLInputElement>('[data-poster-columns]');
+    const orderInput = dialog.querySelector<HTMLSelectElement>('[data-poster-order]');
+    const zoomOutput = dialog.querySelector<HTMLOutputElement>('[data-poster-zoom]');
+    const zoomOut = dialog.querySelector<HTMLButtonElement>('[data-action="zoom-out"]');
+    const zoomIn = dialog.querySelector<HTMLButtonElement>('[data-action="zoom-in"]');
+
+    function rememberPreferences(): void {
+      pairingPreferences = { layout: { ...layout }, zoomPercent };
+    }
+
+    function syncControls(): void {
+      if (rowInput) rowInput.value = String(layout.rows);
+      if (columnInput) columnInput.value = String(layout.columns);
+      if (orderInput) orderInput.value = layout.fillOrder;
+      if (zoomOutput) zoomOutput.value = `${zoomPercent}%`;
+      if (zoomOut) zoomOut.disabled = zoomPercent <= 25;
+      if (zoomIn) zoomIn.disabled = zoomPercent >= 200;
+    }
+
+    function applyZoom(): void {
+      if (!scroll || !posterImage || !isCurrentPairingDialog(dialog, viewer)) return;
+      const width = scroll.clientWidth;
+      const height = scroll.clientHeight;
+      if (width < 1 || height < 1) return;
+      const fitScale = Math.min(width / dimensions.width, height / dimensions.height);
+      if (!Number.isFinite(fitScale) || fitScale <= 0) return;
+      posterImage.style.width = `${dimensions.width * fitScale * zoomPercent / 100}px`;
+      posterImage.style.height = 'auto';
+    }
+
+    function refreshPoster(): void {
+      if (!scroll || !isCurrentPairingDialog(dialog, viewer)) return;
+      dimensions = pairingPosterDimensions(posterMatches.length, layout);
+      pairingPosterSvg = createPairingPoster({
+        tournamentName: state.setup.name,
+        roundNumber: selected.number,
+        matches: posterMatches,
+        layout,
+      });
+      const previousUrl = pairingPosterUrl;
+      const nextUrl = URL.createObjectURL(new Blob([pairingPosterSvg], { type: 'image/svg+xml' }));
+      pairingPosterUrl = nextUrl;
+      const revision = ++pairingPosterRevision;
+      const image = document.createElement('img');
+      image.alt = `Pòster dels emparellaments de la ronda ${selected.number} de ${state.setup.name}.`;
+      image.addEventListener('error', () => {
+        if (posterImage === image && pairingPosterRevision === revision && isCurrentPairingDialog(dialog, viewer)) {
+          showPosterFallback(dialog, viewer, 'No s’ha pogut carregar el pòster. Pots obrir la imatge en una pestanya nova.');
+        }
+      });
+      posterImage = image;
+      scroll.replaceChildren(image);
+      image.src = nextUrl;
+      dialog.querySelector<HTMLButtonElement>('[data-action="open-poster"]')?.setAttribute('hidden', '');
+      if (previousUrl) URL.revokeObjectURL(previousUrl);
+      applyZoom();
+    }
+
+    function setGridFromInput(input: HTMLInputElement, byRows: boolean): void {
+      if (!/^\d+$/.test(input.value) || input.value === '') return;
+      const value = Number(input.value);
+      if (!Number.isSafeInteger(value) || value < 1) return;
+      layout = byRows
+        ? pairingPosterLayoutForRows(posterMatches.length, value, layout.fillOrder)
+        : pairingPosterLayoutForColumns(posterMatches.length, value, layout.fillOrder);
+      rememberPreferences();
+      syncControls();
+      refreshPoster();
+    }
+
     dialog.querySelector<HTMLButtonElement>('[data-action="close-pairings"]')?.addEventListener('click', closePairingDialog);
-    dialog.querySelector<HTMLButtonElement>('[data-action="toggle-fullscreen"]')?.addEventListener('click', () => togglePosterFullscreen(dialog, viewer, posterSvg));
-    dialog.querySelector<HTMLButtonElement>('[data-action="open-poster"]')?.addEventListener('click', () => openPosterInNewTab(dialog, viewer, posterSvg));
+    dialog.querySelector<HTMLButtonElement>('[data-action="toggle-fullscreen"]')?.addEventListener('click', () => togglePosterFullscreen(dialog, viewer));
+    dialog.querySelector<HTMLButtonElement>('[data-action="open-poster"]')?.addEventListener('click', () => openPosterInNewTab(dialog, viewer, pairingPosterSvg, pairingPosterRevision));
+    rowInput?.addEventListener('input', () => setGridFromInput(rowInput, true));
+    columnInput?.addEventListener('input', () => setGridFromInput(columnInput, false));
+    rowInput?.addEventListener('blur', syncControls);
+    columnInput?.addEventListener('blur', syncControls);
+    orderInput?.addEventListener('change', () => {
+      layout = { ...layout, fillOrder: orderInput.value === 'columns' ? 'columns' : 'rows' };
+      rememberPreferences();
+      refreshPoster();
+    });
+    zoomOut?.addEventListener('click', () => {
+      zoomPercent = Math.max(25, zoomPercent - 10);
+      rememberPreferences();
+      syncControls();
+      applyZoom();
+    });
+    zoomIn?.addEventListener('click', () => {
+      zoomPercent = Math.min(200, zoomPercent + 10);
+      rememberPreferences();
+      syncControls();
+      applyZoom();
+    });
+    dialog.querySelector<HTMLButtonElement>('[data-action="fit-poster"]')?.addEventListener('click', () => {
+      zoomPercent = 100;
+      rememberPreferences();
+      syncControls();
+      applyZoom();
+    });
     dialog.addEventListener('click', (event) => {
       if (event.target === dialog) closePairingDialog();
     });
     dialog.addEventListener('close', () => disposePairingDialog());
     document.addEventListener('fullscreenchange', syncFullscreenControls);
+    pairingUpdateFit = applyZoom;
+    if (scroll && 'ResizeObserver' in window) {
+      pairingResizeObserver = new ResizeObserver(() => applyZoom());
+      pairingResizeObserver.observe(scroll);
+    }
+    syncControls();
+    refreshPoster();
     try {
       dialog.showModal();
+      window.requestAnimationFrame(applyZoom);
     } catch {
       disposePairingDialog();
     }
