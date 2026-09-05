@@ -32,6 +32,18 @@ export interface Match {
 export interface Round {
   number: number;
   matches: Match[];
+  manuallyAdjusted?: boolean;
+}
+
+export interface PairPosition {
+  matchId: string;
+  side: 'homeId' | 'awayId';
+}
+
+export interface PreviousOpponent {
+  roundNumber: number;
+  opponentId: string;
+  won: boolean;
 }
 
 export interface Standing {
@@ -122,4 +134,45 @@ export function getStandings(pairs: Pair[], rounds: Round[]): Standing[] {
 
 export function allResultsConfirmed(round: Round): boolean {
   return round.matches.every((match) => match.result !== null);
+}
+
+/** Returns only confirmed meetings from rounds preceding the viewed round. */
+export function previousOpponentsForPair(rounds: Round[], viewedRound: number, pairId: string): PreviousOpponent[] {
+  const opponents: PreviousOpponent[] = [];
+  for (const round of rounds) {
+    if (round.number >= viewedRound) continue;
+    for (const match of round.matches) {
+      if (!match.result) continue;
+      if (match.homeId === pairId) {
+        opponents.push({
+          roundNumber: round.number,
+          opponentId: match.awayId,
+          won: match.result.home > match.result.away,
+        });
+      } else if (match.awayId === pairId) {
+        opponents.push({
+          roundNumber: round.number,
+          opponentId: match.homeId,
+          won: match.result.away > match.result.home,
+        });
+      }
+    }
+  }
+  return opponents;
+}
+
+/** Swaps two pair positions only while both involved matches remain entirely unscored. */
+export function swapPairPositions(round: Round, first: PairPosition, second: PairPosition): boolean {
+  if (first.matchId === second.matchId && first.side === second.side) return false;
+  const firstMatch = round.matches.find((match) => match.id === first.matchId);
+  const secondMatch = round.matches.find((match) => match.id === second.matchId);
+  if (!firstMatch || !secondMatch ||
+    firstMatch.result !== null || secondMatch.result !== null ||
+    firstMatch.draft.home !== '' || firstMatch.draft.away !== '' ||
+    secondMatch.draft.home !== '' || secondMatch.draft.away !== '') return false;
+
+  const firstPairId = firstMatch[first.side];
+  firstMatch[first.side] = secondMatch[second.side];
+  secondMatch[second.side] = firstPairId;
+  return true;
 }

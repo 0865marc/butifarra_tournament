@@ -1,22 +1,23 @@
 import {
   createPairingPoster,
+  pairAssignmentsForMatches,
   pairingPosterDimensions,
-  pairingPosterLayoutForColumns,
-  pairingPosterLayoutForRows,
-  reconcilePairingPosterLayout,
-  type PairingPosterLayout,
+  pairingPosterLayoutForViewport,
 } from '../lib/pairing-poster';
 import {
   allResultsConfirmed,
   createPairs,
   getStandings,
   makeRound,
+  previousOpponentsForPair,
   scoreIssue,
   shufflePairs,
+  swapPairPositions,
   validatePairDrafts,
   type Match,
   type Pair,
   type PairDraft,
+  type PairPosition,
   type Round,
 } from '../lib/tournament';
 
@@ -128,8 +129,10 @@ function isSavedState(value: unknown): value is AppState {
     !saved.pairs.every((pair) => pair.registrationOrder >= 0 && pair.registrationOrder < saved.pairs.length) ||
     (numberedPairs && pairNumbers.size !== saved.pairs.length)) return false;
   return saved.rounds.every((round, roundIndex) => {
-    if (!round || round.number !== roundIndex + 1 || !Array.isArray(round.matches) ||
-      round.matches.length !== saved.pairs.length / 2 || !round.matches.every(isMatch)) return false;
+    if (!round || round.number !== roundIndex + 1 ||
+      (round.manuallyAdjusted !== undefined && typeof round.manuallyAdjusted !== 'boolean') ||
+      !Array.isArray(round.matches) || round.matches.length !== saved.pairs.length / 2 ||
+      !round.matches.every(isMatch)) return false;
     const participants = new Set<string>();
     return round.matches.every((match, matchIndex) => {
       if (match.id !== `round-${round.number}-match-${matchIndex + 1}` || !pairIds.has(match.homeId) ||
@@ -164,6 +167,7 @@ function normalizeRecoveredState(saved: AppState): void {
     pair.number ??= pair.registrationOrder + 1;
     delete (pair as Pair & { name?: string }).name;
   });
+  saved.rounds.forEach((round) => { round.manuallyAdjusted ??= false; });
   if (!saved.started) delete saved.setup.rounds;
 }
 
@@ -192,7 +196,10 @@ export function mountTournament(root: HTMLElement): void {
   let pairingPosterRevision = 0;
   let pairingResizeObserver: ResizeObserver | null = null;
   let pairingUpdateFit: (() => void) | null = null;
-  let pairingPreferences: { layout: PairingPosterLayout; zoomPercent: number } | null = null;
+  let pairingFitFrame: number | null = null;
+  let selectedSwap: PairPosition | null = null;
+  let openHistory: string | null = null;
+  let dismissedHistory: string | null = null;
 
   let storageRead = false;
   try {
@@ -265,6 +272,113 @@ export function mountTournament(root: HTMLElement): void {
     return state.rounds.at(-1);
   }
 
+  function samePosition(left: PairPosition, right: PairPosition): boolean {
+    return left.matchId === right.matchId && left.side === right.side;
+  }
+
+  function swapPositionIssue(position: PairPosition): string | null {
+    const latest = currentRound();
+    if (!latest || state.selectedRound !== latest.number) {
+      return 'Els canvis manuals només es poden fer a la ronda actual.';
+    }
+    const match = latest.matches.find((item) => item.id === position.matchId);
+    if (!match) return 'Aquesta parella ja no és en una taula disponible.';
+    if (match.result !== null) return 'No es pot canviar una taula amb un resultat confirmat.';
+    if (match.draft.home !== '' || match.draft.away !== '') {
+      return 'No es pot canviar una taula amb marcadors escrits.';
+    }
+    return null;
+  }
+
+  function clearSwapSelection(): void {
+    selectedSwap = null;
+  }
+
+  function paintNotice(): void {
+    const noticeElement = root.querySelector<HTMLElement>('[data-notice]');
+    if (!noticeElement) return;
+    noticeElement.textContent = notice;
+    noticeElement.hidden = !notice;
+  }
+
+  function syncHistoryPopover(): void {
+    root.querySelectorAll<HTMLElement>('[data-history-region]').forEach((region) => {
+      const isOpen = region.dataset.historyRegion === openHistory;
+      const isDismissed = region.dataset.historyRegion === dismissedHistory;
+      region.classList.toggle('team--history-open', isOpen);
+      region.classList.toggle('team--history-dismissed', isDismissed);
+      region.querySelector<HTMLButtonElement>('[data-action="toggle-history"]')?.setAttribute('aria-expanded', String(isOpen));
+    });
+  }
+
+  function syncSwapSelection(): void {
+    root.querySelectorAll<HTMLButtonElement>('[data-action="swap-pair"]').forEach((button) => {
+      const side = button.dataset.pairSide;
+      if (side !== 'homeId' && side !== 'awayId') return;
+      const position = { matchId: button.dataset.matchId ?? '', side };
+      const issue = swapPositionIssue(position);
+      const isSelected = selectedSwap !== null && samePosition(selectedSwap, position);
+      const pairLabel = button.dataset.pairLabel ?? 'Parella';
+      button.classList.toggle('swap-button--selected', isSelected);
+      button.setAttribute('aria-pressed', String(isSelected));
+      button.setAttribute('aria-label', `${isSelected ? 'Cancel·la la selecció de' : 'Selecciona per intercanviar'} ${pairLabel}`);
+      button.title = issue ?? 'Intercanvia la posició d’aquesta parella';
+      button.disabled = Boolean(issue);
+      const reason = button.closest<HTMLElement>('.team')?.querySelector<HTMLElement>('[data-swap-reason]');
+      if (reason) {
+        reason.textContent = issue ?? '';
+        reason.hidden = !issue;
+      }
+      if (issue) button.setAttribute('aria-describedby', reason?.id ?? '');
+      else button.removeAttribute('aria-describedby');
+    });
+    const status = root.querySelector<HTMLElement>('[data-swap-status]');
+    if (status) status.hidden = selectedSwap === null;
+  }
+
+  function dismissHistoryPopover(): void {
+    if (!openHistory) return;
+    dismissedHistory = openHistory;
+    openHistory = null;
+    syncHistoryPopover();
+  }
+
+  function selectPairForSwap(position: PairPosition): void {
+    const positionIssue = swapPositionIssue(position);
+    if (positionIssue) {
+      clearSwapSelection();
+      notice = positionIssue;
+      render();
+      return;
+    }
+    if (!selectedSwap) {
+      const match = currentRound()?.matches.find((item) => item.id === position.matchId);
+      const pair = match ? pairFor(match[position.side]) : null;
+      selectedSwap = position;
+      notice = `${pair ? pairLabel(pair) : 'Parella'} seleccionada. Tria una altra parella per intercanviar-la.`;
+      render();
+      return;
+    }
+    if (samePosition(selectedSwap, position)) {
+      clearSwapSelection();
+      notice = 'Selecció d’intercanvi cancel·lada.';
+      render();
+      return;
+    }
+    const selectedIssue = swapPositionIssue(selectedSwap);
+    const latest = currentRound();
+    if (selectedIssue || !latest || !swapPairPositions(latest, selectedSwap, position)) {
+      clearSwapSelection();
+      notice = selectedIssue ?? 'No es poden intercanviar aquestes parelles ara.';
+      render();
+      return;
+    }
+    latest.manuallyAdjusted = true;
+    clearSwapSelection();
+    notice = 'Parelles intercanviades manualment. Els emparellaments s’han desat.';
+    update();
+  }
+
   function configuredRounds(): number {
     if (state.setup.rounds === undefined) throw new Error('Started tournament is missing its round count');
     return state.setup.rounds;
@@ -283,6 +397,8 @@ export function mountTournament(root: HTMLElement): void {
       render();
       return;
     }
+    clearSwapSelection();
+    openHistory = null;
     state.setup.rounds = rounds;
     state.pairs = createPairs(state.pairDrafts);
     state.rounds = [makeRound(1, shufflePairs(state.pairs))];
@@ -304,6 +420,8 @@ export function mountTournament(root: HTMLElement): void {
       render();
       return;
     }
+    clearSwapSelection();
+    openHistory = null;
     const orderedPairs = getStandings(state.pairs, state.rounds).map((standing) => standing.pair);
     const next = makeRound(state.rounds.length + 1, orderedPairs);
     state.rounds.push(next);
@@ -320,9 +438,12 @@ export function mountTournament(root: HTMLElement): void {
     const activeInput = document.activeElement instanceof HTMLInputElement ? document.activeElement : null;
     const selectionStart = activeInput?.selectionStart;
     const selectionEnd = activeInput?.selectionEnd;
+    clearSwapSelection();
     match.draft[field] = value;
     match.result = null;
     notice = '';
+    syncSwapSelection();
+    paintNotice();
 
     if (wasConfirmed) {
       update();
@@ -360,6 +481,7 @@ export function mountTournament(root: HTMLElement): void {
       render();
       return;
     }
+    clearSwapSelection();
     match.result = { home: Number(match.draft.home), away: Number(match.draft.away) };
     notice = 'Resultat confirmat i classificació actualitzada.';
     update();
@@ -377,6 +499,8 @@ export function mountTournament(root: HTMLElement): void {
       return;
     }
     state = emptyState();
+    clearSwapSelection();
+    openHistory = null;
     notice = 'Ja pots preparar un campionat nou.';
     update();
   }
@@ -384,11 +508,10 @@ export function mountTournament(root: HTMLElement): void {
   function renderPairFields(): string {
     return state.pairDrafts.map((pair, index) => `
       <fieldset class="pair-editor">
-        <legend>Parella ${pair.number}</legend>
-        <div class="pair-editor__head">
-          <p class="pair-number">Número d’inscripció ${pair.number}</p>
-          <button class="icon-button" type="button" data-action="remove-pair" data-pair-index="${index}" ${state.pairDrafts.length <= 2 ? 'disabled' : ''} aria-label="Elimina la Parella ${pair.number}">×</button>
-        </div>
+        <legend>
+          Parella ${pair.number}
+          <button class="icon-button" style="width: 1.5rem; height: 1.5rem; margin-left: .25rem; vertical-align: middle; font-size: 1rem; border: 0; background: transparent;" type="button" data-action="remove-pair" data-pair-index="${index}" ${state.pairDrafts.length <= 2 ? 'disabled' : ''} aria-label="Elimina la Parella ${pair.number}">×</button>
+        </legend>
         <div class="player-fields">
           <label>Jugador/a 1
             <input data-pair-index="${index}" data-pair-field="playerOne" value="${escapeHtml(pair.playerOne)}" autocomplete="name" placeholder="Nom i cognom">
@@ -429,12 +552,18 @@ export function mountTournament(root: HTMLElement): void {
     </section>`;
   }
 
+  function pairingAssignmentsForRound(round: Round) {
+    return pairAssignmentsForMatches(round.matches.map((match, index) => ({
+      tableNumber: index + 1,
+      homeNumber: pairFor(match.homeId).number,
+      awayNumber: pairFor(match.awayId).number,
+    })));
+  }
+
   function renderPairingTextAlternative(selected: Round): string {
-    return `<ol>${selected.matches.map((match, index) => {
-      const home = pairFor(match.homeId);
-      const away = pairFor(match.awayId);
-      return `<li>Taula ${index + 1}: Parella ${escapeHtml(home.number)} contra Parella ${escapeHtml(away.number)}.</li>`;
-    }).join('')}</ol>`;
+    return `<ol>${pairingAssignmentsForRound(selected).map((assignment) =>
+      `<li>Parella ${escapeHtml(assignment.pairNumber)}: Taula ${escapeHtml(assignment.tableNumber)}.</li>`
+    ).join('')}</ol>`;
   }
 
   function isCurrentPairingDialog(dialog: HTMLDialogElement | null, viewer: HTMLElement | null): boolean {
@@ -457,7 +586,7 @@ export function mountTournament(root: HTMLElement): void {
     pairingViewer?.classList.toggle('pairing-viewer--fullscreen', isFullscreen);
     const button = pairingDialog?.querySelector<HTMLButtonElement>('[data-action="toggle-fullscreen"]');
     if (button) button.textContent = isFullscreen ? 'Surt de pantalla completa' : 'Pantalla completa';
-    window.requestAnimationFrame(() => pairingUpdateFit?.());
+    pairingUpdateFit?.();
   }
 
   function disposePairingDialog(restoreFocus = true): void {
@@ -478,6 +607,8 @@ export function mountTournament(root: HTMLElement): void {
     document.removeEventListener('fullscreenchange', syncFullscreenControls);
     pairingResizeObserver?.disconnect();
     pairingResizeObserver = null;
+    if (pairingFitFrame !== null) window.cancelAnimationFrame(pairingFitFrame);
+    pairingFitFrame = null;
     pairingUpdateFit = null;
     pairingDialog = null;
     pairingLaunchButton = null;
@@ -529,6 +660,9 @@ export function mountTournament(root: HTMLElement): void {
         }
       });
       popupDocument.title = 'Pòster dels emparellaments';
+      const style = popupDocument.createElement('style');
+      style.textContent = 'html,body{width:100%;height:100%;margin:0;background:#f6f0e3}img{display:block;width:100vw;height:100vh;object-fit:contain}';
+      popupDocument.head.append(style);
       popupDocument.body.replaceChildren(image);
       image.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(posterSvg)}`;
       setFullscreenFeedback('S’està carregant el pòster a la pestanya nova.', dialog);
@@ -559,77 +693,68 @@ export function mountTournament(root: HTMLElement): void {
 
   function openPairingDialog(selected: Round, launcher: HTMLButtonElement): void {
     disposePairingDialog(false);
-    const posterMatches = selected.matches.map((match, index) => {
-      const home = pairFor(match.homeId);
-      const away = pairFor(match.awayId);
-      return { tableNumber: index + 1, homeNumber: home.number, awayNumber: away.number };
-    });
-    let layout = reconcilePairingPosterLayout(posterMatches.length, pairingPreferences?.layout);
-    let zoomPercent = Math.min(200, Math.max(25, pairingPreferences?.zoomPercent ?? 100));
-    let dimensions = pairingPosterDimensions(posterMatches.length, layout);
+    const posterAssignments = pairingAssignmentsForRound(selected);
+    let layout = pairingPosterLayoutForViewport(posterAssignments.length, { width: 0, height: 0 });
+    let dimensions = pairingPosterDimensions(posterAssignments.length, layout);
     let posterImage: HTMLImageElement | null = null;
     pairingLaunchButton = launcher;
     const dialog = document.createElement('dialog');
     dialog.className = 'pairing-dialog';
     dialog.setAttribute('aria-labelledby', 'pairing-dialog-title');
     dialog.setAttribute('aria-describedby', 'pairing-dialog-description');
-    const drawLabel = selected.number === 1 ? 'Sorteig aleatori' : 'Segons classificació prèvia';
-    dialog.innerHTML = `<div class="pairing-dialog__header"><div><p class="eyebrow">${drawLabel}</p><h2 id="pairing-dialog-title">Emparellaments · Ronda ${selected.number}</h2></div><button class="icon-button" type="button" data-action="close-pairings" aria-label="Tanca els emparellaments" autofocus>×</button></div>
-      <p id="pairing-dialog-description" class="quiet">Pòster amb l’ordre desat de les taules de ${escapeHtml(state.setup.name)}.</p>
-      <div class="pairing-viewer" data-pairing-viewer aria-describedby="pairing-dialog-description">
-        <div class="pairing-viewer__toolbar" aria-label="Presentació del pòster">
-          <label>Files<input data-poster-rows value="${layout.rows}" inputmode="numeric" aria-label="Files del pòster"></label>
-          <label>Columnes<input data-poster-columns value="${layout.columns}" inputmode="numeric" aria-label="Columnes del pòster"></label>
-          <label>Ordre<select data-poster-order aria-label="Ordre d’ompliment"><option value="rows" ${layout.fillOrder === 'rows' ? 'selected' : ''}>Per files</option><option value="columns" ${layout.fillOrder === 'columns' ? 'selected' : ''}>Per columnes</option></select></label>
-          <div class="pairing-zoom" aria-label="Mida del pòster"><span>Mida</span><button class="icon-button" type="button" data-action="zoom-out" aria-label="Redueix la mida del pòster">−</button><output data-poster-zoom>${zoomPercent}%</output><button class="icon-button" type="button" data-action="zoom-in" aria-label="Augmenta la mida del pòster">+</button><button class="button button--small button--quiet" type="button" data-action="fit-poster">Ajusta a la pantalla</button></div>
-        </div>
-        <div class="pairing-viewer__actions"><button class="button button--small" type="button" data-action="toggle-fullscreen">Pantalla completa</button><button class="button button--small" type="button" data-action="open-poster" hidden>Obre la imatge</button><p class="field-message" data-fullscreen-feedback role="status" aria-live="polite"></p></div>
+    const drawLabel = selected.manuallyAdjusted
+      ? 'Emparellaments ajustats manualment'
+      : selected.number === 1 ? 'Sorteig aleatori' : 'Segons classificació prèvia';
+    dialog.innerHTML = `<div class="pairing-viewer" data-pairing-viewer aria-describedby="pairing-dialog-description"><div class="pairing-viewer__header"><div><p class="eyebrow">${drawLabel}</p><h2 id="pairing-dialog-title">Parelles i taules · Ronda ${selected.number}</h2></div><div class="pairing-viewer__actions pairing-viewer__actions--header"><button class="button button--small" type="button" data-action="toggle-fullscreen">Pantalla completa</button><button class="button button--small" type="button" data-action="open-poster" hidden>Obre la imatge</button><button class="icon-button" type="button" data-action="close-pairings" aria-label="Tanca els emparellaments" autofocus>×</button></div></div>
+      <p id="pairing-dialog-description" class="quiet">Pòster de les parelles ordenades per número i la seva taula desada de ${escapeHtml(state.setup.name)}.</p>
+      <div class="pairing-viewer__content">
+        <p class="field-message" data-fullscreen-feedback role="status" aria-live="polite"></p>
         <div class="pairing-poster-scroll" data-poster-scroll></div>
       </div>
-      <div class="sr-only"><h3>Versió de text dels emparellaments</h3>${renderPairingTextAlternative(selected)}</div>`;
+      <div class="sr-only"><h3>Versió de text de les parelles i taules</h3>${renderPairingTextAlternative(selected)}</div>`;
     document.body.append(dialog);
     pairingDialog = dialog;
     pairingViewer = dialog.querySelector<HTMLElement>('[data-pairing-viewer]');
     const viewer = pairingViewer;
     const scroll = dialog.querySelector<HTMLElement>('[data-poster-scroll]');
-    const rowInput = dialog.querySelector<HTMLInputElement>('[data-poster-rows]');
-    const columnInput = dialog.querySelector<HTMLInputElement>('[data-poster-columns]');
-    const orderInput = dialog.querySelector<HTMLSelectElement>('[data-poster-order]');
-    const zoomOutput = dialog.querySelector<HTMLOutputElement>('[data-poster-zoom]');
-    const zoomOut = dialog.querySelector<HTMLButtonElement>('[data-action="zoom-out"]');
-    const zoomIn = dialog.querySelector<HTMLButtonElement>('[data-action="zoom-in"]');
 
-    function rememberPreferences(): void {
-      pairingPreferences = { layout: { ...layout }, zoomPercent };
+    function schedulePosterFit(): void {
+      if (pairingFitFrame !== null) return;
+      pairingFitFrame = window.requestAnimationFrame(() => {
+        pairingFitFrame = null;
+        updatePosterFit();
+      });
     }
 
-    function syncControls(): void {
-      if (rowInput) rowInput.value = String(layout.rows);
-      if (columnInput) columnInput.value = String(layout.columns);
-      if (orderInput) orderInput.value = layout.fillOrder;
-      if (zoomOutput) zoomOutput.value = `${zoomPercent}%`;
-      if (zoomOut) zoomOut.disabled = zoomPercent <= 25;
-      if (zoomIn) zoomIn.disabled = zoomPercent >= 200;
-    }
-
-    function applyZoom(): void {
-      if (!scroll || !posterImage || !isCurrentPairingDialog(dialog, viewer)) return;
+    function updatePosterFit(): void {
+      if (!scroll || !isCurrentPairingDialog(dialog, viewer)) return;
       const width = scroll.clientWidth;
       const height = scroll.clientHeight;
       if (width < 1 || height < 1) return;
+      const nextLayout = pairingPosterLayoutForViewport(posterAssignments.length, { width, height });
+      if (nextLayout.columns !== layout.columns || nextLayout.rows !== layout.rows) {
+        layout = nextLayout;
+        dimensions = pairingPosterDimensions(posterAssignments.length, layout);
+        refreshPoster();
+        return;
+      }
+      if (!posterImage) {
+        refreshPoster();
+        return;
+      }
       const fitScale = Math.min(width / dimensions.width, height / dimensions.height);
       if (!Number.isFinite(fitScale) || fitScale <= 0) return;
-      posterImage.style.width = `${dimensions.width * fitScale * zoomPercent / 100}px`;
-      posterImage.style.height = 'auto';
+      posterImage.style.width = `${dimensions.width * fitScale}px`;
+      posterImage.style.height = `${dimensions.height * fitScale}px`;
     }
 
     function refreshPoster(): void {
       if (!scroll || !isCurrentPairingDialog(dialog, viewer)) return;
-      dimensions = pairingPosterDimensions(posterMatches.length, layout);
+      dimensions = pairingPosterDimensions(posterAssignments.length, layout);
       pairingPosterSvg = createPairingPoster({
         tournamentName: state.setup.name,
         roundNumber: selected.number,
-        matches: posterMatches,
+        assignments: posterAssignments,
         layout,
       });
       const previousUrl = pairingPosterUrl;
@@ -637,7 +762,7 @@ export function mountTournament(root: HTMLElement): void {
       pairingPosterUrl = nextUrl;
       const revision = ++pairingPosterRevision;
       const image = document.createElement('img');
-      image.alt = `Pòster dels emparellaments de la ronda ${selected.number} de ${state.setup.name}.`;
+      image.alt = `Pòster de les parelles i taules de la ronda ${selected.number} de ${state.setup.name}.`;
       image.addEventListener('error', () => {
         if (posterImage === image && pairingPosterRevision === revision && isCurrentPairingDialog(dialog, viewer)) {
           showPosterFallback(dialog, viewer, 'No s’ha pogut carregar el pòster. Pots obrir la imatge en una pestanya nova.');
@@ -648,72 +773,50 @@ export function mountTournament(root: HTMLElement): void {
       image.src = nextUrl;
       dialog.querySelector<HTMLButtonElement>('[data-action="open-poster"]')?.setAttribute('hidden', '');
       if (previousUrl) URL.revokeObjectURL(previousUrl);
-      applyZoom();
-    }
-
-    function setGridFromInput(input: HTMLInputElement, byRows: boolean): void {
-      if (!/^\d+$/.test(input.value) || input.value === '') return;
-      const value = Number(input.value);
-      if (!Number.isSafeInteger(value) || value < 1) return;
-      layout = byRows
-        ? pairingPosterLayoutForRows(posterMatches.length, value, layout.fillOrder)
-        : pairingPosterLayoutForColumns(posterMatches.length, value, layout.fillOrder);
-      rememberPreferences();
-      syncControls();
-      refreshPoster();
+      updatePosterFit();
     }
 
     dialog.querySelector<HTMLButtonElement>('[data-action="close-pairings"]')?.addEventListener('click', closePairingDialog);
     dialog.querySelector<HTMLButtonElement>('[data-action="toggle-fullscreen"]')?.addEventListener('click', () => togglePosterFullscreen(dialog, viewer));
     dialog.querySelector<HTMLButtonElement>('[data-action="open-poster"]')?.addEventListener('click', () => openPosterInNewTab(dialog, viewer, pairingPosterSvg, pairingPosterRevision));
-    rowInput?.addEventListener('input', () => setGridFromInput(rowInput, true));
-    columnInput?.addEventListener('input', () => setGridFromInput(columnInput, false));
-    rowInput?.addEventListener('blur', syncControls);
-    columnInput?.addEventListener('blur', syncControls);
-    orderInput?.addEventListener('change', () => {
-      layout = { ...layout, fillOrder: orderInput.value === 'columns' ? 'columns' : 'rows' };
-      rememberPreferences();
-      refreshPoster();
-    });
-    zoomOut?.addEventListener('click', () => {
-      zoomPercent = Math.max(25, zoomPercent - 10);
-      rememberPreferences();
-      syncControls();
-      applyZoom();
-    });
-    zoomIn?.addEventListener('click', () => {
-      zoomPercent = Math.min(200, zoomPercent + 10);
-      rememberPreferences();
-      syncControls();
-      applyZoom();
-    });
-    dialog.querySelector<HTMLButtonElement>('[data-action="fit-poster"]')?.addEventListener('click', () => {
-      zoomPercent = 100;
-      rememberPreferences();
-      syncControls();
-      applyZoom();
-    });
     dialog.addEventListener('click', (event) => {
       if (event.target === dialog) closePairingDialog();
     });
     dialog.addEventListener('close', () => disposePairingDialog());
     document.addEventListener('fullscreenchange', syncFullscreenControls);
-    pairingUpdateFit = applyZoom;
+    pairingUpdateFit = schedulePosterFit;
     if (scroll && 'ResizeObserver' in window) {
-      pairingResizeObserver = new ResizeObserver(() => applyZoom());
+      pairingResizeObserver = new ResizeObserver(() => schedulePosterFit());
       pairingResizeObserver.observe(scroll);
     }
-    syncControls();
-    refreshPoster();
     try {
       dialog.showModal();
-      window.requestAnimationFrame(applyZoom);
+      schedulePosterFit();
     } catch {
       disposePairingDialog();
     }
   }
 
-  function renderMatch(match: Match, editable: boolean, tableNumber: number): string {
+  function renderPairCard(pair: Pair, round: Round, match: Match, side: PairPosition['side'], away = false): string {
+    const historyId = `history-${match.id}-${side}`;
+    const swapReason = swapPositionIssue({ matchId: match.id, side });
+    const isSelected = selectedSwap !== null && samePosition(selectedSwap, { matchId: match.id, side });
+    const history = previousOpponentsForPair(state.rounds, round.number, pair.id);
+    const historyItems = history.length
+      ? `<ul>${history.map((entry) => `<li>R${entry.roundNumber} · P${pairFor(entry.opponentId).number} · <b class="pair-history__result pair-history__result--${entry.won ? 'win' : 'loss'}">${entry.won ? 'Victòria ✓' : 'Derrota ✕'}</b></li>`).join('')}</ul>`
+      : '<p>Encara no hi ha rivals anteriors confirmats.</p>';
+    const swapDescriptionId = `swap-${match.id}-${side}`;
+    return `<div class="team ${away ? 'team--away' : ''} ${openHistory === historyId ? 'team--history-open' : ''}" data-history-region="${historyId}">
+      <button class="team__history-trigger" type="button" data-action="toggle-history" data-history-id="${historyId}" aria-label="Consulta els rivals anteriors de ${escapeHtml(pairLabel(pair))}" aria-describedby="${historyId}" aria-expanded="${openHistory === historyId}">${escapeHtml(pairLabel(pair))}</button><span>${escapeHtml(pair.players[0])} · ${escapeHtml(pair.players[1])}</span>
+      <div class="team__actions">
+        <button class="swap-button ${isSelected ? 'swap-button--selected' : ''}" type="button" data-action="swap-pair" data-match-id="${match.id}" data-pair-side="${side}" data-pair-label="${escapeHtml(pairLabel(pair))}" aria-pressed="${isSelected}" aria-label="${isSelected ? 'Cancel·la la selecció de' : 'Selecciona per intercanviar'} ${escapeHtml(pairLabel(pair))}" ${swapReason ? `aria-describedby="${swapDescriptionId}"` : ''} title="${escapeHtml(swapReason ?? 'Intercanvia la posició d’aquesta parella')}" ${swapReason ? 'disabled' : ''}>⇄</button>
+        <p id="${swapDescriptionId}" class="swap-reason" data-swap-reason ${swapReason ? '' : 'hidden'}>${escapeHtml(swapReason ?? '')}</p>
+      </div>
+      <div id="${historyId}" class="pair-history" role="tooltip"><p class="pair-history__title">Rivals anteriors de ${escapeHtml(pairLabel(pair))}</p>${historyItems}</div>
+    </div>`;
+  }
+
+  function renderMatch(match: Match, round: Round, editable: boolean, tableNumber: number): string {
     const home = pairFor(match.homeId);
     const away = pairFor(match.awayId);
     const homeLabel = pairLabel(home);
@@ -724,13 +827,13 @@ export function mountTournament(root: HTMLElement): void {
       : issue;
     return `<article class="match ${match.result ? 'match--confirmed' : ''}">
       <p class="table-label">Taula ${tableNumber}</p>
-      <div class="team"><strong>${escapeHtml(homeLabel)}</strong><span>${escapeHtml(home.players[0])} · ${escapeHtml(home.players[1])}</span></div>
+      ${renderPairCard(home, round, match, 'homeId')}
       <div class="score-entry">
         <label><span class="sr-only">Punts de ${escapeHtml(homeLabel)}</span><input data-match-id="${match.id}" data-score="home" value="${escapeHtml(match.draft.home)}" ${editable ? '' : 'disabled'} inputmode="numeric" aria-label="Punts de ${escapeHtml(homeLabel)}"></label>
         <span class="versus">—</span>
         <label><span class="sr-only">Punts de ${escapeHtml(awayLabel)}</span><input data-match-id="${match.id}" data-score="away" value="${escapeHtml(match.draft.away)}" ${editable ? '' : 'disabled'} inputmode="numeric" aria-label="Punts de ${escapeHtml(awayLabel)}"></label>
       </div>
-      <div class="team team--away"><strong>${escapeHtml(awayLabel)}</strong><span>${escapeHtml(away.players[0])} · ${escapeHtml(away.players[1])}</span></div>
+      ${renderPairCard(away, round, match, 'awayId', true)}
       <div class="match-footer"><p data-match-message class="field-message ${issue && editable ? 'field-message--error' : ''}">${editable ? (message ?? 'Escriu dos marcadors diferents per confirmar.') : 'Ronda tancada: resultat només de consulta.'}</p>
       <button class="button button--small" type="button" data-action="confirm-match" data-match-id="${match.id}" ${!editable || issue ? 'disabled' : ''}>${match.result ? 'Resultat confirmat' : 'Confirma el resultat'}</button></div>
     </article>`;
@@ -749,8 +852,9 @@ export function mountTournament(root: HTMLElement): void {
         <div class="round-nav" aria-label="Historial de rondes">
           ${state.rounds.map((round) => `<button type="button" data-action="select-round" data-round="${round.number}" class="round-tab ${round.number === selected.number ? 'round-tab--active' : ''}">Ronda ${round.number}</button>`).join('')}
         </div>
-        <div class="round-heading"><div><p class="eyebrow">${selected.number === latest?.number ? 'Ronda actual' : 'Historial'}</p><h1>Ronda ${selected.number}</h1></div><div class="round-heading__actions"><button class="button button--small" type="button" data-action="view-pairings" aria-label="Veure els emparellaments de la ronda ${selected.number}">Veure emparellaments</button><p class="round-note">${editable ? 'Pots editar els resultats confirmats abans de generar la ronda següent.' : 'Aquesta ronda és de consulta per preservar els emparellaments posteriors.'}</p></div></div>
-        <div class="matches">${selected.matches.map((match, index) => renderMatch(match, editable, index + 1)).join('')}</div>
+        <div class="round-heading"><div><p class="eyebrow">${selected.number === latest?.number ? 'Ronda actual' : 'Historial'}</p><h1>Ronda ${selected.number}</h1></div><div class="round-heading__actions"><button class="button button--small" type="button" data-action="view-pairings" aria-label="Veure els emparellaments de la ronda ${selected.number}">Veure emparellaments</button><p class="round-note">${editable ? 'Pots editar els resultats confirmats abans de generar la ronda següent.' : 'Aquesta ronda és de consulta per preservar els emparellaments posteriors.'}</p>${selected.manuallyAdjusted ? '<p class="manual-adjustment">Emparellaments ajustats manualment.</p>' : ''}</div></div>
+        ${selectedSwap ? '<div class="swap-status" data-swap-status role="status">Parella seleccionada: tria una altra parella per intercanviar-la.<button class="text-button" type="button" data-action="cancel-swap">Cancel·la</button></div>' : ''}
+        <div class="matches">${selected.matches.map((match, index) => renderMatch(match, selected, editable, index + 1)).join('')}</div>
         ${selected.number === latest?.number ? `<div class="round-action card ${complete ? 'round-action--ready' : ''}">${complete
           ? tournamentComplete
             ? '<div><strong>Campionat complet</strong><p>Classificació final calculada amb victòries, punts i ordre d’inscripció com a últim criteri estable.</p></div>'
@@ -772,7 +876,7 @@ export function mountTournament(root: HTMLElement): void {
     disposePairingDialog(false);
     root.innerHTML = `<div class="app-shell">
       <header class="masthead"><div><p class="brand"><span aria-hidden="true">♣</span> Taula de Butifarra</p><p class="masthead__sub">Campionat de cartes, ordenat i a punt.</p></div><div class="save-box"><span data-save-dot class="save-dot save-dot--${saveState}" aria-hidden="true"></span><span data-save-message aria-live="polite">${escapeHtml(saveMessage)}</span><button class="text-button" type="button" data-action="save" ${storageLocked ? 'disabled' : ''}>Desa ara</button></div></header>
-      ${notice ? `<p class="notice" role="status">${escapeHtml(notice)}</p>` : ''}
+      <p data-notice class="notice" role="status" ${notice ? '' : 'hidden'}>${escapeHtml(notice)}</p>
       ${state.started ? renderPlay() : `<div class="start-layout"><div class="intro"><p class="eyebrow">Club de cartes</p><h1>Un campionat ben portat comença amb una bona taula.</h1><p>Prepara les parelles, sorteja l’obertura i anota cada mà sense perdre el fil.</p><div class="intro__motif" aria-hidden="true">♠ &nbsp; ♥ &nbsp; ♦ &nbsp; ♣</div></div>${renderSetup()}</div>`}
       <footer>Les dades es desen només en aquest navegador. Cap compte, cap servidor.</footer>
     </div>`;
@@ -803,6 +907,18 @@ export function mountTournament(root: HTMLElement): void {
     root.querySelectorAll<HTMLInputElement>('[data-score]').forEach((input) => input.addEventListener('input', () => {
       updateMatch(input.dataset.matchId ?? '', input.dataset.score as 'home' | 'away', input.value);
     }));
+    root.querySelectorAll<HTMLElement>('[data-history-region]').forEach((region) => {
+      const restoreHistoryHover = (nextFocus: EventTarget | null = null) => {
+        if (region.dataset.historyRegion !== dismissedHistory) return;
+        if (nextFocus instanceof Node) {
+          if (region.contains(nextFocus)) return;
+        } else if (region.contains(document.activeElement)) return;
+        dismissedHistory = null;
+        syncHistoryPopover();
+      };
+      region.addEventListener('pointerleave', () => restoreHistoryHover());
+      region.addEventListener('focusout', (event) => restoreHistoryHover(event.relatedTarget));
+    });
     root.querySelectorAll<HTMLButtonElement>('[data-action]').forEach((button) => button.addEventListener('click', () => {
       const action = button.dataset.action;
       if (action === 'save') { persist(true); render(); }
@@ -810,15 +926,55 @@ export function mountTournament(root: HTMLElement): void {
       if (action === 'add-pair') { state.pairDrafts.push({ number: nextPairNumber(), playerOne: '', playerTwo: '' }); notice = ''; update(); }
       if (action === 'remove-pair') { const index = Number(button.dataset.pairIndex); if (state.pairDrafts.length > 2) { state.pairDrafts.splice(index, 1); notice = ''; update(); } }
       if (action === 'confirm-match') confirmMatch(button.dataset.matchId ?? '');
+      if (action === 'toggle-history') {
+        const historyId = button.dataset.historyId;
+        if (historyId) {
+          if (openHistory === historyId) dismissHistoryPopover();
+          else {
+            dismissedHistory = null;
+            openHistory = historyId;
+            syncHistoryPopover();
+          }
+        }
+      }
+      if (action === 'swap-pair') {
+        const side = button.dataset.pairSide;
+        if (side === 'homeId' || side === 'awayId') {
+          selectPairForSwap({ matchId: button.dataset.matchId ?? '', side });
+        }
+      }
+      if (action === 'cancel-swap') {
+        clearSwapSelection();
+        notice = 'Selecció d’intercanvi cancel·lada.';
+        syncSwapSelection();
+        paintNotice();
+      }
       if (action === 'next-round') nextRound();
       if (action === 'view-pairings') {
         const selected = state.rounds.find((round) => round.number === state.selectedRound) ?? currentRound();
         if (selected) openPairingDialog(selected, button);
       }
-      if (action === 'select-round') { state.selectedRound = Number(button.dataset.round); notice = ''; update(); }
+      if (action === 'select-round') {
+        clearSwapSelection();
+        openHistory = null;
+        state.selectedRound = Number(button.dataset.round);
+        notice = '';
+        update();
+      }
       if (action === 'reset') resetTournament();
     }));
   }
+
+  document.addEventListener('pointerdown', (event) => {
+    if (!openHistory || !(event.target instanceof Element)) return;
+    const region = event.target.closest<HTMLElement>('[data-history-region]');
+    if (region?.dataset.historyRegion === openHistory) return;
+    dismissHistoryPopover();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape' || !openHistory) return;
+    dismissHistoryPopover();
+  });
 
   render();
 }
