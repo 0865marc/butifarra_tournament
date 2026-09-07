@@ -358,16 +358,14 @@ export function mountTournament(root: HTMLElement): void {
       return;
     }
     if (!selectedSwap) {
-      const match = currentRound()?.matches.find((item) => item.id === position.matchId);
-      const pair = match ? pairFor(match[position.side]) : null;
       selectedSwap = position;
-      notice = `${pair ? pairLabel(pair) : 'Parella'} seleccionada. Tria una altra parella per intercanviar-la.`;
+      notice = '';
       render();
       return;
     }
     if (samePosition(selectedSwap, position)) {
       clearSwapSelection();
-      notice = 'Selecció d’intercanvi cancel·lada.';
+      notice = '';
       render();
       return;
     }
@@ -381,7 +379,7 @@ export function mountTournament(root: HTMLElement): void {
     }
     latest.manuallyAdjusted = true;
     clearSwapSelection();
-    notice = 'Parelles intercanviades manualment. Els emparellaments s’han desat.';
+    notice = '';
     update();
   }
 
@@ -411,7 +409,7 @@ export function mountTournament(root: HTMLElement): void {
     }
     latest.manuallyAdjusted = true;
     clearSwapSelection();
-    notice = 'Canvi segur aplicat.';
+    notice = '';
     update();
   }
 
@@ -440,7 +438,7 @@ export function mountTournament(root: HTMLElement): void {
     state.rounds = [makeRound(1, shufflePairs(state.pairs))];
     state.selectedRound = 1;
     state.started = true;
-    notice = 'Primera ronda sortejada. Bona partida!';
+    notice = '';
     update();
   }
 
@@ -462,7 +460,7 @@ export function mountTournament(root: HTMLElement): void {
     const next = makeRound(state.rounds.length + 1, orderedPairs);
     state.rounds.push(next);
     state.selectedRound = next.number;
-    notice = 'Nova ronda creada segons la classificació actual. Les parelles es poden repetir.';
+    notice = '';
     update();
   }
 
@@ -497,14 +495,17 @@ export function mountTournament(root: HTMLElement): void {
     const message = card?.querySelector<HTMLElement>('[data-match-message]');
     const button = card?.querySelector<HTMLButtonElement>('[data-action="confirm-match"]');
     const issue = scoreIssue(match.draft);
+    const visibleIssue = match.draft.home && match.draft.away ? issue : null;
     card?.classList.remove('match--confirmed');
     if (message) {
-      message.textContent = issue ?? 'Escriu dos marcadors diferents per confirmar.';
-      message.className = `field-message ${issue ? 'field-message--error' : ''}`;
+      message.textContent = visibleIssue ?? '';
+      message.hidden = !visibleIssue;
     }
+    card?.querySelectorAll<HTMLInputElement>('[data-score]').forEach((input) => {
+      input.setAttribute('aria-invalid', String(Boolean(visibleIssue)));
+    });
     if (button) {
       button.disabled = Boolean(issue);
-      button.textContent = 'Confirma el resultat';
     }
   }
 
@@ -520,7 +521,7 @@ export function mountTournament(root: HTMLElement): void {
     }
     clearSwapSelection();
     match.result = { home: Number(match.draft.home), away: Number(match.draft.away) };
-    notice = 'Resultat confirmat i classificació actualitzada.';
+    notice = '';
     update();
   }
 
@@ -834,7 +835,7 @@ export function mountTournament(root: HTMLElement): void {
     }
   }
 
-  function renderPairCard(pair: Pair, round: Round, match: Match, side: PairPosition['side'], away = false): string {
+  function renderPairCard(pair: Pair, round: Round, match: Match, side: PairPosition['side']): string {
     const historyId = `history-${match.id}-${side}`;
     const swapReason = swapPositionIssue({ matchId: match.id, side });
     const isSelected = selectedSwap !== null && samePosition(selectedSwap, { matchId: match.id, side });
@@ -843,11 +844,11 @@ export function mountTournament(root: HTMLElement): void {
       ? `<ul>${history.map((entry) => `<li>R${entry.roundNumber} · P${pairFor(entry.opponentId).number} · <b class="pair-history__result pair-history__result--${entry.won ? 'win' : 'loss'}">${entry.won ? 'Victòria ✓' : 'Derrota ✕'}</b></li>`).join('')}</ul>`
       : '<p>Encara no hi ha rivals anteriors confirmats.</p>';
     const swapDescriptionId = `swap-${match.id}-${side}`;
-    return `<div class="team ${away ? 'team--away' : ''} ${openHistory === historyId ? 'team--history-open' : ''}" data-history-region="${historyId}">
-      <button class="team__history-trigger" type="button" data-action="toggle-history" data-history-id="${historyId}" aria-label="Consulta els rivals anteriors de ${escapeHtml(pairLabel(pair))}" aria-describedby="${historyId}" aria-expanded="${openHistory === historyId}">${escapeHtml(pairLabel(pair))}</button><span>${escapeHtml(pair.players[0])} · ${escapeHtml(pair.players[1])}</span>
+    return `<div class="team ${openHistory === historyId ? 'team--history-open' : ''}" data-history-region="${historyId}">
+      <button class="team__history-trigger" type="button" data-action="toggle-history" data-history-id="${historyId}" aria-label="Consulta els rivals anteriors de ${escapeHtml(pairLabel(pair))}" aria-describedby="${historyId}" aria-expanded="${openHistory === historyId}">${escapeHtml(pairLabel(pair))}</button><span class="team__players" title="${escapeHtml(pair.players.join(' · '))}">${escapeHtml(pair.players[0])} · ${escapeHtml(pair.players[1])}</span>
       <div class="team__actions">
         <button class="swap-button ${isSelected ? 'swap-button--selected' : ''}" type="button" data-action="swap-pair" data-match-id="${match.id}" data-pair-side="${side}" data-pair-label="${escapeHtml(pairLabel(pair))}" aria-pressed="${isSelected}" aria-label="${isSelected ? 'Cancel·la la selecció de' : 'Selecciona per intercanviar'} ${escapeHtml(pairLabel(pair))}" ${swapReason ? `aria-describedby="${swapDescriptionId}"` : ''} title="${escapeHtml(swapReason ?? 'Intercanvia la posició d’aquesta parella')}" ${swapReason ? 'disabled' : ''}>⇄</button>
-        <p id="${swapDescriptionId}" class="swap-reason" data-swap-reason ${swapReason ? '' : 'hidden'}>${escapeHtml(swapReason ?? '')}</p>
+        <p id="${swapDescriptionId}" class="sr-only" data-swap-reason ${swapReason ? '' : 'hidden'}>${escapeHtml(swapReason ?? '')}</p>
       </div>
       <div id="${historyId}" class="pair-history" role="tooltip"><p class="pair-history__title">Rivals anteriors de ${escapeHtml(pairLabel(pair))}</p>${historyItems}</div>
     </div>`;
@@ -932,27 +933,26 @@ export function mountTournament(root: HTMLElement): void {
     bindRepeatProposalButtons();
   }
 
-      function renderMatch(match: Match, round: Round, editable: boolean, tableNumber: number, analysis: RepeatAnalysis, latest: Round | undefined): string {
+  function renderMatch(match: Match, round: Round, editable: boolean, tableNumber: number, analysis: RepeatAnalysis, latest: Round | undefined): string {
     const home = pairFor(match.homeId);
     const away = pairFor(match.awayId);
-    const homeLabel = pairLabel(home);
-    const awayLabel = pairLabel(away);
     const issue = scoreIssue(match.draft);
-    const message = match.result
-      ? 'Resultat confirmat. Pots editar-lo fins que generis la ronda següent.'
-      : issue;
-    return `<article class="match ${match.result ? 'match--confirmed' : ''}">
-      <p class="table-label">Taula ${tableNumber}</p>
-          <div class="repeat-match-details" data-repeat-match="${match.id}">${renderRepeatDetails(match, round, latest, analysis)}</div>
-      ${renderPairCard(home, round, match, 'homeId')}
-      <div class="score-entry">
-        <label><span class="sr-only">Punts de ${escapeHtml(homeLabel)}</span><input data-match-id="${match.id}" data-score="home" value="${escapeHtml(match.draft.home)}" ${editable ? '' : 'disabled'} inputmode="numeric" aria-label="Punts de ${escapeHtml(homeLabel)}"></label>
-        <span class="versus">—</span>
-        <label><span class="sr-only">Punts de ${escapeHtml(awayLabel)}</span><input data-match-id="${match.id}" data-score="away" value="${escapeHtml(match.draft.away)}" ${editable ? '' : 'disabled'} inputmode="numeric" aria-label="Punts de ${escapeHtml(awayLabel)}"></label>
+    const visibleIssue = editable && match.draft.home && match.draft.away ? issue : null;
+    const messageId = `score-issue-${match.id}`;
+    const confirmLabel = match.result ? 'Resultat confirmat' : 'Confirma el resultat';
+    const renderRow = (pair: Pair, side: 'home' | 'away'): string => `<div class="match-row">
+      ${renderPairCard(pair, round, match, side === 'home' ? 'homeId' : 'awayId')}
+      <label class="score-field"><span class="sr-only">Punts de ${escapeHtml(pairLabel(pair))}</span><input data-match-id="${match.id}" data-score="${side}" value="${escapeHtml(match.draft[side])}" ${editable ? '' : 'disabled'} inputmode="numeric" aria-describedby="${messageId}" aria-invalid="${Boolean(visibleIssue)}"></label>
+    </div>`;
+    return `<article class="match ${match.result ? 'match--confirmed' : ''}" aria-labelledby="table-${match.id}">
+      <p id="table-${match.id}" class="table-label">Taula <span class="table-number">${tableNumber}</span></p>
+      <div class="match-pairings">
+        ${renderRow(home, 'home')}
+        ${renderRow(away, 'away')}
       </div>
-      ${renderPairCard(away, round, match, 'awayId', true)}
-      <div class="match-footer"><p data-match-message class="field-message ${issue && editable ? 'field-message--error' : ''}">${editable ? (message ?? 'Escriu dos marcadors diferents per confirmar.') : 'Ronda tancada: resultat només de consulta.'}</p>
-      <button class="button button--small" type="button" data-action="confirm-match" data-match-id="${match.id}" ${!editable || issue ? 'disabled' : ''}>${match.result ? 'Resultat confirmat' : 'Confirma el resultat'}</button></div>
+      <button class="score-confirm ${match.result ? 'score-confirm--confirmed' : ''}" type="button" data-action="confirm-match" data-match-id="${match.id}" aria-label="${confirmLabel} de la taula ${tableNumber}" title="${confirmLabel}" ${!editable || issue || match.result ? 'disabled' : ''}><span aria-hidden="true">✓</span></button>
+      <p id="${messageId}" data-match-message class="match-issue field-message field-message--error" role="status" ${visibleIssue ? '' : 'hidden'}>${escapeHtml(visibleIssue ?? '')}</p>
+      <div class="repeat-match-details" data-repeat-match="${match.id}">${renderRepeatDetails(match, round, latest, analysis)}</div>
     </article>`;
   }
 
@@ -961,7 +961,7 @@ export function mountTournament(root: HTMLElement): void {
     if (!selected) return '';
     const latest = currentRound();
     const analysis = analyzePairingRepeats(state.rounds, selected.number);
-        const editable = selected.number === latest?.number;
+    const editable = selected.number === latest?.number;
     const complete = latest && allResultsConfirmed(latest);
     const tournamentComplete = state.rounds.length === configuredRounds() && complete;
     const standings = getStandings(state.pairs, state.rounds);
@@ -970,14 +970,14 @@ export function mountTournament(root: HTMLElement): void {
         <div class="round-nav" aria-label="Historial de rondes">
           ${state.rounds.map((round) => `<button type="button" data-action="select-round" data-round="${round.number}" class="round-tab ${round.number === selected.number ? 'round-tab--active' : ''}">Ronda ${round.number}</button>`).join('')}
         </div>
-        <div class="round-heading"><div><p class="eyebrow">${selected.number === latest?.number ? 'Ronda actual' : 'Historial'}</p><h1>Ronda ${selected.number}</h1></div><div class="round-heading__actions"><button class="button button--small" type="button" data-action="view-pairings" aria-label="Veure els emparellaments de la ronda ${selected.number}">Veure emparellaments</button><p class="round-note">${editable ? 'Pots editar els resultats confirmats abans de generar la ronda següent.' : 'Aquesta ronda és de consulta per preservar els emparellaments posteriors.'}</p>${selected.manuallyAdjusted ? '<p class="manual-adjustment">Emparellaments ajustats manualment.</p>' : ''}</div></div>
+        <div class="round-heading"><div><p class="eyebrow">${editable ? 'Ronda actual' : 'Historial · Només lectura'}</p><h1>Ronda ${selected.number}</h1></div><div class="round-heading__actions"><button class="button button--small" type="button" data-action="view-pairings" aria-label="Veure els emparellaments de la ronda ${selected.number}">Veure emparellaments</button>${selected.manuallyAdjusted ? '<p class="manual-adjustment">Emparellaments ajustats manualment.</p>' : ''}</div></div>
         ${selectedSwap ? '<div class="swap-status" data-swap-status role="status">Parella seleccionada: tria una altra parella per intercanviar-la.<button class="text-button" type="button" data-action="cancel-swap">Cancel·la</button></div>' : ''}
         <section class="repeat-alert" data-repeat-alert data-repeat-alert-signature="${escapeHtml(repeatAlertSignature(selected, latest, analysis))}" aria-label="Avisos d’enfrontaments repetits" ${analysis.repeats.length ? '' : 'hidden'}>${renderRepeatAlert(selected, latest, analysis)}</section>
             <div class="matches">${selected.matches.map((match, index) => renderMatch(match, selected, editable, index + 1, analysis, latest)).join('')}</div>
         ${selected.number === latest?.number ? `<div class="round-action card ${complete ? 'round-action--ready' : ''}">${complete
           ? tournamentComplete
             ? '<div><strong>Campionat complet</strong><p>Classificació final calculada amb victòries, punts i ordre d’inscripció com a últim criteri estable.</p></div>'
-            : '<div><strong>Ronda completa</strong><p>Ja pots crear els emparellaments següents. Les parelles es poden tornar a trobar.</p></div><button class="button" type="button" data-action="next-round">Genera la ronda ${latest.number + 1}</button>'
+            : `<div><strong>Ronda completa</strong><p>Ja pots crear els emparellaments següents. Les parelles es poden tornar a trobar.</p></div><button class="button" type="button" data-action="next-round">Genera la ronda ${latest.number + 1}</button>`
           : '<div><strong>Resultats pendents</strong><p>Confirma cada partida amb dos punts enters, no negatius i diferents.</p></div>'}</div>` : ''}
       </section>
       <div class="secondary-column">
@@ -1072,7 +1072,7 @@ export function mountTournament(root: HTMLElement): void {
       }
       if (action === 'cancel-swap') {
         clearSwapSelection();
-        notice = 'Selecció d’intercanvi cancel·lada.';
+        notice = '';
         syncSwapSelection();
         paintNotice();
       }
