@@ -94,7 +94,16 @@ h2 { margin-bottom: .3rem; font-size: 1.6rem; }
 .pairing-viewer:fullscreen .pairing-poster-scroll, .pairing-viewer--fullscreen .pairing-poster-scroll { height: auto; max-height: none; }
 
 
-.matches { display: grid; gap: .75rem; }
+.repeat-alert { margin: 0 0 .75rem; padding: .65rem .8rem; border: 1px solid #e2c67d; border-left: 3px solid var(--gold); border-radius: 7px; background: #fff6dd; color: var(--green); font-family: ui-sans-serif, system-ui, sans-serif; font-size: .76rem; line-height: 1.4; }
+  .repeat-alert[hidden] { display: none; }
+  .repeat-match-details { grid-column: 1 / -1; }
+  .repeat-marker, .repeat-detail, .repeat-proposal p { margin: 0; font-family: ui-sans-serif, system-ui, sans-serif; font-size: .71rem; line-height: 1.35; }
+  .repeat-marker { color: #8a6528; }
+  .repeat-detail { margin-top: .28rem; color: var(--muted); }
+  .repeat-proposal { display: grid; gap: .32rem; margin-top: .38rem; padding: .55rem .65rem; border: 1px solid #e2c67d; border-radius: 7px; background: #fffaf0; }
+  .repeat-proposal .button { width: fit-content; margin-top: .08rem; }
+  .repeat-summary-list { max-height: 7rem; margin: .4rem 0 0; padding-left: 1.1rem; overflow: auto; overscroll-behavior: contain; }
+  .matches { display: grid; gap: .75rem; }
 .match { display: grid; grid-template-columns: minmax(0, 1fr) 105px minmax(0, 1fr); gap: .5rem 1rem; align-items: center; padding: 1rem; border: 1px solid var(--line); border-left: 4px solid #d5c3a0; border-radius: 10px; background: var(--paper); }
 .table-label { grid-column: 1 / -1; margin: 0; color: var(--gold); font-family: ui-sans-serif, system-ui, sans-serif; font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
 .match--confirmed { border-left-color: #588c65; }
@@ -155,7 +164,7 @@ footer { margin-top: 3rem; color: var(--muted); font-family: ui-sans-serif, syst
   .team--away .team__actions { justify-content: flex-start; }
   .team--away .pair-history { right: auto; left: 0; }
   .swap-status { align-items: flex-start; flex-direction: column; }
-  .swap-status .text-button { width: fit-content; }
+  .swap-status .text-button, .repeat-proposal .button { width: fit-content; }
   .pairing-dialog { width: calc(100vw - .75rem); max-height: calc(100dvh - .75rem); padding: .8rem; }
   .pairing-viewer__header h2 { font-size: 1.3rem; }
   .pairing-viewer__header { align-items: flex-start; flex-direction: column; }

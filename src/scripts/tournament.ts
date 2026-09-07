@@ -5,6 +5,12 @@ import {
   pairingPosterLayoutForViewport,
 } from '../lib/pairing-poster';
 import {
+  analyzePairingRepeats,
+  isRepeatProposalApplicable,
+  type RepeatAnalysis,
+  type RepeatProposal,
+} from '../lib/pairing-repeats';
+import {
   allResultsConfirmed,
   createPairs,
   getStandings,
@@ -379,6 +385,36 @@ export function mountTournament(root: HTMLElement): void {
     update();
   }
 
+  function repeatProposalIdentity(proposal: RepeatProposal): string {
+    return JSON.stringify(proposal);
+  }
+
+  function applyRepeatProposal(displayedIdentity: string): void {
+    const latest = currentRound();
+    if (!latest || state.selectedRound !== latest.number) {
+      notice = 'Aquesta proposta ja no correspon a la ronda actual. Revisa les taules.';
+      render();
+      return;
+    }
+    const fresh = analyzePairingRepeats(state.rounds, latest.number);
+    const proposal = fresh.proposals.find((candidate) => repeatProposalIdentity(candidate) === displayedIdentity);
+    if (!proposal) {
+      notice = 'Aquesta proposta ha quedat obsoleta. Revisa els suggeriments actualitzats.';
+      render();
+      return;
+    }
+    if (!isRepeatProposalApplicable(state.rounds, proposal) ||
+      !swapPairPositions(latest, proposal.firstPosition, proposal.secondPosition)) {
+      notice = 'La proposta ja no coincideix amb l’estat actual de les dues taules. No s’ha aplicat cap canvi.';
+      render();
+      return;
+    }
+    latest.manuallyAdjusted = true;
+    clearSwapSelection();
+    notice = 'Canvi segur aplicat.';
+    update();
+  }
+
   function configuredRounds(): number {
     if (state.setup.rounds === undefined) throw new Error('Started tournament is missing its round count');
     return state.setup.rounds;
@@ -456,6 +492,7 @@ export function mountTournament(root: HTMLElement): void {
     }
 
     saveDraft();
+    refreshRepeatWarnings();
     const card = root.querySelector<HTMLElement>(`.match:has([data-match-id="${matchId}"])`);
     const message = card?.querySelector<HTMLElement>('[data-match-message]');
     const button = card?.querySelector<HTMLButtonElement>('[data-action="confirm-match"]');
@@ -816,7 +853,86 @@ export function mountTournament(root: HTMLElement): void {
     </div>`;
   }
 
-  function renderMatch(match: Match, round: Round, editable: boolean, tableNumber: number): string {
+  function repeatMatchup(homeId: string, awayId: string): string {
+    return `P${pairFor(homeId).number} — P${pairFor(awayId).number}`;
+  }
+
+  function repeatAlertIsLocked(round: Round, analysis: RepeatAnalysis): boolean {
+    return analysis.repeats.some((repeat) => {
+      const match = round.matches.find((item) => item.id === repeat.matchId);
+      return match && (match.result !== null || match.draft.home !== '' || match.draft.away !== '');
+    });
+  }
+
+  function repeatAlertSignature(round: Round, latest: Round | undefined, analysis: RepeatAnalysis): string {
+    return JSON.stringify({
+      current: round.number === latest?.number,
+      repeats: analysis.repeats,
+    });
+  }
+
+  function repeatAlertStatus(round: Round, latest: Round | undefined, analysis: RepeatAnalysis): string {
+    const current = round.number === latest?.number;
+    const locked = repeatAlertIsLocked(round, analysis);
+    return `Consulta les marques de cada taula.${!current ? ' Aquesta ronda és històrica i no es pot modificar.' : locked ? ' Les taules amb resultat confirmat o marcadors escrits només mostren l’avís.' : ''}`;
+  }
+
+  function renderRepeatAlert(round: Round, latest: Round | undefined, analysis: RepeatAnalysis): string {
+    if (!analysis.repeats.length) return '';
+    const count = analysis.repeats.length;
+    const summary = analysis.repeats.map((repeat) => {
+      const home = pairFor(repeat.homeId);
+      const away = pairFor(repeat.awayId);
+      return `<li>Taula ${escapeHtml(String(repeat.tableNumber))} · Parella ${escapeHtml(String(home.number))}–${escapeHtml(String(away.number))} · Rondes ${repeat.priorRoundNumbers.map((number) => escapeHtml(String(number))).join(', ')}</li>`;
+    }).join('');
+    return `<strong>${count === 1 ? 'Hi ha un enfrontament repetit' : `Hi ha ${count} enfrontaments repetits`} en aquesta ronda.</strong> <span data-repeat-alert-status>${escapeHtml(repeatAlertStatus(round, latest, analysis))}</span><ul class="repeat-summary-list" aria-label="Resum dels enfrontaments repetits">${summary}</ul>`;
+  }
+
+  function renderRepeatDetails(match: Match, round: Round, latest: Round | undefined, analysis: RepeatAnalysis): string {
+    const repeat = analysis.repeats.find((item) => item.matchId === match.id);
+    if (!repeat) return '';
+    const rounds = repeat.priorRoundNumbers.map((number) => `R${number}`).join(', ');
+    const marker = `<p class="repeat-marker"><strong>Repetició:</strong> ${repeatMatchup(repeat.homeId, repeat.awayId)} · abans a ${rounds}.</p>`;
+    if (round.number !== latest?.number) return `${marker}<p class="repeat-detail">Aquesta ronda és històrica i no es pot modificar.</p>`;
+    if (match.result !== null || match.draft.home !== '' || match.draft.away !== '') {
+      return `${marker}<p class="repeat-detail">Aquesta taula té un resultat o marcadors escrits; no es pot canviar.</p>`;
+    }
+    const proposal = analysis.proposals.find((item) => item.targetMatchId === match.id);
+    if (!proposal) {
+      return `${marker}<p class="repeat-detail">No s’ha trobat cap intercanvi segur entre dues taules sense resultat ni marcadors escrits.</p>`;
+    }
+    const firstPair = pairFor(proposal.before[0][proposal.firstPosition.side]);
+    const secondPair = pairFor(proposal.before[1][proposal.secondPosition.side]);
+    const proposalIdentity = escapeHtml(repeatProposalIdentity(proposal));
+    return `${marker}<div class="repeat-proposal"><p><strong>Proposta segura:</strong> intercanvia P${firstPair.number} de la taula ${proposal.before[0].tableNumber} amb P${secondPair.number} de la taula ${proposal.before[1].tableNumber}.</p><p>Quedarien: T${proposal.after[0].tableNumber} ${repeatMatchup(proposal.after[0].homeId, proposal.after[0].awayId)} i T${proposal.after[1].tableNumber} ${repeatMatchup(proposal.after[1].homeId, proposal.after[1].awayId)}.</p><button class="button button--small" type="button" data-repeat-proposal="${proposalIdentity}">Aplica el canvi</button></div>`;
+  }
+
+  function refreshRepeatWarnings(): void {
+    const selected = state.rounds.find((round) => round.number === state.selectedRound) ?? currentRound();
+    if (!selected) return;
+    const latest = currentRound();
+    const analysis = analyzePairingRepeats(state.rounds, selected.number);
+    const alert = root.querySelector<HTMLElement>('[data-repeat-alert]');
+    const alertSignature = repeatAlertSignature(selected, latest, analysis);
+    if (alert) {
+      alert.hidden = analysis.repeats.length === 0;
+      if (alert.dataset.repeatAlertSignature !== alertSignature) {
+        alert.dataset.repeatAlertSignature = alertSignature;
+        alert.innerHTML = renderRepeatAlert(selected, latest, analysis);
+      } else {
+        const status = alert.querySelector<HTMLElement>('[data-repeat-alert-status]');
+        const statusText = repeatAlertStatus(selected, latest, analysis);
+        if (status && status.textContent !== statusText) status.textContent = statusText;
+      }
+    }
+    root.querySelectorAll<HTMLElement>('[data-repeat-match]').forEach((region) => {
+      const match = selected.matches.find((item) => item.id === region.dataset.repeatMatch);
+      if (match) region.innerHTML = renderRepeatDetails(match, selected, latest, analysis);
+    });
+    bindRepeatProposalButtons();
+  }
+
+      function renderMatch(match: Match, round: Round, editable: boolean, tableNumber: number, analysis: RepeatAnalysis, latest: Round | undefined): string {
     const home = pairFor(match.homeId);
     const away = pairFor(match.awayId);
     const homeLabel = pairLabel(home);
@@ -827,6 +943,7 @@ export function mountTournament(root: HTMLElement): void {
       : issue;
     return `<article class="match ${match.result ? 'match--confirmed' : ''}">
       <p class="table-label">Taula ${tableNumber}</p>
+          <div class="repeat-match-details" data-repeat-match="${match.id}">${renderRepeatDetails(match, round, latest, analysis)}</div>
       ${renderPairCard(home, round, match, 'homeId')}
       <div class="score-entry">
         <label><span class="sr-only">Punts de ${escapeHtml(homeLabel)}</span><input data-match-id="${match.id}" data-score="home" value="${escapeHtml(match.draft.home)}" ${editable ? '' : 'disabled'} inputmode="numeric" aria-label="Punts de ${escapeHtml(homeLabel)}"></label>
@@ -843,7 +960,8 @@ export function mountTournament(root: HTMLElement): void {
     const selected = state.rounds.find((round) => round.number === state.selectedRound) ?? currentRound();
     if (!selected) return '';
     const latest = currentRound();
-    const editable = selected.number === latest?.number;
+    const analysis = analyzePairingRepeats(state.rounds, selected.number);
+        const editable = selected.number === latest?.number;
     const complete = latest && allResultsConfirmed(latest);
     const tournamentComplete = state.rounds.length === configuredRounds() && complete;
     const standings = getStandings(state.pairs, state.rounds);
@@ -854,7 +972,8 @@ export function mountTournament(root: HTMLElement): void {
         </div>
         <div class="round-heading"><div><p class="eyebrow">${selected.number === latest?.number ? 'Ronda actual' : 'Historial'}</p><h1>Ronda ${selected.number}</h1></div><div class="round-heading__actions"><button class="button button--small" type="button" data-action="view-pairings" aria-label="Veure els emparellaments de la ronda ${selected.number}">Veure emparellaments</button><p class="round-note">${editable ? 'Pots editar els resultats confirmats abans de generar la ronda següent.' : 'Aquesta ronda és de consulta per preservar els emparellaments posteriors.'}</p>${selected.manuallyAdjusted ? '<p class="manual-adjustment">Emparellaments ajustats manualment.</p>' : ''}</div></div>
         ${selectedSwap ? '<div class="swap-status" data-swap-status role="status">Parella seleccionada: tria una altra parella per intercanviar-la.<button class="text-button" type="button" data-action="cancel-swap">Cancel·la</button></div>' : ''}
-        <div class="matches">${selected.matches.map((match, index) => renderMatch(match, selected, editable, index + 1)).join('')}</div>
+        <section class="repeat-alert" data-repeat-alert data-repeat-alert-signature="${escapeHtml(repeatAlertSignature(selected, latest, analysis))}" aria-label="Avisos d’enfrontaments repetits" ${analysis.repeats.length ? '' : 'hidden'}>${renderRepeatAlert(selected, latest, analysis)}</section>
+            <div class="matches">${selected.matches.map((match, index) => renderMatch(match, selected, editable, index + 1, analysis, latest)).join('')}</div>
         ${selected.number === latest?.number ? `<div class="round-action card ${complete ? 'round-action--ready' : ''}">${complete
           ? tournamentComplete
             ? '<div><strong>Campionat complet</strong><p>Classificació final calculada amb victòries, punts i ordre d’inscripció com a últim criteri estable.</p></div>'
@@ -881,9 +1000,17 @@ export function mountTournament(root: HTMLElement): void {
       <footer>Les dades es desen només en aquest navegador. Cap compte, cap servidor.</footer>
     </div>`;
     bindEvents();
+        bindRepeatProposalButtons();
   }
 
-  function bindEvents(): void {
+  function bindRepeatProposalButtons(): void {
+        root.querySelectorAll<HTMLButtonElement>('[data-repeat-proposal]').forEach((button) => button.addEventListener('click', () => {
+          const displayedIdentity = button.dataset.repeatProposal;
+          if (displayedIdentity) applyRepeatProposal(displayedIdentity);
+        }));
+      }
+
+      function bindEvents(): void {
     root.querySelector('.setup-form')?.addEventListener('submit', (event) => {
       event.preventDefault();
       startTournament();
