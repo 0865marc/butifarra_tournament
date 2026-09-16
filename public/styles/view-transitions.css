@@ -1,0 +1,42 @@
+/* Native page transitions preserve full-page navigation and script lifecycles. */
+@view-transition {
+  navigation: auto;
+}
+
+[data-transition-brand] {
+  view-transition-name: butipunt-brand;
+}
+
+::view-transition-old(root) {
+  animation: butipunt-page-out 160ms ease-out both;
+}
+
+::view-transition-new(root) {
+  animation: butipunt-page-in 240ms ease-out both;
+}
+
+::view-transition-group(butipunt-brand) {
+  animation-duration: 240ms;
+  animation-timing-function: ease-out;
+}
+
+@keyframes butipunt-page-out {
+  to { opacity: 0; }
+}
+
+@keyframes butipunt-page-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

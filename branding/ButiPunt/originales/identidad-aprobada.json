@@ -1,0 +1,75 @@
+{
+  "brandbookElements": [],
+  "essentialKitApproved": true,
+  "logo": {
+    "approvalSummary": "El usuario eligió «1.» en la revisión de tres símbolos, aprobando Punt propi para ButiPunt. Se conserva el SVG original de Recraft y la paleta ya aprobada.",
+    "asset": {
+      "id": "435a4461-59ba-4f86-8cc4-6ed407ae60ab",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/hf_20260908_132939_435a4461-59ba-4f86-8cc4-6ed407ae60ab.svg"
+    },
+    "geometryFingerprint": "d22c8a621d75ea8a058fef049c0cfc546850de4e0634f981781f6036cc0ce477",
+    "name": "ButiPunt · Punt propi",
+    "origin": "brandkit_generated",
+    "revision": 1
+  },
+  "palette": {
+    "approvalSummary": "El usuario seleccionó la propuesta 01, ButiPunt, con el mensaje «ButiPunt claramente» tras la revisión de nombre y paleta. Se aprueban los cinco colores exactos de esa propuesta.",
+    "colors": [
+      {
+        "hex": "#f8f3e8",
+        "name": "Papel",
+        "role": "background"
+      },
+      {
+        "hex": "#182d29",
+        "name": "Tinta",
+        "role": "text"
+      },
+      {
+        "hex": "#245748",
+        "name": "Tapete",
+        "role": "primary"
+      },
+      {
+        "hex": "#d7684f",
+        "name": "Coral",
+        "role": "accent"
+      },
+      {
+        "hex": "#ddcba8",
+        "name": "Arena",
+        "role": "support"
+      }
+    ],
+    "gradients": [],
+    "origin": "brandkit_generated",
+    "revision": 1
+  },
+  "typography": {
+    "approvalSummary": "El usuario eligió la opción tipográfica 2 con «creo que me gusta mas el 2». Se aprueban Fraunces 700 para titulares y nombre y Source Sans 3 400 para cuerpo, conservando el símbolo y la paleta aprobados.",
+    "body": {
+      "family": "Source Sans 3",
+      "source": "google:Source Sans 3",
+      "style": "normal",
+      "weight": 400
+    },
+    "display": {
+      "family": "Fraunces",
+      "source": "google:Fraunces",
+      "style": "normal",
+      "weight": 700
+    },
+    "fontLinks": [
+      "https://fonts.google.com/specimen/Fraunces",
+      "https://fonts.google.com/specimen/Source+Sans+3"
+    ],
+    "origin": "brandkit_generated",
+    "revision": 1
+  },
+  "version": 4,
+  "visualAxes": {
+    "familiarExperimental": 50,
+    "geometricOrganic": 50,
+    "restrainedExpressive": 50
+  }
+}

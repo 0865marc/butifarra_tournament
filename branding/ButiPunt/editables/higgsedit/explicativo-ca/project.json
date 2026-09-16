@@ -1,0 +1,857 @@
+{
+  "id": "1831cf49-4570-4240-9636-01d77c460432",
+  "name": "explicativo-ca",
+  "schemaVersion": 2,
+  "scenes": [
+    {
+      "id": "46680d20-7499-437c-8f4d-46fa5e4b5b45",
+      "name": "New Scene",
+      "x": 0,
+      "y": 0,
+      "width": 1920,
+      "height": 1080,
+      "background": { "type": "solid", "color": "#F8F3E8" },
+      "fps": 30,
+      "duration": 30,
+      "tracks": [
+        {
+          "id": "129a74fd-8b18-4b67-9b71-cc83d9a866d5",
+          "name": "Track 1",
+          "mode": "default",
+          "clips": [
+            {
+              "id": "9a9f3556-592c-43e8-9d87-b3897396fe97",
+              "kind": "media",
+              "name": "explicativo-ca-scene-1",
+              "assetId": "d62b7bbe-fd3f-38d6-8aa5-20d1072cae3b",
+              "timeRange": { "start": 0, "duration": 5 },
+              "trim": { "start": 0, "end": 5 },
+              "speed": 1,
+              "transform": {
+                "x": 0,
+                "y": 0,
+                "scaleX": 1,
+                "scaleY": 1,
+                "rotation": 0,
+                "anchorX": 0,
+                "anchorY": 0,
+                "flipX": false,
+                "flipY": false,
+                "skewX": 0,
+                "skewY": 0
+              },
+              "size": { "width": 1920, "height": 1080 },
+              "opacity": 1,
+              "blendMode": "normal",
+              "volume": 1,
+              "muted": true,
+              "cornerRadius": { "bl": 0, "br": 0, "mixed": false, "tl": 0, "tr": 0, "uniform": 0 },
+              "effects": [],
+              "animations": [
+                {
+                  "property": "offsetY",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 28,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.16, "x2": 0.3, "y1": 1, "y2": 1 },
+                      "id": "82c7dde2-456a-4ecf-a07d-9adad8fecb12"
+                    },
+                    {
+                      "time": 0.55,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "f0b3a0b7-7967-4c7d-a47e-bde3b37fe800"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "56bc5011-029c-44da-837b-d00b775a14fc"
+                },
+                {
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 0,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "513c7a8d-73d2-4cc3-b2ca-e43c3a6d881a"
+                    },
+                    {
+                      "time": 0.3,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "837e34ab-e885-4a50-aef8-cec610fcbfe1"
+                    },
+                    {
+                      "time": 4.8,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "295adac3-a104-4efd-afe6-b02da5115532"
+                    },
+                    {
+                      "time": 5,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "baa0e314-6883-4faa-8f2b-f1ee1dc70917"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "a6ce9020-9534-4e90-a2ad-fee6db382e56"
+                }
+              ],
+              "presetAnimations": [],
+              "mask": null,
+              "locked": false,
+              "hidden": false,
+              "origin": { "column": 15, "file": "motion.js", "line": 16 },
+              "preservePitch": true
+            },
+            {
+              "id": "dc0e4b11-d8d4-4e90-b963-4912d0cdfcd2",
+              "kind": "media",
+              "name": "explicativo-ca-scene-2",
+              "assetId": "4ff5ab47-ea4f-7f35-7942-101ca13de7ed",
+              "timeRange": { "start": 5, "duration": 5 },
+              "trim": { "start": 0, "end": 5 },
+              "speed": 1,
+              "transform": {
+                "x": 0,
+                "y": 0,
+                "scaleX": 1,
+                "scaleY": 1,
+                "rotation": 0,
+                "anchorX": 0,
+                "anchorY": 0,
+                "flipX": false,
+                "flipY": false,
+                "skewX": 0,
+                "skewY": 0
+              },
+              "size": { "width": 1920, "height": 1080 },
+              "opacity": 1,
+              "blendMode": "normal",
+              "volume": 1,
+              "muted": true,
+              "cornerRadius": { "bl": 0, "br": 0, "mixed": false, "tl": 0, "tr": 0, "uniform": 0 },
+              "effects": [],
+              "animations": [
+                {
+                  "property": "offsetY",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 28,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.16, "x2": 0.3, "y1": 1, "y2": 1 },
+                      "id": "9fe061bc-6e39-4c55-9da0-cc6c6d27d834"
+                    },
+                    {
+                      "time": 0.55,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "f5cf8482-d29a-47ce-96b9-564dc1141bde"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "6181d45c-f8b1-4fbe-baa4-07d3b00e4b37"
+                },
+                {
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 0,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "856b24e8-b28c-4f8a-9cc1-ff91dff00a56"
+                    },
+                    {
+                      "time": 0.3,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "0daf3cb7-4699-4030-a1cc-502d99581e60"
+                    },
+                    {
+                      "time": 4.8,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "e97720bb-5365-4287-b0a2-a3b682844bc3"
+                    },
+                    {
+                      "time": 5,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "1e13c160-29e0-4632-929f-ec4fea50bf0d"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "cc859d1b-e462-4b85-80e2-28cf6db83647"
+                }
+              ],
+              "presetAnimations": [],
+              "mask": null,
+              "locked": false,
+              "hidden": false,
+              "origin": { "column": 15, "file": "motion.js", "line": 16 },
+              "preservePitch": true
+            },
+            {
+              "id": "0c1c0c95-9b5d-4700-a0a8-ee5a0386fbef",
+              "kind": "media",
+              "name": "explicativo-ca-scene-3",
+              "assetId": "b8594189-e40e-6c24-92b4-4ce5f64f810a",
+              "timeRange": { "start": 10, "duration": 5 },
+              "trim": { "start": 0, "end": 5 },
+              "speed": 1,
+              "transform": {
+                "x": 0,
+                "y": 0,
+                "scaleX": 1,
+                "scaleY": 1,
+                "rotation": 0,
+                "anchorX": 0,
+                "anchorY": 0,
+                "flipX": false,
+                "flipY": false,
+                "skewX": 0,
+                "skewY": 0
+              },
+              "size": { "width": 1920, "height": 1080 },
+              "opacity": 1,
+              "blendMode": "normal",
+              "volume": 1,
+              "muted": true,
+              "cornerRadius": { "bl": 0, "br": 0, "mixed": false, "tl": 0, "tr": 0, "uniform": 0 },
+              "effects": [],
+              "animations": [
+                {
+                  "property": "offsetY",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 28,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.16, "x2": 0.3, "y1": 1, "y2": 1 },
+                      "id": "c670482b-91aa-4fcb-9118-78212f9ccd13"
+                    },
+                    {
+                      "time": 0.55,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "2ce1b8b2-8374-4251-8076-8f87f1581b24"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "fa3e8bcf-1d53-40b6-9759-c33a4627bf89"
+                },
+                {
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 0,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "dcfa86d5-4f02-4292-87dd-08856633035e"
+                    },
+                    {
+                      "time": 0.3,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "fae670b6-b71d-4917-a977-2897ed35e347"
+                    },
+                    {
+                      "time": 4.8,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "475ebfc1-33f4-4c2a-8569-099c6e4e0509"
+                    },
+                    {
+                      "time": 5,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "f8b76816-593e-4918-afeb-554504c0208d"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "a5817b05-7099-4448-9d7d-74d0741ad730"
+                }
+              ],
+              "presetAnimations": [],
+              "mask": null,
+              "locked": false,
+              "hidden": false,
+              "origin": { "column": 15, "file": "motion.js", "line": 16 },
+              "preservePitch": true
+            },
+            {
+              "id": "d6200ec6-f3f9-4659-be70-d2e95915f5a2",
+              "kind": "media",
+              "name": "explicativo-ca-scene-4",
+              "assetId": "29a264d7-7eef-528e-eee9-93a6e1f00a00",
+              "timeRange": { "start": 15, "duration": 5 },
+              "trim": { "start": 0, "end": 5 },
+              "speed": 1,
+              "transform": {
+                "x": 0,
+                "y": 0,
+                "scaleX": 1,
+                "scaleY": 1,
+                "rotation": 0,
+                "anchorX": 0,
+                "anchorY": 0,
+                "flipX": false,
+                "flipY": false,
+                "skewX": 0,
+                "skewY": 0
+              },
+              "size": { "width": 1920, "height": 1080 },
+              "opacity": 1,
+              "blendMode": "normal",
+              "volume": 1,
+              "muted": true,
+              "cornerRadius": { "bl": 0, "br": 0, "mixed": false, "tl": 0, "tr": 0, "uniform": 0 },
+              "effects": [],
+              "animations": [
+                {
+                  "property": "offsetY",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 28,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.16, "x2": 0.3, "y1": 1, "y2": 1 },
+                      "id": "941b93d4-b42b-442e-9cd6-0f35722fd1af"
+                    },
+                    {
+                      "time": 0.55,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "7af96f1b-90aa-4863-99b5-1695d6a1651c"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "263efc25-3990-4387-9b5b-0fe550007be6"
+                },
+                {
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 0,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "92c94b67-2942-49c5-872a-a04bf1fc897b"
+                    },
+                    {
+                      "time": 0.3,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "119d8f37-eb26-4b4e-a4cd-1f6d75e28c35"
+                    },
+                    {
+                      "time": 4.8,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "146860aa-020e-49e1-bf55-749be9144150"
+                    },
+                    {
+                      "time": 5,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "23c001e6-d1a0-4dbf-8e31-81bf52b7a3f4"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "53ef7f3c-2402-4f6b-9ae0-309dff9df83f"
+                }
+              ],
+              "presetAnimations": [],
+              "mask": null,
+              "locked": false,
+              "hidden": false,
+              "origin": { "column": 15, "file": "motion.js", "line": 16 },
+              "preservePitch": true
+            },
+            {
+              "id": "cd411d65-066c-4adb-90f8-895d6669b52c",
+              "kind": "media",
+              "name": "explicativo-ca-scene-5",
+              "assetId": "18741321-b393-53e7-5f78-8e249687e78c",
+              "timeRange": { "start": 20, "duration": 5 },
+              "trim": { "start": 0, "end": 5 },
+              "speed": 1,
+              "transform": {
+                "x": 0,
+                "y": 0,
+                "scaleX": 1,
+                "scaleY": 1,
+                "rotation": 0,
+                "anchorX": 0,
+                "anchorY": 0,
+                "flipX": false,
+                "flipY": false,
+                "skewX": 0,
+                "skewY": 0
+              },
+              "size": { "width": 1920, "height": 1080 },
+              "opacity": 1,
+              "blendMode": "normal",
+              "volume": 1,
+              "muted": true,
+              "cornerRadius": { "bl": 0, "br": 0, "mixed": false, "tl": 0, "tr": 0, "uniform": 0 },
+              "effects": [],
+              "animations": [
+                {
+                  "property": "offsetY",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 28,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.16, "x2": 0.3, "y1": 1, "y2": 1 },
+                      "id": "8caae345-53d7-46c4-a6bc-d4403dc3917b"
+                    },
+                    {
+                      "time": 0.55,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "c6dde8bb-4d4c-4f6b-a74c-8ca32378c549"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "a4a69d5e-cd61-4a32-97ea-8ae2085a4dd5"
+                },
+                {
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 0,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "ce74213b-e411-453d-a9cf-abd796edd17a"
+                    },
+                    {
+                      "time": 0.3,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "4dc4219f-f77a-4ca9-b7be-0df849b7c4d4"
+                    },
+                    {
+                      "time": 4.8,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "15615f5c-039a-442f-80ae-1beb43d9b069"
+                    },
+                    {
+                      "time": 5,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "9f461ea5-b032-42fe-bb55-58622cdcdb53"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "7c5ed0fb-06af-44c6-8e30-54519eeb6418"
+                }
+              ],
+              "presetAnimations": [],
+              "mask": null,
+              "locked": false,
+              "hidden": false,
+              "origin": { "column": 15, "file": "motion.js", "line": 16 },
+              "preservePitch": true
+            },
+            {
+              "id": "7bdbe41d-38fa-42ab-8bb4-0244e7c6515b",
+              "kind": "media",
+              "name": "explicativo-ca-scene-6",
+              "assetId": "7bd12268-35af-0682-a7a3-6e2be27c29cc",
+              "timeRange": { "start": 25, "duration": 5 },
+              "trim": { "start": 0, "end": 5 },
+              "speed": 1,
+              "transform": {
+                "x": 0,
+                "y": 0,
+                "scaleX": 1,
+                "scaleY": 1,
+                "rotation": 0,
+                "anchorX": 0,
+                "anchorY": 0,
+                "flipX": false,
+                "flipY": false,
+                "skewX": 0,
+                "skewY": 0
+              },
+              "size": { "width": 1920, "height": 1080 },
+              "opacity": 1,
+              "blendMode": "normal",
+              "volume": 1,
+              "muted": true,
+              "cornerRadius": { "bl": 0, "br": 0, "mixed": false, "tl": 0, "tr": 0, "uniform": 0 },
+              "effects": [],
+              "animations": [
+                {
+                  "property": "offsetY",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 28,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.16, "x2": 0.3, "y1": 1, "y2": 1 },
+                      "id": "76d77eb7-c211-499c-b15c-9e24fefe55a9"
+                    },
+                    {
+                      "time": 0.55,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "81c54264-0cb5-48b5-ae07-c08225f854b0"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "045d36b3-714d-41ec-b974-5ea224fbcbf0"
+                },
+                {
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 0,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "6bf342c5-0054-4242-b242-8cd9aae2101f"
+                    },
+                    {
+                      "time": 0.3,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "87e8e014-7f3b-4321-83d4-5bb27b3f8567"
+                    },
+                    {
+                      "time": 4.8,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "8589b1e9-7418-4980-b7f4-3856bce5ab1e"
+                    },
+                    {
+                      "time": 5,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "d70bf573-aea0-4cd3-a555-cbaf6375c322"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "359c23b6-06c7-4171-ada3-cd117d8710df"
+                }
+              ],
+              "presetAnimations": [],
+              "mask": null,
+              "locked": false,
+              "hidden": false,
+              "origin": { "column": 15, "file": "motion.js", "line": 16 },
+              "preservePitch": true
+            }
+          ],
+          "locked": false,
+          "hidden": false,
+          "muted": false,
+          "solo": false,
+          "volume": 1
+        },
+        {
+          "id": "d1bb2010-57d9-4dfc-aac3-0d94b7c7bf03",
+          "name": "Track 2",
+          "mode": "default",
+          "clips": [
+            {
+              "id": "12df85ff-1556-412e-8cf8-888f8a392bad",
+              "kind": "group",
+              "name": "brand-point-progress",
+              "timeRange": { "start": 0, "duration": 30 },
+              "transform": {
+                "x": 0,
+                "y": 0,
+                "scaleX": 1,
+                "scaleY": 1,
+                "rotation": 0,
+                "anchorX": 0,
+                "anchorY": 0,
+                "flipX": false,
+                "flipY": false,
+                "skewX": 0,
+                "skewY": 0
+              },
+              "size": { "width": 1920, "height": 1080 },
+              "opacity": 1,
+              "blendMode": "normal",
+              "effects": [],
+              "animations": [],
+              "presetAnimations": [],
+              "mask": null,
+              "locked": false,
+              "hidden": false,
+              "children": [
+                {
+                  "id": "504b240f-77cc-45e7-9088-f1ddc0d33fce",
+                  "kind": "rect",
+                  "name": "Rect",
+                  "timeRange": { "start": 0, "duration": 30 },
+                  "transform": {
+                    "x": 110,
+                    "y": 1024,
+                    "scaleX": 1,
+                    "scaleY": 1,
+                    "rotation": 0,
+                    "anchorX": 0,
+                    "anchorY": 0,
+                    "flipX": false,
+                    "flipY": false,
+                    "skewX": 0,
+                    "skewY": 0
+                  },
+                  "size": { "width": 1700, "height": 2 },
+                  "opacity": 1,
+                  "blendMode": "normal",
+                  "fill": { "type": "solid", "color": "#DDCBA8" },
+                  "stroke": { "width": 0, "color": "#ffffff" },
+                  "cornerRadius": { "bl": 0, "br": 0, "mixed": false, "tl": 0, "tr": 0, "uniform": 0 },
+                  "effects": [],
+                  "animations": [],
+                  "presetAnimations": [],
+                  "mask": null,
+                  "locked": false,
+                  "hidden": false,
+                  "origin": { "column": 5, "file": "motion.js", "line": 24 }
+                },
+                {
+                  "id": "a15c8b71-66ad-4013-a3c1-0eda78a7a856",
+                  "kind": "rect",
+                  "name": "Rect",
+                  "timeRange": { "start": 0, "duration": 30 },
+                  "transform": {
+                    "x": 98,
+                    "y": 1014,
+                    "scaleX": 1,
+                    "scaleY": 1,
+                    "rotation": 0,
+                    "anchorX": 0,
+                    "anchorY": 0,
+                    "flipX": false,
+                    "flipY": false,
+                    "skewX": 0,
+                    "skewY": 0
+                  },
+                  "size": { "width": 24, "height": 24 },
+                  "opacity": 1,
+                  "blendMode": "normal",
+                  "fill": { "type": "solid", "color": "#D7684F" },
+                  "stroke": { "width": 0, "color": "#ffffff" },
+                  "cornerRadius": { "bl": 12, "br": 12, "mixed": false, "tl": 12, "tr": 12, "uniform": 12 },
+                  "effects": [],
+                  "animations": [
+                    {
+                      "property": "offsetX",
+                      "keyframes": [
+                        {
+                          "time": 0,
+                          "value": 0,
+                          "easing": { "kind": "linear" },
+                          "id": "a453bb7a-b10a-4c7a-87d8-cc74a6f6526e"
+                        },
+                        {
+                          "time": 30,
+                          "value": 1700,
+                          "easing": { "kind": "linear" },
+                          "id": "24b7a349-0b18-466a-9cbc-6f21e4d4f8d9"
+                        }
+                      ],
+                      "effectId": null,
+                      "effectParam": null,
+                      "gradientStopIndex": null,
+                      "id": "cb7b3b95-37e1-482b-a315-27aa33981ef9"
+                    }
+                  ],
+                  "presetAnimations": [],
+                  "mask": null,
+                  "locked": false,
+                  "hidden": false,
+                  "origin": { "column": 5, "file": "motion.js", "line": 25 }
+                }
+              ],
+              "origin": { "column": 5, "file": "motion.js", "line": 23 }
+            }
+          ],
+          "locked": false,
+          "hidden": false,
+          "muted": false,
+          "solo": false,
+          "volume": 1
+        }
+      ],
+      "markers": []
+    }
+  ],
+  "activeSceneId": "46680d20-7499-437c-8f4d-46fa5e4b5b45",
+  "assets": [
+    {
+      "id": "17f7cad5-6121-a012-4c50-e30fcfa64013",
+      "name": "explicativo-ca-00.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 101242,
+      "duration": null,
+      "width": 1920,
+      "height": 1080,
+      "uri": "fs:media/17f7cad56121a0124c50e30fcfa640137f1184a28109fc25fe03a2985406b1ff.png",
+      "hash": "17f7cad56121a0124c50e30fcfa640137f1184a28109fc25fe03a2985406b1ff"
+    },
+    {
+      "id": "79f7533c-32b8-326a-02d4-8319df6abc2e",
+      "name": "explicativo-ca-01.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 98269,
+      "duration": null,
+      "width": 1920,
+      "height": 1080,
+      "uri": "fs:media/79f7533c32b8326a02d48319df6abc2e90cdcb1b6a5cbb73a1960e2925562726.png",
+      "hash": "79f7533c32b8326a02d48319df6abc2e90cdcb1b6a5cbb73a1960e2925562726"
+    },
+    {
+      "id": "e8972fe0-61ce-83ae-01bb-f9cf53b85140",
+      "name": "explicativo-ca-02.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 108737,
+      "duration": null,
+      "width": 1920,
+      "height": 1080,
+      "uri": "fs:media/e8972fe061ce83ae01bbf9cf53b85140cb45c95d3bbd347f49d7a2ff5e747ff4.png",
+      "hash": "e8972fe061ce83ae01bbf9cf53b85140cb45c95d3bbd347f49d7a2ff5e747ff4"
+    },
+    {
+      "id": "66f369ae-554d-ff47-83bf-188cda2f8158",
+      "name": "explicativo-ca-03.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 105714,
+      "duration": null,
+      "width": 1920,
+      "height": 1080,
+      "uri": "fs:media/66f369ae554dff4783bf188cda2f815862f8f33a764ce5e7e4261768ca199a30.png",
+      "hash": "66f369ae554dff4783bf188cda2f815862f8f33a764ce5e7e4261768ca199a30"
+    },
+    {
+      "id": "0f5056bc-9ee9-ca7b-232e-cee9a331e6b0",
+      "name": "explicativo-ca-04.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 113675,
+      "duration": null,
+      "width": 1920,
+      "height": 1080,
+      "uri": "fs:media/0f5056bc9ee9ca7b232ecee9a331e6b0928c230e4a428b9fc11dd1d9ec5b89b1.png",
+      "hash": "0f5056bc9ee9ca7b232ecee9a331e6b0928c230e4a428b9fc11dd1d9ec5b89b1"
+    },
+    {
+      "id": "276b4cdd-57f3-e201-f2a1-3970276b8bda",
+      "name": "explicativo-ca-05.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 86530,
+      "duration": null,
+      "width": 1920,
+      "height": 1080,
+      "uri": "fs:media/276b4cdd57f3e201f2a13970276b8bdab3b9550d3133bec1c886deb87617a322.png",
+      "hash": "276b4cdd57f3e201f2a13970276b8bdab3b9550d3133bec1c886deb87617a322"
+    },
+    {
+      "id": "d62b7bbe-fd3f-38d6-8aa5-20d1072cae3b",
+      "name": "explicativo-ca-00.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 101735,
+      "duration": null,
+      "width": 1920,
+      "height": 1080,
+      "uri": "fs:media/d62b7bbefd3f38d68aa520d1072cae3b58fce4042ae9be79883280bb721a229a.png",
+      "hash": "d62b7bbefd3f38d68aa520d1072cae3b58fce4042ae9be79883280bb721a229a"
+    },
+    {
+      "id": "4ff5ab47-ea4f-7f35-7942-101ca13de7ed",
+      "name": "explicativo-ca-01.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 98764,
+      "duration": null,
+      "width": 1920,
+      "height": 1080,
+      "uri": "fs:media/4ff5ab47ea4f7f357942101ca13de7ed76ef8c612ec3062d05467b189c8d267a.png",
+      "hash": "4ff5ab47ea4f7f357942101ca13de7ed76ef8c612ec3062d05467b189c8d267a"
+    },
+    {
+      "id": "b8594189-e40e-6c24-92b4-4ce5f64f810a",
+      "name": "explicativo-ca-02.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 109249,
+      "duration": null,
+      "width": 1920,
+      "height": 1080,
+      "uri": "fs:media/b8594189e40e6c2492b44ce5f64f810a2878371942988feb36935277142c5527.png",
+      "hash": "b8594189e40e6c2492b44ce5f64f810a2878371942988feb36935277142c5527"
+    },
+    {
+      "id": "29a264d7-7eef-528e-eee9-93a6e1f00a00",
+      "name": "explicativo-ca-03.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 106179,
+      "duration": null,
+      "width": 1920,
+      "height": 1080,
+      "uri": "fs:media/29a264d77eef528eeee993a6e1f00a00384446a5cc520a4fdc28da7c7cb429a6.png",
+      "hash": "29a264d77eef528eeee993a6e1f00a00384446a5cc520a4fdc28da7c7cb429a6"
+    },
+    {
+      "id": "18741321-b393-53e7-5f78-8e249687e78c",
+      "name": "explicativo-ca-04.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 114284,
+      "duration": null,
+      "width": 1920,
+      "height": 1080,
+      "uri": "fs:media/18741321b39353e75f788e249687e78c2c71ee2ab91d3f37dc9f0f1b2c917bdb.png",
+      "hash": "18741321b39353e75f788e249687e78c2c71ee2ab91d3f37dc9f0f1b2c917bdb"
+    },
+    {
+      "id": "7bd12268-35af-0682-a7a3-6e2be27c29cc",
+      "name": "explicativo-ca-05.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 86899,
+      "duration": null,
+      "width": 1920,
+      "height": 1080,
+      "uri": "fs:media/7bd1226835af0682a7a36e2be27c29cc3265ab596f9f112d995a81437a0f3009.png",
+      "hash": "7bd1226835af0682a7a36e2be27c29cc3265ab596f9f112d995a81437a0f3009"
+    }
+  ],
+  "createdAt": 1789554393137,
+  "modifiedAt": 1789554894931
+}

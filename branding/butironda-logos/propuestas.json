@@ -1,0 +1,51 @@
+{
+  "name": "ButiRonda",
+  "status": "logo candidates for user selection",
+  "method": "original SVG geometry authored locally; no generative service",
+  "palette": {
+    "green": "#183D35",
+    "ivory": "#F6F0E3",
+    "paper": "#FFFAF0",
+    "coral": "#C96959",
+    "gold": "#BA8A3A",
+    "line": "#D9CFBC",
+    "muted": "#69716A"
+  },
+  "wordmark": {
+    "family": "Noto Serif",
+    "weight": 700,
+    "status": "provisional comparison only"
+  },
+  "proposals": [
+    {
+      "id": "01-parelles",
+      "name": "Parelles",
+      "idea": "Cuatro cartas. Dos parejas.",
+      "lines": [
+        "El encuentro de parejas, visto desde arriba.",
+        "El símbolo más cercano al juego de cartas."
+      ],
+      "rationale": "Cuatro reversos de carta giran alrededor de un centro abierto. Las cartas opuestas comparten color y forman dos parejas."
+    },
+    {
+      "id": "02-ronda",
+      "name": "Ronda",
+      "idea": "Una ronda da paso a otra.",
+      "lines": [
+        "Dos trazos complementarios, un centro común.",
+        "El símbolo más abstracto y compacto."
+      ],
+      "rationale": "Dos bandas de igual peso forman un contorno casi cuadrado. Sus encuentros escalonados sugieren continuidad sin recurrir a flechas."
+    },
+    {
+      "id": "03-la-b",
+      "name": "La B",
+      "idea": "Una inicial. Dos mitades.",
+      "lines": [
+        "Una B propia, con dos partes equilibradas.",
+        "La opción más ligada al nombre ButiRonda."
+      ],
+      "rationale": "Una B dibujada a medida, con dos lóbulos equivalentes, espacios interiores amplios y una separación central. La letra se sostiene sin una tipografía externa."
+    }
+  ]
+}

@@ -1,0 +1,209 @@
+{
+  "study": "Higgsfield desde cero",
+  "status": "complete",
+  "approved_typography": {
+    "display": {
+      "family": "Fraunces",
+      "weight": 700
+    },
+    "body": {
+      "family": "Source Sans 3",
+      "weight": 400
+    }
+  },
+  "typography_approval_evidence": "creo que me gusta mas el 2",
+  "approved_logo": "Punt propi",
+  "logo_approval_evidence": "1.",
+  "logo_geometry_fingerprint": "d22c8a621d75ea8a058fef049c0cfc546850de4e0634f981781f6036cc0ce477",
+  "internal_logo_png": {
+    "media_id": "84aa591b-b170-4051-84e4-edc0b30bdf77",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/84aa591b-b170-4051-84e4-edc0b30bdf77.png"
+  },
+  "approved_name": "ButiPunt",
+  "name_palette_approval_evidence": "ButiPunt claramente",
+  "authorship": {
+    "analysis_names_copy_palettes": "assistant",
+    "render": "Higgsfield Brandkit preview script in remote sandbox",
+    "generative_models": [
+      "recraft_v4_1"
+    ]
+  },
+  "trial": {
+    "renewal_cancelled": true,
+    "ends_at": "2026-09-11T13:09:21Z",
+    "authorized_trial_credits": 100,
+    "remaining_authorized_credit_budget": 70,
+    "observed_credits_spent": 30,
+    "account_total_credits": 80,
+    "historical_snapshot_date": "2026-09-08"
+  },
+  "state": {
+    "version": 4,
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/bce66f82-b42d-49ab-ac15-454330f82bad.json",
+    "media_id": "bce66f82-b42d-49ab-ac15-454330f82bad"
+  },
+  "reviews": [
+    {
+      "payload": {
+        "stage": "palette",
+        "name": "01 · ButiPunt",
+        "premise": "El torneo, punto a punto. Verde profundo y papel cálido recuperan la calma de la interfaz original; el coral señala lo que necesita atención.",
+        "keywords": [
+          "Claridad",
+          "Control",
+          "Cercanía"
+        ],
+        "palette": [
+          {
+            "hex": "#F8F3E8",
+            "name": "Papel · fondo"
+          },
+          {
+            "hex": "#182D29",
+            "name": "Tinta · texto"
+          },
+          {
+            "hex": "#245748",
+            "name": "Tapete · principal"
+          },
+          {
+            "hex": "#D7684F",
+            "name": "Coral · acento"
+          },
+          {
+            "hex": "#DDCBA8",
+            "name": "Arena · apoyo"
+          }
+        ],
+        "logo_ideas": [
+          "Una P cuyo punto separado marca el resultado confirmado.",
+          "Una ficha de tanteo con una única muesca lateral reconocible.",
+          "Un trazo escalonado que termina en un punto: avanzar en la clasificación."
+        ],
+        "background_color": "#F8F3E8",
+        "text_color": "#182D29"
+      },
+      "html": {
+        "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/99a4927b-4c25-4b43-9be3-c199bb53863d.html",
+        "media_id": "99a4927b-4c25-4b43-9be3-c199bb53863d"
+      },
+      "png": {
+        "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/3639c5f6-a8b6-45ff-bd77-26be0ea692ea.png",
+        "media_id": "3639c5f6-a8b6-45ff-bd77-26be0ea692ea"
+      },
+      "confirmed": true,
+      "visual_qa": "complete margins and legible text"
+    },
+    {
+      "payload": {
+        "stage": "palette",
+        "name": "02 · ButiNexe",
+        "premise": "La butifarra como encuentro. Azul tinta y albaricoque dan protagonismo a las parejas, con fondos suaves que conservan la claridad de los paneles de la app.",
+        "keywords": [
+          "Encuentro",
+          "Parejas",
+          "Continuidad"
+        ],
+        "palette": [
+          {
+            "hex": "#F7F4EF",
+            "name": "Lino · fondo"
+          },
+          {
+            "hex": "#232845",
+            "name": "Tinta · texto"
+          },
+          {
+            "hex": "#4E5BB3",
+            "name": "Azul · principal"
+          },
+          {
+            "hex": "#F2AB78",
+            "name": "Albaricoque · acento"
+          },
+          {
+            "hex": "#DADDF4",
+            "name": "Lavanda · apoyo"
+          }
+        ],
+        "logo_ideas": [
+          "Una N con una unión central compartida por sus dos trazos.",
+          "Dos bandas que encajan por una sola muesca: una pareja que se completa.",
+          "Una cinta plegada en dos mitades complementarias, con un único punto de unión."
+        ],
+        "background_color": "#F7F4EF",
+        "text_color": "#232845"
+      },
+      "html": {
+        "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/483b6453-4538-4ce1-a3f5-9a34d4510f59.html",
+        "media_id": "483b6453-4538-4ce1-a3f5-9a34d4510f59"
+      },
+      "png": {
+        "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/2727b861-e3e6-4e27-8c3d-a284b8ded7ed.png",
+        "media_id": "2727b861-e3e6-4e27-8c3d-a284b8ded7ed"
+      },
+      "confirmed": true,
+      "visual_qa": "complete margins and legible text"
+    },
+    {
+      "payload": {
+        "stage": "palette",
+        "name": "03 · ButiLliga",
+        "premise": "La emoción de seguir la clasificación. Fondo frío, tinta oscura y lima para destacar posiciones y resultados, con una presencia más deportiva.",
+        "keywords": [
+          "Competición",
+          "Progreso",
+          "Energía"
+        ],
+        "palette": [
+          {
+            "hex": "#F1F4F0",
+            "name": "Niebla · fondo"
+          },
+          {
+            "hex": "#172824",
+            "name": "Tinta · texto"
+          },
+          {
+            "hex": "#276153",
+            "name": "Verde · principal"
+          },
+          {
+            "hex": "#CBE65C",
+            "name": "Lima · acento"
+          },
+          {
+            "hex": "#B7CEC5",
+            "name": "Salvia · apoyo"
+          }
+        ],
+        "logo_ideas": [
+          "Una L formada por tres peldaños de altura creciente.",
+          "Tres franjas ascendentes con un corte lateral común: posiciones en juego.",
+          "Un banderín compacto dividido por tres líneas de clasificación."
+        ],
+        "background_color": "#F1F4F0",
+        "text_color": "#172824"
+      },
+      "html": {
+        "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/c9b52fbe-1ea3-41f9-b035-2cd269c75ebb.html",
+        "media_id": "c9b52fbe-1ea3-41f9-b035-2cd269c75ebb"
+      },
+      "png": {
+        "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/38badfae-3ee0-490c-98ae-3b1fd6244ac0.png",
+        "media_id": "38badfae-3ee0-490c-98ae-3b1fd6244ac0"
+      },
+      "confirmed": true,
+      "visual_qa": "complete margins and legible text"
+    }
+  ],
+  "current_account": {
+    "checked_at": "2026-09-16",
+    "credits": 0,
+    "plan": "free",
+    "trial": "expired",
+    "new_generation_credits_this_completion": 0
+  },
+  "completion_method": "Original Recraft/GPT Image 2 assets; deterministic vector production and native Higgsedit motion graphics in Higgsfield sandbox; local documentation and packaging.",
+  "delivery": "registro-entrega.json"
+}

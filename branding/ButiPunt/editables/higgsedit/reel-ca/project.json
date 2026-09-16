@@ -1,0 +1,742 @@
+{
+  "id": "319fb71d-5289-4146-9270-0a345500d119",
+  "name": "reel-ca",
+  "schemaVersion": 2,
+  "scenes": [
+    {
+      "id": "84357749-860c-4967-9238-0ad94c47a787",
+      "name": "New Scene",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "background": { "type": "solid", "color": "#F8F3E8" },
+      "fps": 30,
+      "duration": 15,
+      "tracks": [
+        {
+          "id": "fbd9dce2-5b20-44a7-8f28-686a5909b94a",
+          "name": "Track 1",
+          "mode": "default",
+          "clips": [
+            {
+              "id": "7cb443ad-e55d-4db3-803a-bb9d3f03c11b",
+              "kind": "media",
+              "name": "reel-ca-scene-1",
+              "assetId": "2e3c4367-b033-aa15-f1dd-6f602b750c8d",
+              "timeRange": { "start": 0, "duration": 3 },
+              "trim": { "start": 0, "end": 3 },
+              "speed": 1,
+              "transform": {
+                "x": 0,
+                "y": 0,
+                "scaleX": 1,
+                "scaleY": 1,
+                "rotation": 0,
+                "anchorX": 0,
+                "anchorY": 0,
+                "flipX": false,
+                "flipY": false,
+                "skewX": 0,
+                "skewY": 0
+              },
+              "size": { "width": 1080, "height": 1920 },
+              "opacity": 1,
+              "blendMode": "normal",
+              "volume": 1,
+              "muted": true,
+              "cornerRadius": { "bl": 0, "br": 0, "mixed": false, "tl": 0, "tr": 0, "uniform": 0 },
+              "effects": [],
+              "animations": [
+                {
+                  "property": "offsetY",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 28,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.16, "x2": 0.3, "y1": 1, "y2": 1 },
+                      "id": "c3fc108a-8bed-4fc2-a428-3f4e3e5b24d5"
+                    },
+                    {
+                      "time": 0.55,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "e7021ae5-4a43-4dd3-9406-a37973d49501"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "6f35c10f-b73d-4f2d-bcbc-1ec941bfecb9"
+                },
+                {
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 0,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "7a943775-0c16-4853-91a0-6c9d51124870"
+                    },
+                    {
+                      "time": 0.3,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "2755d7d9-eacc-4afc-82cd-e5afd6fad9b9"
+                    },
+                    {
+                      "time": 2.8,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "902fba42-0b60-458a-a444-ac87a18b906d"
+                    },
+                    {
+                      "time": 3,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "50bf09f8-8f23-4731-b183-461d90687a41"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "0b664aef-c937-4d8d-9a10-426d80ea866a"
+                }
+              ],
+              "presetAnimations": [],
+              "mask": null,
+              "locked": false,
+              "hidden": false,
+              "origin": { "column": 15, "file": "motion.js", "line": 16 },
+              "preservePitch": true
+            },
+            {
+              "id": "a6b571da-0ae2-4f25-ad03-e8938bab0d19",
+              "kind": "media",
+              "name": "reel-ca-scene-2",
+              "assetId": "4c89e277-6003-fe02-c5ec-f5f969fa5539",
+              "timeRange": { "start": 3, "duration": 3 },
+              "trim": { "start": 0, "end": 3 },
+              "speed": 1,
+              "transform": {
+                "x": 0,
+                "y": 0,
+                "scaleX": 1,
+                "scaleY": 1,
+                "rotation": 0,
+                "anchorX": 0,
+                "anchorY": 0,
+                "flipX": false,
+                "flipY": false,
+                "skewX": 0,
+                "skewY": 0
+              },
+              "size": { "width": 1080, "height": 1920 },
+              "opacity": 1,
+              "blendMode": "normal",
+              "volume": 1,
+              "muted": true,
+              "cornerRadius": { "bl": 0, "br": 0, "mixed": false, "tl": 0, "tr": 0, "uniform": 0 },
+              "effects": [],
+              "animations": [
+                {
+                  "property": "offsetY",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 28,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.16, "x2": 0.3, "y1": 1, "y2": 1 },
+                      "id": "2ffac12c-4eda-44c4-9b22-51c22ef3e358"
+                    },
+                    {
+                      "time": 0.55,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "b9e36501-4020-42ed-886a-94a28612eead"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "f9cd954b-08b3-4d4d-9431-05818e1a61d3"
+                },
+                {
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 0,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "a8b1a6cd-961d-49db-acb3-84302ec15b95"
+                    },
+                    {
+                      "time": 0.3,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "e2bbd144-d537-4aac-8969-0b3aa94eff1b"
+                    },
+                    {
+                      "time": 2.8,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "d806c248-509c-4b15-9884-b9340a913d82"
+                    },
+                    {
+                      "time": 3,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "e03c459b-9e0e-4e05-ae7b-c0342e6976e1"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "e8048bd1-bddd-4138-8756-d73e8c810fa0"
+                }
+              ],
+              "presetAnimations": [],
+              "mask": null,
+              "locked": false,
+              "hidden": false,
+              "origin": { "column": 15, "file": "motion.js", "line": 16 },
+              "preservePitch": true
+            },
+            {
+              "id": "48414fd6-15c6-42a7-ae5d-2af6887c8a43",
+              "kind": "media",
+              "name": "reel-ca-scene-3",
+              "assetId": "c235ca35-9969-5af3-372b-3784da9fbb6e",
+              "timeRange": { "start": 6, "duration": 3 },
+              "trim": { "start": 0, "end": 3 },
+              "speed": 1,
+              "transform": {
+                "x": 0,
+                "y": 0,
+                "scaleX": 1,
+                "scaleY": 1,
+                "rotation": 0,
+                "anchorX": 0,
+                "anchorY": 0,
+                "flipX": false,
+                "flipY": false,
+                "skewX": 0,
+                "skewY": 0
+              },
+              "size": { "width": 1080, "height": 1920 },
+              "opacity": 1,
+              "blendMode": "normal",
+              "volume": 1,
+              "muted": true,
+              "cornerRadius": { "bl": 0, "br": 0, "mixed": false, "tl": 0, "tr": 0, "uniform": 0 },
+              "effects": [],
+              "animations": [
+                {
+                  "property": "offsetY",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 28,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.16, "x2": 0.3, "y1": 1, "y2": 1 },
+                      "id": "dd83bc00-dd98-4a65-ae93-c1f9ead95e08"
+                    },
+                    {
+                      "time": 0.55,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "091013d2-7bdf-45fa-8be4-2cd8a3e8c60c"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "4480eef8-6691-4f64-811b-500ebe8ee370"
+                },
+                {
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 0,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "353078f2-0964-45e5-92a0-fd84c65673d3"
+                    },
+                    {
+                      "time": 0.3,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "54fc2f66-2c10-4e2c-8b88-0e51c495e63f"
+                    },
+                    {
+                      "time": 2.8,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "7034adbe-2d42-4a54-8e08-f2864996d3e1"
+                    },
+                    {
+                      "time": 3,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "3d9d4096-db56-4f1d-b292-4c595e8fe79d"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "bb7c1507-6cd1-4241-9c87-c39407d1e5c0"
+                }
+              ],
+              "presetAnimations": [],
+              "mask": null,
+              "locked": false,
+              "hidden": false,
+              "origin": { "column": 15, "file": "motion.js", "line": 16 },
+              "preservePitch": true
+            },
+            {
+              "id": "bfc5e2fc-97ac-497f-b5da-5a796ba62839",
+              "kind": "media",
+              "name": "reel-ca-scene-4",
+              "assetId": "1362c604-178c-ab1a-2d82-4c382d7a869f",
+              "timeRange": { "start": 9, "duration": 3 },
+              "trim": { "start": 0, "end": 3 },
+              "speed": 1,
+              "transform": {
+                "x": 0,
+                "y": 0,
+                "scaleX": 1,
+                "scaleY": 1,
+                "rotation": 0,
+                "anchorX": 0,
+                "anchorY": 0,
+                "flipX": false,
+                "flipY": false,
+                "skewX": 0,
+                "skewY": 0
+              },
+              "size": { "width": 1080, "height": 1920 },
+              "opacity": 1,
+              "blendMode": "normal",
+              "volume": 1,
+              "muted": true,
+              "cornerRadius": { "bl": 0, "br": 0, "mixed": false, "tl": 0, "tr": 0, "uniform": 0 },
+              "effects": [],
+              "animations": [
+                {
+                  "property": "offsetY",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 28,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.16, "x2": 0.3, "y1": 1, "y2": 1 },
+                      "id": "fb6f44d7-64c7-40bd-b055-a04b6bc22d53"
+                    },
+                    {
+                      "time": 0.55,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "5acec129-8caa-4db5-95c6-33a14cc22eaf"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "fe4d6701-b63b-4680-9006-8aa6ca613799"
+                },
+                {
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 0,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "a0d867e2-a494-4a1c-a037-21dbeefcd921"
+                    },
+                    {
+                      "time": 0.3,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "11a45d43-1f1c-432e-868f-703783002261"
+                    },
+                    {
+                      "time": 2.8,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "19e84c2a-0864-4a03-9763-461280489070"
+                    },
+                    {
+                      "time": 3,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "faf7442e-6b98-4fc6-ae77-3fbeb9845c27"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "cf1d76df-0924-4a85-91de-401014fc772c"
+                }
+              ],
+              "presetAnimations": [],
+              "mask": null,
+              "locked": false,
+              "hidden": false,
+              "origin": { "column": 15, "file": "motion.js", "line": 16 },
+              "preservePitch": true
+            },
+            {
+              "id": "44ee2676-6c70-462d-8ffb-98007a9f288c",
+              "kind": "media",
+              "name": "reel-ca-scene-5",
+              "assetId": "210fc6a1-b63a-476c-a250-5aca3e3b3510",
+              "timeRange": { "start": 12, "duration": 3 },
+              "trim": { "start": 0, "end": 3 },
+              "speed": 1,
+              "transform": {
+                "x": 0,
+                "y": 0,
+                "scaleX": 1,
+                "scaleY": 1,
+                "rotation": 0,
+                "anchorX": 0,
+                "anchorY": 0,
+                "flipX": false,
+                "flipY": false,
+                "skewX": 0,
+                "skewY": 0
+              },
+              "size": { "width": 1080, "height": 1920 },
+              "opacity": 1,
+              "blendMode": "normal",
+              "volume": 1,
+              "muted": true,
+              "cornerRadius": { "bl": 0, "br": 0, "mixed": false, "tl": 0, "tr": 0, "uniform": 0 },
+              "effects": [],
+              "animations": [
+                {
+                  "property": "offsetY",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 28,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.16, "x2": 0.3, "y1": 1, "y2": 1 },
+                      "id": "23d90572-37b0-4a81-9fba-176c2085bb37"
+                    },
+                    {
+                      "time": 0.55,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "e54c3893-f08c-437c-8bdc-4be3c23f9adf"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "4c45447a-ee14-406a-a698-182930b5e915"
+                },
+                {
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 0,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "4f4ffd7a-0f51-44b4-bdf0-a812e13e6ab9"
+                    },
+                    {
+                      "time": 0.3,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "81302a15-c429-44eb-bd24-55ea637aa039"
+                    },
+                    {
+                      "time": 2.8,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "cb799985-230a-4f7b-ac03-245fbd7598d3"
+                    },
+                    {
+                      "time": 3,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "d5ec8861-e2f5-4f12-9b7d-45702b31dc9d"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "ab82e252-af6a-459c-b16c-49a61c4318dc"
+                }
+              ],
+              "presetAnimations": [],
+              "mask": null,
+              "locked": false,
+              "hidden": false,
+              "origin": { "column": 15, "file": "motion.js", "line": 16 },
+              "preservePitch": true
+            }
+          ],
+          "locked": false,
+          "hidden": false,
+          "muted": false,
+          "solo": false,
+          "volume": 1
+        },
+        {
+          "id": "b990fbf9-3443-4c07-a865-499c003ab90a",
+          "name": "Track 2",
+          "mode": "default",
+          "clips": [
+            {
+              "id": "e5f6755e-d4b8-4ec5-806d-dbc01f903bec",
+              "kind": "group",
+              "name": "brand-point-progress",
+              "timeRange": { "start": 0, "duration": 15 },
+              "transform": {
+                "x": 0,
+                "y": 0,
+                "scaleX": 1,
+                "scaleY": 1,
+                "rotation": 0,
+                "anchorX": 0,
+                "anchorY": 0,
+                "flipX": false,
+                "flipY": false,
+                "skewX": 0,
+                "skewY": 0
+              },
+              "size": { "width": 1080, "height": 1920 },
+              "opacity": 1,
+              "blendMode": "normal",
+              "effects": [],
+              "animations": [],
+              "presetAnimations": [],
+              "mask": null,
+              "locked": false,
+              "hidden": false,
+              "children": [
+                {
+                  "id": "42ef0efe-4265-4ca6-90a0-f99c094b60f8",
+                  "kind": "rect",
+                  "name": "Rect",
+                  "timeRange": { "start": 0, "duration": 15 },
+                  "transform": {
+                    "x": 104,
+                    "y": 1540,
+                    "scaleX": 1,
+                    "scaleY": 1,
+                    "rotation": 0,
+                    "anchorX": 0,
+                    "anchorY": 0,
+                    "flipX": false,
+                    "flipY": false,
+                    "skewX": 0,
+                    "skewY": 0
+                  },
+                  "size": { "width": 872, "height": 2 },
+                  "opacity": 1,
+                  "blendMode": "normal",
+                  "fill": { "type": "solid", "color": "#DDCBA8" },
+                  "stroke": { "width": 0, "color": "#ffffff" },
+                  "cornerRadius": { "bl": 0, "br": 0, "mixed": false, "tl": 0, "tr": 0, "uniform": 0 },
+                  "effects": [],
+                  "animations": [],
+                  "presetAnimations": [],
+                  "mask": null,
+                  "locked": false,
+                  "hidden": false,
+                  "origin": { "column": 5, "file": "motion.js", "line": 24 }
+                },
+                {
+                  "id": "a6b69916-de05-43ba-931c-43ccf8d00bfe",
+                  "kind": "rect",
+                  "name": "Rect",
+                  "timeRange": { "start": 0, "duration": 15 },
+                  "transform": {
+                    "x": 92,
+                    "y": 1530,
+                    "scaleX": 1,
+                    "scaleY": 1,
+                    "rotation": 0,
+                    "anchorX": 0,
+                    "anchorY": 0,
+                    "flipX": false,
+                    "flipY": false,
+                    "skewX": 0,
+                    "skewY": 0
+                  },
+                  "size": { "width": 24, "height": 24 },
+                  "opacity": 1,
+                  "blendMode": "normal",
+                  "fill": { "type": "solid", "color": "#D7684F" },
+                  "stroke": { "width": 0, "color": "#ffffff" },
+                  "cornerRadius": { "bl": 12, "br": 12, "mixed": false, "tl": 12, "tr": 12, "uniform": 12 },
+                  "effects": [],
+                  "animations": [
+                    {
+                      "property": "offsetX",
+                      "keyframes": [
+                        {
+                          "time": 0,
+                          "value": 0,
+                          "easing": { "kind": "linear" },
+                          "id": "45acfee2-f0d4-40e9-a0a8-c75b3ace1f92"
+                        },
+                        {
+                          "time": 15,
+                          "value": 872,
+                          "easing": { "kind": "linear" },
+                          "id": "3f4e4f6c-9ef7-4e95-92f7-c695843be142"
+                        }
+                      ],
+                      "effectId": null,
+                      "effectParam": null,
+                      "gradientStopIndex": null,
+                      "id": "0c84c0cc-03b7-4ab0-a8d4-d5586062ac55"
+                    }
+                  ],
+                  "presetAnimations": [],
+                  "mask": null,
+                  "locked": false,
+                  "hidden": false,
+                  "origin": { "column": 5, "file": "motion.js", "line": 25 }
+                }
+              ],
+              "origin": { "column": 5, "file": "motion.js", "line": 23 }
+            }
+          ],
+          "locked": false,
+          "hidden": false,
+          "muted": false,
+          "solo": false,
+          "volume": 1
+        }
+      ],
+      "markers": []
+    }
+  ],
+  "activeSceneId": "84357749-860c-4967-9238-0ad94c47a787",
+  "assets": [
+    {
+      "id": "f43b3b50-878c-10cb-14f1-085fe9e469b8",
+      "name": "reel-ca-00.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 57289,
+      "duration": null,
+      "width": 1080,
+      "height": 1920,
+      "uri": "fs:media/f43b3b50878c10cb14f1085fe9e469b82f76fcdde369568e4a2d6596dc06ceb0.png",
+      "hash": "f43b3b50878c10cb14f1085fe9e469b82f76fcdde369568e4a2d6596dc06ceb0"
+    },
+    {
+      "id": "35f95437-05b7-a7ed-e851-241019ee77fd",
+      "name": "reel-ca-01.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 61745,
+      "duration": null,
+      "width": 1080,
+      "height": 1920,
+      "uri": "fs:media/35f9543705b7a7ede851241019ee77fddbe95fdcc9555c3c1e9f1c72c02879ad.png",
+      "hash": "35f9543705b7a7ede851241019ee77fddbe95fdcc9555c3c1e9f1c72c02879ad"
+    },
+    {
+      "id": "9a429243-9ccb-cefa-a613-25819639cff3",
+      "name": "reel-ca-02.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 66025,
+      "duration": null,
+      "width": 1080,
+      "height": 1920,
+      "uri": "fs:media/9a4292439ccbcefaa61325819639cff368b575ee440a094b79c45fed1d0381b4.png",
+      "hash": "9a4292439ccbcefaa61325819639cff368b575ee440a094b79c45fed1d0381b4"
+    },
+    {
+      "id": "ebd4495b-6dd9-1770-31f9-4b675a5bfcca",
+      "name": "reel-ca-03.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 73414,
+      "duration": null,
+      "width": 1080,
+      "height": 1920,
+      "uri": "fs:media/ebd4495b6dd9177031f94b675a5bfccaf758a79d7da846c38d1cc8f9cdf19ab7.png",
+      "hash": "ebd4495b6dd9177031f94b675a5bfccaf758a79d7da846c38d1cc8f9cdf19ab7"
+    },
+    {
+      "id": "de00f0a7-083a-f5ee-ee2d-eaf17e48e5ed",
+      "name": "reel-ca-04.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 64785,
+      "duration": null,
+      "width": 1080,
+      "height": 1920,
+      "uri": "fs:media/de00f0a7083af5eeee2deaf17e48e5ed2bd445da2ee71721ac0fa012c1317f12.png",
+      "hash": "de00f0a7083af5eeee2deaf17e48e5ed2bd445da2ee71721ac0fa012c1317f12"
+    },
+    {
+      "id": "2e3c4367-b033-aa15-f1dd-6f602b750c8d",
+      "name": "reel-ca-00.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 60241,
+      "duration": null,
+      "width": 1080,
+      "height": 1920,
+      "uri": "fs:media/2e3c4367b033aa15f1dd6f602b750c8deaf09b91e879e55c9f7ad426b95c78a9.png",
+      "hash": "2e3c4367b033aa15f1dd6f602b750c8deaf09b91e879e55c9f7ad426b95c78a9"
+    },
+    {
+      "id": "4c89e277-6003-fe02-c5ec-f5f969fa5539",
+      "name": "reel-ca-01.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 62346,
+      "duration": null,
+      "width": 1080,
+      "height": 1920,
+      "uri": "fs:media/4c89e2776003fe02c5ecf5f969fa5539545a82576a51d3c6dc36116a1ea86125.png",
+      "hash": "4c89e2776003fe02c5ecf5f969fa5539545a82576a51d3c6dc36116a1ea86125"
+    },
+    {
+      "id": "c235ca35-9969-5af3-372b-3784da9fbb6e",
+      "name": "reel-ca-02.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 66697,
+      "duration": null,
+      "width": 1080,
+      "height": 1920,
+      "uri": "fs:media/c235ca3599695af3372b3784da9fbb6e48cad90c13f54deab4797219052554a8.png",
+      "hash": "c235ca3599695af3372b3784da9fbb6e48cad90c13f54deab4797219052554a8"
+    },
+    {
+      "id": "1362c604-178c-ab1a-2d82-4c382d7a869f",
+      "name": "reel-ca-03.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 74046,
+      "duration": null,
+      "width": 1080,
+      "height": 1920,
+      "uri": "fs:media/1362c604178cab1a2d824c382d7a869f4eab79a9eb1e097749f262526d401e55.png",
+      "hash": "1362c604178cab1a2d824c382d7a869f4eab79a9eb1e097749f262526d401e55"
+    },
+    {
+      "id": "210fc6a1-b63a-476c-a250-5aca3e3b3510",
+      "name": "reel-ca-04.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 67740,
+      "duration": null,
+      "width": 1080,
+      "height": 1920,
+      "uri": "fs:media/210fc6a1b63a476ca2505aca3e3b3510b2dd387c3a2cc725fe7296320abf8e76.png",
+      "hash": "210fc6a1b63a476ca2505aca3e3b3510b2dd387c3a2cc725fe7296320abf8e76"
+    }
+  ],
+  "createdAt": 1789554379637,
+  "modifiedAt": 1789554881262
+}

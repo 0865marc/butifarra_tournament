@@ -1,0 +1,30 @@
+{
+  "status": "complete",
+  "completed_at": "2026-09-16",
+  "name": "ButiPunt",
+  "local_gallery": "/home/victus/dev/butifarra_tournament/branding/ButiPunt/index.html",
+  "local_zip": "/home/victus/dev/butifarra_tournament/branding/ButiPunt-branding-pack.zip",
+  "campaign_pieces": 16,
+  "videos": {
+    "count": 4,
+    "languages": [
+      "ca",
+      "es"
+    ],
+    "vertical_seconds": 15,
+    "horizontal_seconds": 30,
+    "type": "native motion graphics with original tonal music; no voiceover"
+  },
+  "credits_spent_for_completion": 0,
+  "application_code_changed": false,
+  "community_or_social_publishing": false,
+  "pending_required_work": [],
+  "review": {
+    "logo_transparency": "corrected and visually checked",
+    "campaigns": "visual review passed",
+    "video_frames": "22 reviewed",
+    "browser_video_metadata": "15/15/30/30 seconds, readyState 4, no errors",
+    "gallery_links": "all local files exist",
+    "gallery_overflow": false
+  }
+}

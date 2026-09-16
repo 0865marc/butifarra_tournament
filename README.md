@@ -1,6 +1,8 @@
-# Taula de Butifarra
+# ButiPunt
 
 A small, browser-only Astro MVP for running a Catalan Butifarra card-game championship from one shared desk.
+
+The product landing lives at `/`, tournament preparation and play at `/torneig/`, and secondary brand resources at `/marca/`, linked from the landing footer. The landing uses the approved ButiPunt identity, with clearly labelled example data. It is part of this Astro application; no ChatGPT Sites integration is required.
 
 ## Quick start
 
@@ -24,6 +26,8 @@ npm run build
 - Only confirmed, valid results appear in the standings. Current-round results can be edited until the next round is generated; older rounds are read-only.
 
 ## Local persistence
+
+The original `taula-de-butifarra-v1` storage key and data format are retained. Moving the interface to `/torneig/` preserves existing data on the same origin. The landing only reads saved state to offer a continue link; it never modifies tournament data. Different origins have separate browser storage.
 
 The app stores setup edits, score drafts, confirmed results, round history, and the selected round in this browser's `localStorage`. It has no account, server, sync, import, or export feature. Private-browsing policies, cleared browser data, storage quotas, and another device can therefore prevent recovery. Corrupted or unsupported saved data is left untouched rather than erased automatically; use the confirmed new-tournament action only when you choose to clear it.
 

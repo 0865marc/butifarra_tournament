@@ -1,0 +1,131 @@
+{
+  "status": "logo_1_approved",
+  "user_selection": "1.",
+  "approved_name": "ButiPunt",
+  "palette_state_version": 2,
+  "cost": {
+    "exact_estimate_per_job": 10,
+    "observed_total_balance_before": 110,
+    "observed_total_balance_after": 80,
+    "observed_spend": 30,
+    "remaining_authorized_budget": 70,
+    "trial_credits_field_from_provider": 100,
+    "trial_credits_field_note": "Provider still reports 100 after total credits decreased. Treat as offered allocation, not reliable remaining balance."
+  },
+  "candidates": [
+    {
+      "index": 1,
+      "job_id": "435a4461-59ba-4f86-8cc4-6ed407ae60ab",
+      "status": "completed",
+      "type": "image",
+      "model": "recraft_v4_1",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/hf_20260908_132939_435a4461-59ba-4f86-8cc4-6ed407ae60ab.svg",
+      "name": "Punt propi",
+      "original_svg_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/hf_20260908_132939_435a4461-59ba-4f86-8cc4-6ed407ae60ab.svg",
+      "provider_preview_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/hf_20260908_132939_435a4461-59ba-4f86-8cc4-6ed407ae60ab_min.webp",
+      "svg_audit": {
+        "index": 1,
+        "bytes": 6406,
+        "sha256": "387580371dbb5813bfe51194232e3ab93ade309260cb1bc7e613ab2f94e29d54",
+        "svg_attributes": {
+          "version": "1.1",
+          "style": "display: block;",
+          "viewBox": "0 0 2048 2048",
+          "width": "2048",
+          "height": "2048",
+          "preserveAspectRatio": "none"
+        },
+        "element_counts": {
+          "svg": 1,
+          "metadata": 1,
+          "manifest": 1,
+          "path": 4
+        },
+        "paints": {
+          "rgb(248,243,232)": 2,
+          "rgb(36,87,72)": 1,
+          "rgb(215,104,79)": 1
+        }
+      },
+      "visual_qa": "Rendered as an editorial serif P with a separate coral point; Recraft chose serif terminals and a closed bowl instead of the prompt's softly squared open bowl. Clear complete silhouette and no unintended extra text. Candidate remains draft.",
+      "approved": true
+    },
+    {
+      "index": 2,
+      "job_id": "40ab3679-d619-4bca-bde7-6a3f33feb94b",
+      "status": "completed",
+      "type": "image",
+      "model": "recraft_v4_1",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/hf_20260908_132940_40ab3679-d619-4bca-bde7-6a3f33feb94b.svg",
+      "name": "Tanteig",
+      "original_svg_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/hf_20260908_132940_40ab3679-d619-4bca-bde7-6a3f33feb94b.svg",
+      "provider_preview_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/hf_20260908_132940_40ab3679-d619-4bca-bde7-6a3f33feb94b_min.webp",
+      "svg_audit": {
+        "index": 2,
+        "bytes": 6696,
+        "sha256": "f70a1a3036216d6d530ce108eb0f210e113ed39b598ce4c0c73cf7e9ef5fb432",
+        "svg_attributes": {
+          "version": "1.1",
+          "style": "display: block;",
+          "viewBox": "0 0 2048 2048",
+          "width": "2048",
+          "height": "2048",
+          "preserveAspectRatio": "none"
+        },
+        "element_counts": {
+          "svg": 1,
+          "metadata": 1,
+          "manifest": 1,
+          "path": 3
+        },
+        "paints": {
+          "rgb(248,243,232)": 1,
+          "rgb(36,87,72)": 1,
+          "rgb(215,104,79)": 1
+        }
+      },
+      "visual_qa": "Rounded scorecard-like silhouette with a right notch, two broad counters and a coral result block; can also read as a numeral 3. Candidate remains draft.",
+      "approved": false
+    },
+    {
+      "index": 3,
+      "job_id": "20acf42b-3b95-46fd-b9cf-ebee5dc844fc",
+      "status": "completed",
+      "type": "image",
+      "model": "recraft_v4_1",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/hf_20260908_132939_20acf42b-3b95-46fd-b9cf-ebee5dc844fc.svg",
+      "name": "Punt amunt",
+      "original_svg_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/hf_20260908_132939_20acf42b-3b95-46fd-b9cf-ebee5dc844fc.svg",
+      "provider_preview_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/hf_20260908_132939_20acf42b-3b95-46fd-b9cf-ebee5dc844fc_min.webp",
+      "svg_audit": {
+        "index": 3,
+        "bytes": 6290,
+        "sha256": "0e9cb04d13434973e6f68a850ec64064fc90b25db5e415e3c78319cef0bc58b4",
+        "svg_attributes": {
+          "version": "1.1",
+          "style": "display: block;",
+          "viewBox": "0 0 2048 2048",
+          "width": "2048",
+          "height": "2048",
+          "preserveAspectRatio": "none"
+        },
+        "element_counts": {
+          "svg": 1,
+          "metadata": 1,
+          "manifest": 1,
+          "path": 3
+        },
+        "paints": {
+          "rgb(248,243,232)": 1,
+          "rgb(36,87,72)": 1,
+          "rgb(215,104,79)": 1
+        }
+      },
+      "visual_qa": "Continuous rising ribbon with two rounded steps and a separate coral endpoint above the end; more fluid than the prompt's right-angle geometry. Candidate remains draft.",
+      "approved": false
+    }
+  ],
+  "same_generation_parameters": true,
+  "source_svg_modified": false,
+  "gallery_displayed_once": true
+}

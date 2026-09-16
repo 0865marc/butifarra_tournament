@@ -1,0 +1,160 @@
+{
+  "status": "awaiting_typography_selection",
+  "approved_name": "ButiPunt",
+  "approved_logo": {
+    "name": "Punt propi",
+    "job_id": "435a4461-59ba-4f86-8cc4-6ed407ae60ab",
+    "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/hf_20260908_132939_435a4461-59ba-4f86-8cc4-6ed407ae60ab.svg",
+    "geometry_fingerprint": "d22c8a621d75ea8a058fef049c0cfc546850de4e0634f981781f6036cc0ce477",
+    "approval_evidence": "1."
+  },
+  "state": {
+    "version": 3,
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/9df53617-d187-474d-bb86-c25965fe1649.json"
+  },
+  "rendering": {
+    "base": "Higgsfield Brandkit preview script",
+    "environment": "Higgsfield remote sandbox",
+    "layout_adjustment": "Assistant moved the exact generated inline SVG block next to the wordmark and adjusted CSS for readable equal comparisons; SVG block bytes preserved.",
+    "capture": "Preinstalled Playwright 1.61.1 and Chromium 1228; fonts loaded and checked before screenshots.",
+    "generative_images_this_stage": 0,
+    "reference_svg_geometry_modified": false
+  },
+  "options": [
+    {
+      "index": 1,
+      "payload": {
+        "stage": "typography",
+        "name": "01 · Editorial",
+        "premise": "DM Serif Display acompaña el contraste y los remates de la P; DM Sans mantiene claros los resultados y los textos de la aplicación.",
+        "display_font": {
+          "family": "DM Serif Display",
+          "source": "google:DM Serif Display",
+          "weight": 400
+        },
+        "body_font": {
+          "family": "DM Sans",
+          "source": "google:DM Sans",
+          "weight": 400
+        },
+        "keywords": [
+          "Equilibrio",
+          "Carácter",
+          "Claridad"
+        ],
+        "palette": [],
+        "logo_ideas": [],
+        "logo_svg": "brandkit/selected-logo.svg",
+        "headline": "ButiPunt",
+        "body": "Organitza les parelles, anota els punts i consulta la classificació. Organiza las parejas, anota los puntos y consulta la clasificación. Ronda 01 · 24–18.",
+        "background_color": "#F8F3E8",
+        "text_color": "#182D29"
+      },
+      "font_links": [
+        "https://fonts.google.com/specimen/DM+Serif+Display",
+        "https://fonts.google.com/specimen/DM+Sans"
+      ],
+      "html": {
+        "media_id": "d5f0d943-c972-47ed-a00a-f338b92fdf7e",
+        "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/d5f0d943-c972-47ed-a00a-f338b92fdf7e.html"
+      },
+      "png": {
+        "media_id": "4c660373-f751-42ab-88f5-5ce1fc0b2356",
+        "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/4c660373-f751-42ab-88f5-5ce1fc0b2356.png"
+      },
+      "fonts_loaded": true,
+      "visual_qa": "Verified complete 1200×700 board: selected symbol next to real wordmark, full font labels and body text, no overlap or clipping.",
+      "approved": false
+    },
+    {
+      "index": 2,
+      "payload": {
+        "stage": "typography",
+        "name": "02 · Cercana",
+        "premise": "Fraunces aporta curvas más suaves y un tono cercano; Source Sans 3 ofrece una lectura tranquila para parejas, rondas y clasificaciones.",
+        "display_font": {
+          "family": "Fraunces",
+          "source": "google:Fraunces",
+          "weight": 700
+        },
+        "body_font": {
+          "family": "Source Sans 3",
+          "source": "google:Source Sans 3",
+          "weight": 400
+        },
+        "keywords": [
+          "Cercanía",
+          "Calidez",
+          "Ritmo"
+        ],
+        "palette": [],
+        "logo_ideas": [],
+        "logo_svg": "brandkit/selected-logo.svg",
+        "headline": "ButiPunt",
+        "body": "Organitza les parelles, anota els punts i consulta la classificació. Organiza las parejas, anota los puntos y consulta la clasificación. Ronda 01 · 24–18.",
+        "background_color": "#F8F3E8",
+        "text_color": "#182D29"
+      },
+      "font_links": [
+        "https://fonts.google.com/specimen/Fraunces",
+        "https://fonts.google.com/specimen/Source+Sans+3"
+      ],
+      "html": {
+        "media_id": "9339d397-85e4-4920-9c89-14722df8e642",
+        "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/9339d397-85e4-4920-9c89-14722df8e642.html"
+      },
+      "png": {
+        "media_id": "d3de0f06-bf7a-46e6-ae89-038d3e685916",
+        "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/d3de0f06-bf7a-46e6-ae89-038d3e685916.png"
+      },
+      "fonts_loaded": true,
+      "visual_qa": "Verified complete 1200×700 board: selected symbol next to real wordmark, full font labels and body text, no overlap or clipping.",
+      "approved": false
+    },
+    {
+      "index": 3,
+      "payload": {
+        "stage": "typography",
+        "name": "03 · Clásica",
+        "premise": "Bodoni Moda acentúa el contraste fino y grueso del símbolo; Inter equilibra esa expresión con textos y cifras de apariencia actual.",
+        "display_font": {
+          "family": "Bodoni Moda",
+          "source": "google:Bodoni Moda",
+          "weight": 700
+        },
+        "body_font": {
+          "family": "Inter",
+          "source": "google:Inter",
+          "weight": 400
+        },
+        "keywords": [
+          "Tradición",
+          "Contraste",
+          "Precisión"
+        ],
+        "palette": [],
+        "logo_ideas": [],
+        "logo_svg": "brandkit/selected-logo.svg",
+        "headline": "ButiPunt",
+        "body": "Organitza les parelles, anota els punts i consulta la classificació. Organiza las parejas, anota los puntos y consulta la clasificación. Ronda 01 · 24–18.",
+        "background_color": "#F8F3E8",
+        "text_color": "#182D29"
+      },
+      "font_links": [
+        "https://fonts.google.com/specimen/Bodoni+Moda",
+        "https://fonts.google.com/specimen/Inter"
+      ],
+      "html": {
+        "media_id": "dee856c7-3661-4e34-8453-0266a92695c4",
+        "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/dee856c7-3661-4e34-8453-0266a92695c4.html"
+      },
+      "png": {
+        "media_id": "3854f2c2-5c95-408d-91fa-7524de15b186",
+        "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/3854f2c2-5c95-408d-91fa-7524de15b186.png"
+      },
+      "fonts_loaded": true,
+      "visual_qa": "Verified complete 1200×700 board: selected symbol next to real wordmark, full font labels and body text, no overlap or clipping.",
+      "approved": false
+    }
+  ]
+}
