@@ -1,0 +1,9 @@
+{
+  "ok": true,
+  "path": "renders/picture.mp4",
+  "frames": 450,
+  "durationSeconds": 15,
+  "diagnostics": [],
+  "fallbacks": [],
+  "backend": "cpu"
+}

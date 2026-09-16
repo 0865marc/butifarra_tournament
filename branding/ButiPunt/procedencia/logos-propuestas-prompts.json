@@ -1,0 +1,272 @@
+{
+  "approved_name": "ButiPunt",
+  "approval_evidence": "ButiPunt claramente",
+  "approved_palette_state_url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/5696a209-b6c8-4b97-ae83-99fa9d18090e.json",
+  "source_inputs": "Product facts and original interface design, the fresh ButiPunt proposal and user selection. No former pack supplied.",
+  "requests": [
+    {
+      "index": 1,
+      "name": "Punt propi",
+      "candidate": {
+        "mark_type": "lettermark_monogram",
+        "central_idea": "The letter P releases its lower bowl terminal as a separate point.",
+        "visual_mechanism": "Only the initial P is permitted: a sturdy vertical stem and an open rounded upper bowl end in a detached circular dot at the lower right.",
+        "distinctive_element": "A circle separated by one stroke-width from the lower-right terminal of an otherwise continuous P.",
+        "shape_logic": "One stem and one semicircular bowl with a generous open counter; one disconnected circular terminal; intentional asymmetry.",
+        "treatment": "flat_vector",
+        "style_register": "Warm contemporary geometric letterform with softly squared stem ends.",
+        "user_style_directive": null,
+        "composition": "One isolated centered mark on a square canvas, generous even margins."
+      },
+      "specification": {
+        "brand_context": {
+          "name": "ButiPunt",
+          "offering": "Web application to organize physical Butifarra tournaments, fixed pairs, rounds, table scores and standings; no online gameplay today.",
+          "industry": "Card tournament management",
+          "positioning": "Proposed: clear and approachable organization, point by point.",
+          "audience": "Proposed: organizers of local Butifarra tournaments in groups and clubs.",
+          "values": [
+            "clarity",
+            "control",
+            "approachability"
+          ]
+        },
+        "visual_axes": {
+          "restrained_expressive": 50,
+          "geometric_organic": 50,
+          "familiar_experimental": 50
+        },
+        "candidate": {
+          "mark_type": "lettermark_monogram",
+          "central_idea": "The letter P releases its lower bowl terminal as a separate point.",
+          "visual_mechanism": "Only the initial P is permitted: a sturdy vertical stem and an open rounded upper bowl end in a detached circular dot at the lower right.",
+          "distinctive_element": "A circle separated by one stroke-width from the lower-right terminal of an otherwise continuous P.",
+          "shape_logic": "One stem and one semicircular bowl with a generous open counter; one disconnected circular terminal; intentional asymmetry.",
+          "treatment": "flat_vector",
+          "style_register": "Warm contemporary geometric letterform with softly squared stem ends.",
+          "user_style_directive": null,
+          "composition": "One isolated centered mark on a square canvas, generous even margins."
+        },
+        "palette": {
+          "count": 3,
+          "user_requested_more_than_three": false,
+          "roles": [
+            "primary",
+            "accent",
+            "background"
+          ]
+        },
+        "reference_signals": [
+          "Warm light surfaces",
+          "Deep green hierarchy",
+          "Softened rectangular corners",
+          "Low visual density",
+          "Small coral emphasis"
+        ],
+        "forbidden_elements": [
+          "brand names",
+          "wordmarks",
+          "taglines",
+          "unrelated letters",
+          "playing card suits",
+          "trophies",
+          "shields",
+          "orbits",
+          "decorative flourishes",
+          "gradients",
+          "three-dimensional treatment"
+        ]
+      },
+      "params": {
+        "model": "recraft_v4_1",
+        "model_type": "vector",
+        "resolution": "2k",
+        "aspect_ratio": "1:1",
+        "count": 1,
+        "colors": [
+          "#245748",
+          "#D7684F"
+        ],
+        "background_color": "#F8F3E8",
+        "prompt": "Lettermark monogram in which the initial P releases its lower bowl terminal as a separate point. Build one sturdy vertical stem with softly squared ends and one rounded upper bowl with a generous open counter; stop the lower-right bowl terminal one stroke-width before a detached circular terminal, retaining a clearly readable P silhouette and only two filled components. Use warm contemporary geometric letterform construction, an asymmetric open counter and broad shapes that remain distinct at small icon size. Use exactly three solid locked colors including the background: the locked primary tone for the P body, the locked accent for the detached circular terminal, and the locked background throughout the counter and surrounding field. Center one isolated upright mark within a square with generous even margins. Permit only the specified initial P; exclude all other lettering, card suits, trophies, shields, orbits and decorative flourishes. Flat vector design, clean lines, no shadows, no texture, no text. Clean editable vector paths, SVG-friendly, minimal anchor points."
+      },
+      "estimated_credits": 10
+    },
+    {
+      "index": 2,
+      "name": "Tanteig",
+      "candidate": {
+        "mark_type": "pictorial",
+        "central_idea": "A notched scorecard isolates its final score.",
+        "visual_mechanism": "One upright softly rounded score slip has a deep semicircular notch centered on its right edge, two broad horizontal negative-space score slots and one short accent bar completing the lower slot.",
+        "distinctive_element": "A pronounced single right-edge notch at mid-height and a short result bar aligned to the lower counter.",
+        "shape_logic": "Compact 3:4 vertical silhouette, solid body, two open horizontal slots, no small ruling or fine outlines.",
+        "treatment": "flat_vector",
+        "style_register": "Reduced pictogram with sturdy negative spaces and soft corner transitions.",
+        "user_style_directive": null,
+        "composition": "One isolated centered mark on a square canvas, generous even margins."
+      },
+      "specification": {
+        "brand_context": {
+          "name": "ButiPunt",
+          "offering": "Web application to organize physical Butifarra tournaments, fixed pairs, rounds, table scores and standings; no online gameplay today.",
+          "industry": "Card tournament management",
+          "positioning": "Proposed: clear and approachable organization, point by point.",
+          "audience": "Proposed: organizers of local Butifarra tournaments in groups and clubs.",
+          "values": [
+            "clarity",
+            "control",
+            "approachability"
+          ]
+        },
+        "visual_axes": {
+          "restrained_expressive": 50,
+          "geometric_organic": 50,
+          "familiar_experimental": 50
+        },
+        "candidate": {
+          "mark_type": "pictorial",
+          "central_idea": "A notched scorecard isolates its final score.",
+          "visual_mechanism": "One upright softly rounded score slip has a deep semicircular notch centered on its right edge, two broad horizontal negative-space score slots and one short accent bar completing the lower slot.",
+          "distinctive_element": "A pronounced single right-edge notch at mid-height and a short result bar aligned to the lower counter.",
+          "shape_logic": "Compact 3:4 vertical silhouette, solid body, two open horizontal slots, no small ruling or fine outlines.",
+          "treatment": "flat_vector",
+          "style_register": "Reduced pictogram with sturdy negative spaces and soft corner transitions.",
+          "user_style_directive": null,
+          "composition": "One isolated centered mark on a square canvas, generous even margins."
+        },
+        "palette": {
+          "count": 3,
+          "user_requested_more_than_three": false,
+          "roles": [
+            "primary",
+            "accent",
+            "background"
+          ]
+        },
+        "reference_signals": [
+          "Warm light surfaces",
+          "Deep green hierarchy",
+          "Softened rectangular corners",
+          "Low visual density",
+          "Small coral emphasis"
+        ],
+        "forbidden_elements": [
+          "brand names",
+          "wordmarks",
+          "taglines",
+          "unrelated letters",
+          "playing card suits",
+          "trophies",
+          "shields",
+          "orbits",
+          "decorative flourishes",
+          "gradients",
+          "three-dimensional treatment"
+        ]
+      },
+      "params": {
+        "model": "recraft_v4_1",
+        "model_type": "vector",
+        "resolution": "2k",
+        "aspect_ratio": "1:1",
+        "count": 1,
+        "colors": [
+          "#245748",
+          "#D7684F"
+        ],
+        "background_color": "#F8F3E8",
+        "prompt": "Pictorial symbol of a notched scorecard isolating its final score. Build one upright solid score slip in a compact three-to-four proportion, softly rounded outer corners, a pronounced semicircular notch centered on its right edge, and exactly two broad horizontal negative-space score slots; terminate the lower slot with one short solid result bar inset from the edge. Keep the side notch as the distinctive silhouette feature and use wide counters without fine ruling, numerals or extra details. Use a reduced pictogram register with sturdy geometry and soft corner transitions, legible at small icon size. Use exactly three solid locked colors including the background: the locked primary tone for the scorecard body, the locked accent for the short result bar, and the locked background for both slots and the surrounding field. Center one isolated upright mark within a square with generous even margins. Exclude lettering, card suits, trophies, shields, orbits and decorative flourishes. Flat vector design, clean lines, no shadows, no texture, no text. Clean editable vector paths, SVG-friendly, minimal anchor points."
+      },
+      "estimated_credits": 10
+    },
+    {
+      "index": 3,
+      "name": "Punt amunt",
+      "candidate": {
+        "mark_type": "abstract",
+        "central_idea": "One rising stepped path terminates in a point.",
+        "visual_mechanism": "A single wide ribbon makes two rising right-angle steps toward the upper right, stopping before a separate round endpoint on the final horizontal level.",
+        "distinctive_element": "Exactly two broad rounded steps lead into a detached circular terminal with a gap equal to the ribbon width.",
+        "shape_logic": "One continuous solid stepped silhouette with rounded outer corners and clear inner corners, one separate circle, no axes or additional bars.",
+        "treatment": "flat_vector",
+        "style_register": "Compact geometric sign with deliberate upward rhythm and softened transitions.",
+        "user_style_directive": null,
+        "composition": "One isolated centered mark on a square canvas, generous even margins."
+      },
+      "specification": {
+        "brand_context": {
+          "name": "ButiPunt",
+          "offering": "Web application to organize physical Butifarra tournaments, fixed pairs, rounds, table scores and standings; no online gameplay today.",
+          "industry": "Card tournament management",
+          "positioning": "Proposed: clear and approachable organization, point by point.",
+          "audience": "Proposed: organizers of local Butifarra tournaments in groups and clubs.",
+          "values": [
+            "clarity",
+            "control",
+            "approachability"
+          ]
+        },
+        "visual_axes": {
+          "restrained_expressive": 50,
+          "geometric_organic": 50,
+          "familiar_experimental": 50
+        },
+        "candidate": {
+          "mark_type": "abstract",
+          "central_idea": "One rising stepped path terminates in a point.",
+          "visual_mechanism": "A single wide ribbon makes two rising right-angle steps toward the upper right, stopping before a separate round endpoint on the final horizontal level.",
+          "distinctive_element": "Exactly two broad rounded steps lead into a detached circular terminal with a gap equal to the ribbon width.",
+          "shape_logic": "One continuous solid stepped silhouette with rounded outer corners and clear inner corners, one separate circle, no axes or additional bars.",
+          "treatment": "flat_vector",
+          "style_register": "Compact geometric sign with deliberate upward rhythm and softened transitions.",
+          "user_style_directive": null,
+          "composition": "One isolated centered mark on a square canvas, generous even margins."
+        },
+        "palette": {
+          "count": 3,
+          "user_requested_more_than_three": false,
+          "roles": [
+            "primary",
+            "accent",
+            "background"
+          ]
+        },
+        "reference_signals": [
+          "Warm light surfaces",
+          "Deep green hierarchy",
+          "Softened rectangular corners",
+          "Low visual density",
+          "Small coral emphasis"
+        ],
+        "forbidden_elements": [
+          "brand names",
+          "wordmarks",
+          "taglines",
+          "unrelated letters",
+          "playing card suits",
+          "trophies",
+          "shields",
+          "orbits",
+          "decorative flourishes",
+          "gradients",
+          "three-dimensional treatment"
+        ]
+      },
+      "params": {
+        "model": "recraft_v4_1",
+        "model_type": "vector",
+        "resolution": "2k",
+        "aspect_ratio": "1:1",
+        "count": 1,
+        "colors": [
+          "#245748",
+          "#D7684F"
+        ],
+        "background_color": "#F8F3E8",
+        "prompt": "Abstract symbol of one rising stepped path terminating in a point. Build a single wide solid ribbon with exactly two ascending right-angle steps from lower left toward upper right, softly rounded outer corners and clear inner corners; the final horizontal level ends one ribbon-width before a separate circular endpoint. Maintain one compact continuous stepped silhouette and one disconnected circle, with the large negative spaces between levels left entirely open; avoid axes, additional bars or arrowheads. Use a compact geometric sign register with deliberate upward rhythm and softened transitions, readable at small icon size. Use exactly three solid locked colors including the background: the locked primary tone for the stepped ribbon, the locked accent for its circular endpoint, and the locked background for all open space and the surrounding field. Center one isolated mark within a square with generous even margins. Exclude lettering, card suits, trophies, shields, orbits and decorative flourishes. Flat vector design, clean lines, no shadows, no texture, no text. Clean editable vector paths, SVG-friendly, minimal anchor points."
+      },
+      "estimated_credits": 10
+    }
+  ]
+}

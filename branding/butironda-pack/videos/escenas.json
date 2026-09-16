@@ -1,0 +1,36 @@
+{
+  "ca": {
+    "vertical": [
+      "videos/fuentes/ca/vertical-1.png",
+      "videos/fuentes/ca/vertical-2.png",
+      "videos/fuentes/ca/vertical-3.png",
+      "videos/fuentes/ca/vertical-4.png",
+      "videos/fuentes/ca/vertical-5.png"
+    ],
+    "horizontal": [
+      "videos/fuentes/ca/horizontal-1.png",
+      "videos/fuentes/ca/horizontal-2.png",
+      "videos/fuentes/ca/horizontal-3.png",
+      "videos/fuentes/ca/horizontal-4.png",
+      "videos/fuentes/ca/horizontal-5.png",
+      "videos/fuentes/ca/horizontal-6.png"
+    ]
+  },
+  "es": {
+    "vertical": [
+      "videos/fuentes/es/vertical-1.png",
+      "videos/fuentes/es/vertical-2.png",
+      "videos/fuentes/es/vertical-3.png",
+      "videos/fuentes/es/vertical-4.png",
+      "videos/fuentes/es/vertical-5.png"
+    ],
+    "horizontal": [
+      "videos/fuentes/es/horizontal-1.png",
+      "videos/fuentes/es/horizontal-2.png",
+      "videos/fuentes/es/horizontal-3.png",
+      "videos/fuentes/es/horizontal-4.png",
+      "videos/fuentes/es/horizontal-5.png",
+      "videos/fuentes/es/horizontal-6.png"
+    ]
+  }
+}

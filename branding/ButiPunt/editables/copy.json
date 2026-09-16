@@ -1,0 +1,108 @@
+{
+  "es": {
+    "hero": [
+      "Cada punto,",
+      "en su sitio."
+    ],
+    "tag": "El torneo, a punto.",
+    "desc": "Gestor de torneos de butifarra",
+    "labels": [
+      "Parejas",
+      "Rondas",
+      "Clasificación"
+    ],
+    "steps": [
+      "Inscribe las parejas",
+      "Anota los resultados",
+      "Consulta la clasificación"
+    ],
+    "end": "Butifarra, ronda a ronda.",
+    "explain": [
+      "Organiza tu torneo",
+      "Prepara las parejas",
+      "Sigue cada ronda",
+      "Confirma los puntos",
+      "Consulta la clasificación",
+      "El torneo, a punto."
+    ],
+    "details": [
+      [
+        "Parejas, mesas y resultados.",
+        "Todo en el mismo lugar."
+      ],
+      [
+        "Pon nombre al torneo.",
+        "Elige las rondas e inscribe las parejas."
+      ],
+      [
+        "La primera ronda se sortea.",
+        "Las siguientes siguen la clasificación."
+      ],
+      [
+        "Anota el resultado de cada mesa.",
+        "Confírmalo para actualizar la clasificación."
+      ],
+      [
+        "Sigue las victorias y los puntos.",
+        "Consulta también las rondas anteriores."
+      ],
+      [
+        "ButiPunt",
+        "Butifarra, ronda a ronda."
+      ]
+    ]
+  },
+  "ca": {
+    "hero": [
+      "Cada punt,",
+      "al seu lloc."
+    ],
+    "tag": "El torneig, a punt.",
+    "desc": "Gestor de tornejos de butifarra",
+    "labels": [
+      "Parelles",
+      "Rondes",
+      "Classificació"
+    ],
+    "steps": [
+      "Inscriu les parelles",
+      "Anota els resultats",
+      "Consulta la classificació"
+    ],
+    "end": "Butifarra, ronda a ronda.",
+    "explain": [
+      "Organitza el teu torneig",
+      "Prepara les parelles",
+      "Segueix cada ronda",
+      "Confirma els punts",
+      "Consulta la classificació",
+      "El torneig, a punt."
+    ],
+    "details": [
+      [
+        "Parelles, taules i resultats.",
+        "Tot al mateix lloc."
+      ],
+      [
+        "Posa nom al torneig.",
+        "Tria les rondes i inscriu les parelles."
+      ],
+      [
+        "La primera ronda se sorteja.",
+        "Les següents segueixen la classificació."
+      ],
+      [
+        "Anota el resultat de cada taula.",
+        "Confirma’l per actualitzar la classificació."
+      ],
+      [
+        "Segueix les victòries i els punts.",
+        "Consulta també les rondes anteriors."
+      ],
+      [
+        "ButiPunt",
+        "Butifarra, ronda a ronda."
+      ]
+    ]
+  }
+}

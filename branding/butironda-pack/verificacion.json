@@ -1,0 +1,18 @@
+{
+  "symbolIdenticalToChosenMaster": true,
+  "svgCount": 51,
+  "manifestDimensionsVerified": true,
+  "galleryLocalLinksVerified": true,
+  "videoDecodeVerified": true,
+  "visuallyReviewed": "logos, 22 campaign images, 22 video source scenes, decoded frames from all four MP4 files",
+  "categories": {
+    "logo": 5,
+    "social": 12,
+    "story": 4,
+    "banner": 4,
+    "poster": 2,
+    "video-frame": 22,
+    "guide": 1,
+    "overview": 1
+  }
+}

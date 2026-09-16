@@ -1,0 +1,247 @@
+{
+  "date": "2026-09-16",
+  "static_dimensions": [
+    {
+      "file": "campana/post-es.png",
+      "width": 1080,
+      "height": 1080
+    },
+    {
+      "file": "campana/story-es.png",
+      "width": 1080,
+      "height": 1920
+    },
+    {
+      "file": "campana/cartel-A3-es.png",
+      "width": 2382,
+      "height": 3368
+    },
+    {
+      "file": "campana/cabecera-es.png",
+      "width": 1600,
+      "height": 600
+    },
+    {
+      "file": "campana/og-es.png",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "file": "campana/carrusel-es-01.png",
+      "width": 1080,
+      "height": 1350
+    },
+    {
+      "file": "campana/carrusel-es-02.png",
+      "width": 1080,
+      "height": 1350
+    },
+    {
+      "file": "campana/carrusel-es-03.png",
+      "width": 1080,
+      "height": 1350
+    },
+    {
+      "file": "campana/post-ca.png",
+      "width": 1080,
+      "height": 1080
+    },
+    {
+      "file": "campana/story-ca.png",
+      "width": 1080,
+      "height": 1920
+    },
+    {
+      "file": "campana/cartel-A3-ca.png",
+      "width": 2382,
+      "height": 3368
+    },
+    {
+      "file": "campana/cabecera-ca.png",
+      "width": 1600,
+      "height": 600
+    },
+    {
+      "file": "campana/og-ca.png",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "file": "campana/carrusel-ca-01.png",
+      "width": 1080,
+      "height": 1350
+    },
+    {
+      "file": "campana/carrusel-ca-02.png",
+      "width": 1080,
+      "height": 1350
+    },
+    {
+      "file": "campana/carrusel-ca-03.png",
+      "width": 1080,
+      "height": 1350
+    }
+  ],
+  "video": [
+    {
+      "file": "videos/reel-es.mp4",
+      "probe": {
+        "programs": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1080,
+            "height": 1920,
+            "r_frame_rate": "30/1",
+            "duration": "15.000000"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "r_frame_rate": "0/0",
+            "duration": "15.000000"
+          }
+        ],
+        "format": {
+          "duration": "15.000000"
+        }
+      }
+    },
+    {
+      "file": "videos/reel-ca.mp4",
+      "probe": {
+        "programs": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1080,
+            "height": 1920,
+            "r_frame_rate": "30/1",
+            "duration": "15.000000"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "r_frame_rate": "0/0",
+            "duration": "15.000000"
+          }
+        ],
+        "format": {
+          "duration": "15.000000"
+        }
+      }
+    },
+    {
+      "file": "videos/explicativo-es.mp4",
+      "probe": {
+        "programs": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "30/1",
+            "duration": "30.000000"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "r_frame_rate": "0/0",
+            "duration": "30.000000"
+          }
+        ],
+        "format": {
+          "duration": "30.000000"
+        }
+      }
+    },
+    {
+      "file": "videos/explicativo-ca.mp4",
+      "probe": {
+        "programs": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1920,
+            "height": 1080,
+            "r_frame_rate": "30/1",
+            "duration": "30.000000"
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "r_frame_rate": "0/0",
+            "duration": "30.000000"
+          }
+        ],
+        "format": {
+          "duration": "30.000000"
+        }
+      }
+    }
+  ],
+  "broken_links": [],
+  "original_symbol_sha256": "387580371dbb5813bfe51194232e3ab93ade309260cb1bc7e613ab2f94e29d54",
+  "production_symbol_has_evenodd_counter": true,
+  "video_render_reports": [
+    {
+      "ok": true,
+      "path": "renders/picture.mp4",
+      "frames": 450,
+      "durationSeconds": 15,
+      "diagnostics": [],
+      "fallbacks": [],
+      "backend": "cpu"
+    },
+    {
+      "ok": true,
+      "path": "renders/picture.mp4",
+      "frames": 450,
+      "durationSeconds": 15,
+      "diagnostics": [],
+      "fallbacks": [],
+      "backend": "cpu"
+    },
+    {
+      "ok": true,
+      "path": "renders/picture.mp4",
+      "frames": 900,
+      "durationSeconds": 30,
+      "diagnostics": [],
+      "fallbacks": [],
+      "backend": "cpu"
+    },
+    {
+      "ok": true,
+      "path": "renders/picture.mp4",
+      "frames": 900,
+      "durationSeconds": 30,
+      "diagnostics": [],
+      "fallbacks": [],
+      "backend": "cpu"
+    }
+  ],
+  "visual_review": "Reviewed: original images, corrected logo counter/transparency, identity sheet, campaign sheet and 22 video sample frames. No clipped text observed.",
+  "browser_check": {
+    "local_gallery": "passed",
+    "video_readyState": [
+      4,
+      4,
+      4,
+      4
+    ],
+    "durations": [
+      15,
+      15,
+      30,
+      30
+    ],
+    "horizontal_overflow": false,
+    "image_load_errors": [],
+    "anchor_navigation": "videos section at 100 px below viewport top"
+  }
+}

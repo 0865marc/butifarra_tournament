@@ -1,0 +1,90 @@
+{
+  "checked_at": "2026-09-16",
+  "labels": [
+    "post-ca",
+    "post-es",
+    "story-ca",
+    "story-es"
+  ],
+  "jobs": [
+    {
+      "index": 1,
+      "job_id": "6902607d-f2a3-46f9-a0d0-71f484bc22ef",
+      "status": "completed",
+      "type": "image",
+      "model": "gpt_image_2",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/hf_20260908_135909_6902607d-f2a3-46f9-a0d0-71f484bc22ef.png"
+    },
+    {
+      "index": 2,
+      "job_id": "2ea19ecc-1d89-4bf2-a424-366841bd2f3b",
+      "status": "completed",
+      "type": "image",
+      "model": "gpt_image_2",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/hf_20260908_135909_2ea19ecc-1d89-4bf2-a424-366841bd2f3b.png"
+    },
+    {
+      "index": 3,
+      "job_id": "c8a79dca-319c-4781-9114-9386f51c8170",
+      "status": "completed",
+      "type": "image",
+      "model": "gpt_image_2",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/hf_20260908_135909_c8a79dca-319c-4781-9114-9386f51c8170.png"
+    },
+    {
+      "index": 4,
+      "job_id": "70313ca8-638d-4c61-8028-2a74a2a2dfba",
+      "status": "completed",
+      "type": "image",
+      "model": "gpt_image_2",
+      "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3J0WYuccflO7jGTnI72Q4ZUXo6i/hf_20260908_135909_70313ca8-638d-4c61-8028-2a74a2a2dfba.png"
+    }
+  ],
+  "visual_qa": "Pending; completion verified, not yet reviewed.",
+  "account_status": {
+    "credits": 0,
+    "subscription_plan_type": "free",
+    "pricing_url": "https://higgsfield.ai/mcp-pricing",
+    "free_trial": {
+      "status": "expired",
+      "eligible": false,
+      "offered_kind": null,
+      "kind": "mcp",
+      "trial_credits": 100,
+      "ends_at": "2026-09-11T13:09:21Z",
+      "unlim_available": false,
+      "unlim_remaining": null,
+      "unlim_expires_at": null
+    },
+    "free_gens": [
+      {
+        "job_set_types": [
+          "hf_mult_motion_control",
+          "hf_mult_replace_object"
+        ],
+        "remaining": 1,
+        "parameters": {
+          "resolution": [
+            "480p",
+            "720p"
+          ]
+        },
+        "max_duration": 30
+      },
+      {
+        "job_set_types": [
+          "viral_hub_video"
+        ],
+        "remaining": 1,
+        "parameters": {
+          "resolution": [
+            "480p",
+            "720p"
+          ]
+        },
+        "max_duration": null
+      }
+    ]
+  },
+  "notes": "ButiPunt identity approved (name, palette, Punt propi logo, Fraunces 700 + Source Sans 3 400). Campaign was interrupted after social image submission by a new request for an ainkii landing. No videos submitted."
+}

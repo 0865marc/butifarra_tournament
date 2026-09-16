@@ -1,0 +1,333 @@
+{
+  "brand": "ButiPunt",
+  "date": "2026-09-16",
+  "approved": {
+    "symbol": "Punt propi · opción 1",
+    "typography": "Fraunces 700 + Source Sans 3 400 · opción 2",
+    "palette": [
+      "#F8F3E8",
+      "#182D29",
+      "#245748",
+      "#D7684F",
+      "#DDCBA8"
+    ]
+  },
+  "assets": [
+    {
+      "name": "logos/butipunt-horizontal-color",
+      "width": 1150,
+      "height": 260,
+      "title": "ButiPunt"
+    },
+    {
+      "name": "logos/butipunt-simbolo-color",
+      "width": 512,
+      "height": 512,
+      "title": "ButiPunt"
+    },
+    {
+      "name": "logos/butipunt-vertical-color",
+      "width": 720,
+      "height": 760,
+      "title": "ButiPunt"
+    },
+    {
+      "name": "logos/butipunt-horizontal-tinta",
+      "width": 1150,
+      "height": 260,
+      "title": "ButiPunt"
+    },
+    {
+      "name": "logos/butipunt-simbolo-tinta",
+      "width": 512,
+      "height": 512,
+      "title": "ButiPunt"
+    },
+    {
+      "name": "logos/butipunt-vertical-tinta",
+      "width": 720,
+      "height": 760,
+      "title": "ButiPunt"
+    },
+    {
+      "name": "logos/butipunt-horizontal-blanco",
+      "width": 1150,
+      "height": 260,
+      "title": "ButiPunt"
+    },
+    {
+      "name": "logos/butipunt-simbolo-blanco",
+      "width": 512,
+      "height": 512,
+      "title": "ButiPunt"
+    },
+    {
+      "name": "logos/butipunt-vertical-blanco",
+      "width": 720,
+      "height": 760,
+      "title": "ButiPunt"
+    },
+    {
+      "name": "logos/butipunt-avatar",
+      "width": 512,
+      "height": 512,
+      "title": "ButiPunt"
+    },
+    {
+      "name": "logos/butipunt-favicon",
+      "width": 64,
+      "height": 64,
+      "title": "ButiPunt"
+    },
+    {
+      "name": "campana/post-es",
+      "width": 1080,
+      "height": 1080,
+      "title": "Cada punto, en su sitio."
+    },
+    {
+      "name": "campana/story-es",
+      "width": 1080,
+      "height": 1920,
+      "title": "El torneo, a punto."
+    },
+    {
+      "name": "campana/cartel-A3-es",
+      "width": 2382,
+      "height": 3368,
+      "title": "El torneo, a punto."
+    },
+    {
+      "name": "campana/cabecera-es",
+      "width": 1600,
+      "height": 600,
+      "title": "El torneo, a punto."
+    },
+    {
+      "name": "campana/og-es",
+      "width": 1200,
+      "height": 630,
+      "title": "El torneo, a punto."
+    },
+    {
+      "name": "campana/carrusel-es-01",
+      "width": 1080,
+      "height": 1350,
+      "title": "Inscribe las parejas"
+    },
+    {
+      "name": "campana/carrusel-es-02",
+      "width": 1080,
+      "height": 1350,
+      "title": "Anota los resultados"
+    },
+    {
+      "name": "campana/carrusel-es-03",
+      "width": 1080,
+      "height": 1350,
+      "title": "Consulta la clasificación"
+    },
+    {
+      "name": "editables/escenas/reel-es-00",
+      "width": 1080,
+      "height": 1920,
+      "title": "El torneo, a punto."
+    },
+    {
+      "name": "editables/escenas/reel-es-01",
+      "width": 1080,
+      "height": 1920,
+      "title": "Inscribe las parejas"
+    },
+    {
+      "name": "editables/escenas/reel-es-02",
+      "width": 1080,
+      "height": 1920,
+      "title": "Anota los resultados"
+    },
+    {
+      "name": "editables/escenas/reel-es-03",
+      "width": 1080,
+      "height": 1920,
+      "title": "Consulta la clasificación"
+    },
+    {
+      "name": "editables/escenas/reel-es-04",
+      "width": 1080,
+      "height": 1920,
+      "title": "Butifarra, ronda a ronda."
+    },
+    {
+      "name": "editables/escenas/explicativo-es-00",
+      "width": 1920,
+      "height": 1080,
+      "title": "Organiza tu torneo"
+    },
+    {
+      "name": "editables/escenas/explicativo-es-01",
+      "width": 1920,
+      "height": 1080,
+      "title": "Prepara las parejas"
+    },
+    {
+      "name": "editables/escenas/explicativo-es-02",
+      "width": 1920,
+      "height": 1080,
+      "title": "Sigue cada ronda"
+    },
+    {
+      "name": "editables/escenas/explicativo-es-03",
+      "width": 1920,
+      "height": 1080,
+      "title": "Confirma los puntos"
+    },
+    {
+      "name": "editables/escenas/explicativo-es-04",
+      "width": 1920,
+      "height": 1080,
+      "title": "Consulta la clasificación"
+    },
+    {
+      "name": "editables/escenas/explicativo-es-05",
+      "width": 1920,
+      "height": 1080,
+      "title": "El torneo, a punto."
+    },
+    {
+      "name": "campana/post-ca",
+      "width": 1080,
+      "height": 1080,
+      "title": "Cada punt, al seu lloc."
+    },
+    {
+      "name": "campana/story-ca",
+      "width": 1080,
+      "height": 1920,
+      "title": "El torneig, a punt."
+    },
+    {
+      "name": "campana/cartel-A3-ca",
+      "width": 2382,
+      "height": 3368,
+      "title": "El torneig, a punt."
+    },
+    {
+      "name": "campana/cabecera-ca",
+      "width": 1600,
+      "height": 600,
+      "title": "El torneig, a punt."
+    },
+    {
+      "name": "campana/og-ca",
+      "width": 1200,
+      "height": 630,
+      "title": "El torneig, a punt."
+    },
+    {
+      "name": "campana/carrusel-ca-01",
+      "width": 1080,
+      "height": 1350,
+      "title": "Inscriu les parelles"
+    },
+    {
+      "name": "campana/carrusel-ca-02",
+      "width": 1080,
+      "height": 1350,
+      "title": "Anota els resultats"
+    },
+    {
+      "name": "campana/carrusel-ca-03",
+      "width": 1080,
+      "height": 1350,
+      "title": "Consulta la classificació"
+    },
+    {
+      "name": "editables/escenas/reel-ca-00",
+      "width": 1080,
+      "height": 1920,
+      "title": "El torneig, a punt."
+    },
+    {
+      "name": "editables/escenas/reel-ca-01",
+      "width": 1080,
+      "height": 1920,
+      "title": "Inscriu les parelles"
+    },
+    {
+      "name": "editables/escenas/reel-ca-02",
+      "width": 1080,
+      "height": 1920,
+      "title": "Anota els resultats"
+    },
+    {
+      "name": "editables/escenas/reel-ca-03",
+      "width": 1080,
+      "height": 1920,
+      "title": "Consulta la classificació"
+    },
+    {
+      "name": "editables/escenas/reel-ca-04",
+      "width": 1080,
+      "height": 1920,
+      "title": "Butifarra, ronda a ronda."
+    },
+    {
+      "name": "editables/escenas/explicativo-ca-00",
+      "width": 1920,
+      "height": 1080,
+      "title": "Organitza el teu torneig"
+    },
+    {
+      "name": "editables/escenas/explicativo-ca-01",
+      "width": 1920,
+      "height": 1080,
+      "title": "Prepara les parelles"
+    },
+    {
+      "name": "editables/escenas/explicativo-ca-02",
+      "width": 1920,
+      "height": 1080,
+      "title": "Segueix cada ronda"
+    },
+    {
+      "name": "editables/escenas/explicativo-ca-03",
+      "width": 1920,
+      "height": 1080,
+      "title": "Confirma els punts"
+    },
+    {
+      "name": "editables/escenas/explicativo-ca-04",
+      "width": 1920,
+      "height": 1080,
+      "title": "Consulta la classificació"
+    },
+    {
+      "name": "editables/escenas/explicativo-ca-05",
+      "width": 1920,
+      "height": 1080,
+      "title": "El torneig, a punt."
+    },
+    {
+      "name": "identidad",
+      "width": 1280,
+      "height": 1340,
+      "title": "ButiPunt"
+    }
+  ],
+  "provenance": {
+    "logo": "Recraft V4.1 en Higgsfield, 2026-09-08. Curvas originales conservadas.",
+    "original_social": "GPT Image 2 en Higgsfield, 2026-09-08.",
+    "production": "Composición, textos, contorneado tipográfico y adaptaciones por Codex; render determinista en el sandbox de Higgsfield.",
+    "video": "Animación gráfica nativa en Higgsedit; sin nuevas tomas generadas por IA.",
+    "new_generation_credits": 0
+  },
+  "logo_bounds": [
+    605.011,
+    529.5571869429655,
+    830.088736140892,
+    987.7628130570345
+  ],
+  "video_count": 4,
+  "campaign_png_count": 16,
+  "status": "production_complete"
+}

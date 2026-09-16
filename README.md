@@ -2,7 +2,7 @@
 
 A small, browser-only Astro MVP for running a Catalan Butifarra card-game championship from one shared desk.
 
-The product landing lives at `/`, tournament preparation and play at `/torneig/`, and secondary brand resources at `/marca/`, linked from the landing footer. The landing uses the approved ButiPunt identity and campaign video, with clearly labelled example data.
+The product landing lives at `/`, tournament preparation and play at `/torneig/`, and secondary brand resources at `/marca/`, linked from the landing footer. The landing uses the approved ButiPunt identity, with clearly labelled example data. It is part of this Astro application; no ChatGPT Sites integration is required.
 
 ## Quick start
 

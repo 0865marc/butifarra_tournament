@@ -1,0 +1,536 @@
+{
+  "name": "ButiRonda",
+  "symbol": "Parelles",
+  "symbolSource": "logos/simbolo-parelles.svg",
+  "fonts": [
+    "Noto Serif Bold",
+    "Noto Sans Regular",
+    "Noto Sans Bold"
+  ],
+  "palette": {
+    "green": "#183D35",
+    "ivory": "#F6F0E3",
+    "paper": "#FFFAF0",
+    "coral": "#C96959",
+    "gold": "#BA8A3A",
+    "line": "#D9CFBC",
+    "muted": "#69716A"
+  },
+  "assets": [
+    {
+      "file": "logos/simbolo-parelles.png",
+      "source": "logos/simbolo-parelles.svg",
+      "category": "logo",
+      "title": "Símbolo elegido · Parelles",
+      "width": 2048,
+      "height": 2048
+    },
+    {
+      "file": "logos/logo-horizontal.png",
+      "source": "logos/logo-horizontal.svg",
+      "category": "logo",
+      "lang": null,
+      "width": 1920,
+      "height": 438,
+      "title": "ButiRonda · logo horizontal"
+    },
+    {
+      "file": "logos/logo-apilado.png",
+      "source": "logos/logo-apilado.svg",
+      "category": "logo",
+      "lang": null,
+      "width": 1760,
+      "height": 1160,
+      "title": "ButiRonda · logo apilado"
+    },
+    {
+      "file": "logos/icono-app.png",
+      "source": "logos/icono-app.svg",
+      "category": "logo",
+      "lang": null,
+      "width": 1024,
+      "height": 1024,
+      "title": "ButiRonda · icono de aplicación"
+    },
+    {
+      "file": "logos/avatar.png",
+      "source": "logos/avatar.svg",
+      "category": "logo",
+      "lang": null,
+      "width": 1024,
+      "height": 1024,
+      "title": "ButiRonda · avatar"
+    },
+    {
+      "file": "redes/ca/01-llancament.png",
+      "source": "redes/ca/01-llancament.svg",
+      "category": "social",
+      "lang": "ca",
+      "width": 1080,
+      "height": 1350,
+      "title": "ButiRonda · La pròxima ronda comença aquí."
+    },
+    {
+      "file": "redes/ca/02-parelles.png",
+      "source": "redes/ca/02-parelles.svg",
+      "category": "social",
+      "lang": "ca",
+      "width": 1080,
+      "height": 1350,
+      "title": "ButiRonda · Les parelles, a punt."
+    },
+    {
+      "file": "redes/ca/03-sorteig.png",
+      "source": "redes/ca/03-sorteig.svg",
+      "category": "social",
+      "lang": "ca",
+      "width": 1080,
+      "height": 1350,
+      "title": "ButiRonda · Comença amb un sorteig."
+    },
+    {
+      "file": "redes/ca/04-resultats.png",
+      "source": "redes/ca/04-resultats.svg",
+      "category": "social",
+      "lang": "ca",
+      "width": 1080,
+      "height": 1350,
+      "title": "ButiRonda · Cada resultat compta."
+    },
+    {
+      "file": "redes/ca/05-classificacio.png",
+      "source": "redes/ca/05-classificacio.svg",
+      "category": "social",
+      "lang": "ca",
+      "width": 1080,
+      "height": 1350,
+      "title": "ButiRonda · La classificació, al dia."
+    },
+    {
+      "file": "redes/ca/06-taules.png",
+      "source": "redes/ca/06-taules.svg",
+      "category": "social",
+      "lang": "ca",
+      "width": 1080,
+      "height": 1350,
+      "title": "ButiRonda · Cada parella, a la seva taula."
+    },
+    {
+      "file": "redes/ca/07-story-lanzamiento.png",
+      "source": "redes/ca/07-story-lanzamiento.svg",
+      "category": "story",
+      "lang": "ca",
+      "width": 1080,
+      "height": 1920,
+      "title": "ButiRonda · story de lanzamiento"
+    },
+    {
+      "file": "redes/ca/08-story-pasos.png",
+      "source": "redes/ca/08-story-pasos.svg",
+      "category": "story",
+      "lang": "ca",
+      "width": 1080,
+      "height": 1920,
+      "title": "ButiRonda · cuatro pasos"
+    },
+    {
+      "file": "banners/ca/cabecera.png",
+      "source": "banners/ca/cabecera.svg",
+      "category": "banner",
+      "lang": "ca",
+      "width": 1920,
+      "height": 640,
+      "title": "ButiRonda · cabecera"
+    },
+    {
+      "file": "banners/ca/enlace-social.png",
+      "source": "banners/ca/enlace-social.svg",
+      "category": "banner",
+      "lang": "ca",
+      "width": 1200,
+      "height": 630,
+      "title": "ButiRonda · imagen de enlace"
+    },
+    {
+      "file": "cartel/ca/cartel-a3.png",
+      "source": "cartel/ca/cartel-a3.svg",
+      "category": "poster",
+      "lang": "ca",
+      "width": 3508,
+      "height": 4960,
+      "title": "ButiRonda · cartel A3"
+    },
+    {
+      "file": "redes/es/01-lanzamiento.png",
+      "source": "redes/es/01-lanzamiento.svg",
+      "category": "social",
+      "lang": "es",
+      "width": 1080,
+      "height": 1350,
+      "title": "ButiRonda · La próxima ronda empieza aquí."
+    },
+    {
+      "file": "redes/es/02-parejas.png",
+      "source": "redes/es/02-parejas.svg",
+      "category": "social",
+      "lang": "es",
+      "width": 1080,
+      "height": 1350,
+      "title": "ButiRonda · Las parejas, a punto."
+    },
+    {
+      "file": "redes/es/03-sorteo.png",
+      "source": "redes/es/03-sorteo.svg",
+      "category": "social",
+      "lang": "es",
+      "width": 1080,
+      "height": 1350,
+      "title": "ButiRonda · Empieza con un sorteo."
+    },
+    {
+      "file": "redes/es/04-resultados.png",
+      "source": "redes/es/04-resultados.svg",
+      "category": "social",
+      "lang": "es",
+      "width": 1080,
+      "height": 1350,
+      "title": "ButiRonda · Cada resultado cuenta."
+    },
+    {
+      "file": "redes/es/05-clasificacion.png",
+      "source": "redes/es/05-clasificacion.svg",
+      "category": "social",
+      "lang": "es",
+      "width": 1080,
+      "height": 1350,
+      "title": "ButiRonda · La clasificación, al día."
+    },
+    {
+      "file": "redes/es/06-mesas.png",
+      "source": "redes/es/06-mesas.svg",
+      "category": "social",
+      "lang": "es",
+      "width": 1080,
+      "height": 1350,
+      "title": "ButiRonda · Cada pareja, en su mesa."
+    },
+    {
+      "file": "redes/es/07-story-lanzamiento.png",
+      "source": "redes/es/07-story-lanzamiento.svg",
+      "category": "story",
+      "lang": "es",
+      "width": 1080,
+      "height": 1920,
+      "title": "ButiRonda · story de lanzamiento"
+    },
+    {
+      "file": "redes/es/08-story-pasos.png",
+      "source": "redes/es/08-story-pasos.svg",
+      "category": "story",
+      "lang": "es",
+      "width": 1080,
+      "height": 1920,
+      "title": "ButiRonda · cuatro pasos"
+    },
+    {
+      "file": "banners/es/cabecera.png",
+      "source": "banners/es/cabecera.svg",
+      "category": "banner",
+      "lang": "es",
+      "width": 1920,
+      "height": 640,
+      "title": "ButiRonda · cabecera"
+    },
+    {
+      "file": "banners/es/enlace-social.png",
+      "source": "banners/es/enlace-social.svg",
+      "category": "banner",
+      "lang": "es",
+      "width": 1200,
+      "height": 630,
+      "title": "ButiRonda · imagen de enlace"
+    },
+    {
+      "file": "cartel/es/cartel-a3.png",
+      "source": "cartel/es/cartel-a3.svg",
+      "category": "poster",
+      "lang": "es",
+      "width": 3508,
+      "height": 4960,
+      "title": "ButiRonda · cartel A3"
+    },
+    {
+      "file": "videos/fuentes/ca/vertical-1.png",
+      "source": "videos/fuentes/ca/vertical-1.svg",
+      "category": "video-frame",
+      "lang": "ca",
+      "width": 1080,
+      "height": 1920,
+      "title": "ButiRonda · vertical · escena 1"
+    },
+    {
+      "file": "videos/fuentes/ca/vertical-2.png",
+      "source": "videos/fuentes/ca/vertical-2.svg",
+      "category": "video-frame",
+      "lang": "ca",
+      "width": 1080,
+      "height": 1920,
+      "title": "ButiRonda · vertical · escena 2"
+    },
+    {
+      "file": "videos/fuentes/ca/vertical-3.png",
+      "source": "videos/fuentes/ca/vertical-3.svg",
+      "category": "video-frame",
+      "lang": "ca",
+      "width": 1080,
+      "height": 1920,
+      "title": "ButiRonda · vertical · escena 3"
+    },
+    {
+      "file": "videos/fuentes/ca/vertical-4.png",
+      "source": "videos/fuentes/ca/vertical-4.svg",
+      "category": "video-frame",
+      "lang": "ca",
+      "width": 1080,
+      "height": 1920,
+      "title": "ButiRonda · vertical · escena 4"
+    },
+    {
+      "file": "videos/fuentes/ca/vertical-5.png",
+      "source": "videos/fuentes/ca/vertical-5.svg",
+      "category": "video-frame",
+      "lang": "ca",
+      "width": 1080,
+      "height": 1920,
+      "title": "ButiRonda · vertical · escena 5"
+    },
+    {
+      "file": "videos/fuentes/ca/horizontal-1.png",
+      "source": "videos/fuentes/ca/horizontal-1.svg",
+      "category": "video-frame",
+      "lang": "ca",
+      "width": 1920,
+      "height": 1080,
+      "title": "ButiRonda · explicación · escena 1"
+    },
+    {
+      "file": "videos/fuentes/ca/horizontal-2.png",
+      "source": "videos/fuentes/ca/horizontal-2.svg",
+      "category": "video-frame",
+      "lang": "ca",
+      "width": 1920,
+      "height": 1080,
+      "title": "ButiRonda · explicación · escena 2"
+    },
+    {
+      "file": "videos/fuentes/ca/horizontal-3.png",
+      "source": "videos/fuentes/ca/horizontal-3.svg",
+      "category": "video-frame",
+      "lang": "ca",
+      "width": 1920,
+      "height": 1080,
+      "title": "ButiRonda · explicación · escena 3"
+    },
+    {
+      "file": "videos/fuentes/ca/horizontal-4.png",
+      "source": "videos/fuentes/ca/horizontal-4.svg",
+      "category": "video-frame",
+      "lang": "ca",
+      "width": 1920,
+      "height": 1080,
+      "title": "ButiRonda · explicación · escena 4"
+    },
+    {
+      "file": "videos/fuentes/ca/horizontal-5.png",
+      "source": "videos/fuentes/ca/horizontal-5.svg",
+      "category": "video-frame",
+      "lang": "ca",
+      "width": 1920,
+      "height": 1080,
+      "title": "ButiRonda · explicación · escena 5"
+    },
+    {
+      "file": "videos/fuentes/ca/horizontal-6.png",
+      "source": "videos/fuentes/ca/horizontal-6.svg",
+      "category": "video-frame",
+      "lang": "ca",
+      "width": 1920,
+      "height": 1080,
+      "title": "ButiRonda · explicación · escena 6"
+    },
+    {
+      "file": "videos/fuentes/es/vertical-1.png",
+      "source": "videos/fuentes/es/vertical-1.svg",
+      "category": "video-frame",
+      "lang": "es",
+      "width": 1080,
+      "height": 1920,
+      "title": "ButiRonda · vertical · escena 1"
+    },
+    {
+      "file": "videos/fuentes/es/vertical-2.png",
+      "source": "videos/fuentes/es/vertical-2.svg",
+      "category": "video-frame",
+      "lang": "es",
+      "width": 1080,
+      "height": 1920,
+      "title": "ButiRonda · vertical · escena 2"
+    },
+    {
+      "file": "videos/fuentes/es/vertical-3.png",
+      "source": "videos/fuentes/es/vertical-3.svg",
+      "category": "video-frame",
+      "lang": "es",
+      "width": 1080,
+      "height": 1920,
+      "title": "ButiRonda · vertical · escena 3"
+    },
+    {
+      "file": "videos/fuentes/es/vertical-4.png",
+      "source": "videos/fuentes/es/vertical-4.svg",
+      "category": "video-frame",
+      "lang": "es",
+      "width": 1080,
+      "height": 1920,
+      "title": "ButiRonda · vertical · escena 4"
+    },
+    {
+      "file": "videos/fuentes/es/vertical-5.png",
+      "source": "videos/fuentes/es/vertical-5.svg",
+      "category": "video-frame",
+      "lang": "es",
+      "width": 1080,
+      "height": 1920,
+      "title": "ButiRonda · vertical · escena 5"
+    },
+    {
+      "file": "videos/fuentes/es/horizontal-1.png",
+      "source": "videos/fuentes/es/horizontal-1.svg",
+      "category": "video-frame",
+      "lang": "es",
+      "width": 1920,
+      "height": 1080,
+      "title": "ButiRonda · explicación · escena 1"
+    },
+    {
+      "file": "videos/fuentes/es/horizontal-2.png",
+      "source": "videos/fuentes/es/horizontal-2.svg",
+      "category": "video-frame",
+      "lang": "es",
+      "width": 1920,
+      "height": 1080,
+      "title": "ButiRonda · explicación · escena 2"
+    },
+    {
+      "file": "videos/fuentes/es/horizontal-3.png",
+      "source": "videos/fuentes/es/horizontal-3.svg",
+      "category": "video-frame",
+      "lang": "es",
+      "width": 1920,
+      "height": 1080,
+      "title": "ButiRonda · explicación · escena 3"
+    },
+    {
+      "file": "videos/fuentes/es/horizontal-4.png",
+      "source": "videos/fuentes/es/horizontal-4.svg",
+      "category": "video-frame",
+      "lang": "es",
+      "width": 1920,
+      "height": 1080,
+      "title": "ButiRonda · explicación · escena 4"
+    },
+    {
+      "file": "videos/fuentes/es/horizontal-5.png",
+      "source": "videos/fuentes/es/horizontal-5.svg",
+      "category": "video-frame",
+      "lang": "es",
+      "width": 1920,
+      "height": 1080,
+      "title": "ButiRonda · explicación · escena 5"
+    },
+    {
+      "file": "videos/fuentes/es/horizontal-6.png",
+      "source": "videos/fuentes/es/horizontal-6.svg",
+      "category": "video-frame",
+      "lang": "es",
+      "width": 1920,
+      "height": 1080,
+      "title": "ButiRonda · explicación · escena 6"
+    },
+    {
+      "file": "guia/identidad.png",
+      "source": "guia/identidad.svg",
+      "category": "guide",
+      "lang": null,
+      "width": 1600,
+      "height": 1220,
+      "title": "ButiRonda · identidad"
+    },
+    {
+      "file": "vista-del-pack.png",
+      "source": "vista-del-pack.svg",
+      "category": "overview",
+      "lang": null,
+      "width": 1800,
+      "height": 1350,
+      "title": "ButiRonda · vista del pack"
+    }
+  ],
+  "videos": [
+    {
+      "file": "videos/vertical-15s-ca.mp4",
+      "language": "ca",
+      "width": 1080,
+      "height": 1920,
+      "duration": 15,
+      "fps": 30,
+      "videoCodec": "h264",
+      "audioCodec": "aac",
+      "audio": "original local tone synthesis; no narration",
+      "fullyDecoded": true
+    },
+    {
+      "file": "videos/explicacion-30s-ca.mp4",
+      "language": "ca",
+      "width": 1920,
+      "height": 1080,
+      "duration": 30,
+      "fps": 30,
+      "videoCodec": "h264",
+      "audioCodec": "aac",
+      "audio": "original local tone synthesis; no narration",
+      "fullyDecoded": true
+    },
+    {
+      "file": "videos/vertical-15s-es.mp4",
+      "language": "es",
+      "width": 1080,
+      "height": 1920,
+      "duration": 15,
+      "fps": 30,
+      "videoCodec": "h264",
+      "audioCodec": "aac",
+      "audio": "original local tone synthesis; no narration",
+      "fullyDecoded": true
+    },
+    {
+      "file": "videos/explicacion-30s-es.mp4",
+      "language": "es",
+      "width": 1920,
+      "height": 1080,
+      "duration": 30,
+      "fps": 30,
+      "videoCodec": "h264",
+      "audioCodec": "aac",
+      "audio": "original local tone synthesis; no narration",
+      "fullyDecoded": true
+    }
+  ],
+  "documents": [
+    "LEEME.md",
+    "textos/copy-ca.md",
+    "textos/copy-es.md",
+    "textos/plan-publicacion.md",
+    "videos/guiones.md"
+  ]
+}

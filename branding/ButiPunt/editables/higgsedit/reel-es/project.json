@@ -1,0 +1,742 @@
+{
+  "id": "fa5fabf9-7f3c-444b-82fd-3ec5ef1cc870",
+  "name": "reel-es",
+  "schemaVersion": 2,
+  "scenes": [
+    {
+      "id": "2bd1ffd4-815f-4d02-8d69-c1e6afa5363e",
+      "name": "New Scene",
+      "x": 0,
+      "y": 0,
+      "width": 1080,
+      "height": 1920,
+      "background": { "type": "solid", "color": "#F8F3E8" },
+      "fps": 30,
+      "duration": 15,
+      "tracks": [
+        {
+          "id": "c382f45d-cfab-492f-bef6-c603ec70ba3f",
+          "name": "Track 1",
+          "mode": "default",
+          "clips": [
+            {
+              "id": "c81f3de6-fd9c-4ef9-b3bf-6e3c7afed65c",
+              "kind": "media",
+              "name": "reel-es-scene-1",
+              "assetId": "e13a5be6-2f45-d2d7-e18b-d65fbd5b8b29",
+              "timeRange": { "start": 0, "duration": 3 },
+              "trim": { "start": 0, "end": 3 },
+              "speed": 1,
+              "transform": {
+                "x": 0,
+                "y": 0,
+                "scaleX": 1,
+                "scaleY": 1,
+                "rotation": 0,
+                "anchorX": 0,
+                "anchorY": 0,
+                "flipX": false,
+                "flipY": false,
+                "skewX": 0,
+                "skewY": 0
+              },
+              "size": { "width": 1080, "height": 1920 },
+              "opacity": 1,
+              "blendMode": "normal",
+              "volume": 1,
+              "muted": true,
+              "cornerRadius": { "bl": 0, "br": 0, "mixed": false, "tl": 0, "tr": 0, "uniform": 0 },
+              "effects": [],
+              "animations": [
+                {
+                  "property": "offsetY",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 28,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.16, "x2": 0.3, "y1": 1, "y2": 1 },
+                      "id": "05f0af37-678f-439e-85e8-60298fc2514f"
+                    },
+                    {
+                      "time": 0.55,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "dfa99e78-7709-4d8a-8d9e-a5766fd273e9"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "174195c3-1fc9-47f1-b452-7ff86d7c2308"
+                },
+                {
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 0,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "de654f57-2a94-4b7a-9da3-dd32033b9c1a"
+                    },
+                    {
+                      "time": 0.3,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "eed2652a-bd5b-43a3-95e8-02a8719c73c0"
+                    },
+                    {
+                      "time": 2.8,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "4bece56f-f573-4648-a21d-61623efe6cbc"
+                    },
+                    {
+                      "time": 3,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "999308f8-6702-42a7-bf05-312c7d46fa77"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "e6d49e3b-75ac-4562-95d2-49541891b2f9"
+                }
+              ],
+              "presetAnimations": [],
+              "mask": null,
+              "locked": false,
+              "hidden": false,
+              "origin": { "column": 15, "file": "motion.js", "line": 16 },
+              "preservePitch": true
+            },
+            {
+              "id": "33f7ab8d-4b0c-4436-ad92-70f130e1f162",
+              "kind": "media",
+              "name": "reel-es-scene-2",
+              "assetId": "85643849-d86f-dfd4-3b2e-0fbe6e505c8c",
+              "timeRange": { "start": 3, "duration": 3 },
+              "trim": { "start": 0, "end": 3 },
+              "speed": 1,
+              "transform": {
+                "x": 0,
+                "y": 0,
+                "scaleX": 1,
+                "scaleY": 1,
+                "rotation": 0,
+                "anchorX": 0,
+                "anchorY": 0,
+                "flipX": false,
+                "flipY": false,
+                "skewX": 0,
+                "skewY": 0
+              },
+              "size": { "width": 1080, "height": 1920 },
+              "opacity": 1,
+              "blendMode": "normal",
+              "volume": 1,
+              "muted": true,
+              "cornerRadius": { "bl": 0, "br": 0, "mixed": false, "tl": 0, "tr": 0, "uniform": 0 },
+              "effects": [],
+              "animations": [
+                {
+                  "property": "offsetY",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 28,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.16, "x2": 0.3, "y1": 1, "y2": 1 },
+                      "id": "b205df99-dfa0-44b9-930a-fc67bd77c317"
+                    },
+                    {
+                      "time": 0.55,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "5d239fe7-646c-4fa6-8289-f4b71b001dce"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "18ba4809-6b85-4d99-b83a-f98ac277db33"
+                },
+                {
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 0,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "d398575f-d828-4324-8ccb-ca7b5db70489"
+                    },
+                    {
+                      "time": 0.3,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "d9d65003-4d05-4959-8f15-b4372ca6c6c4"
+                    },
+                    {
+                      "time": 2.8,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "49521426-1980-4ef5-9458-6a7fa2f2e12a"
+                    },
+                    {
+                      "time": 3,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "c6a93833-05e2-4d48-923d-c29a4402d8a8"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "dc1a3d8d-b233-416a-b273-4ff94eabaf96"
+                }
+              ],
+              "presetAnimations": [],
+              "mask": null,
+              "locked": false,
+              "hidden": false,
+              "origin": { "column": 15, "file": "motion.js", "line": 16 },
+              "preservePitch": true
+            },
+            {
+              "id": "24506551-4615-4353-9b4f-70ad7b7853af",
+              "kind": "media",
+              "name": "reel-es-scene-3",
+              "assetId": "f341e9a4-c097-a360-c356-cfcd8f8612e3",
+              "timeRange": { "start": 6, "duration": 3 },
+              "trim": { "start": 0, "end": 3 },
+              "speed": 1,
+              "transform": {
+                "x": 0,
+                "y": 0,
+                "scaleX": 1,
+                "scaleY": 1,
+                "rotation": 0,
+                "anchorX": 0,
+                "anchorY": 0,
+                "flipX": false,
+                "flipY": false,
+                "skewX": 0,
+                "skewY": 0
+              },
+              "size": { "width": 1080, "height": 1920 },
+              "opacity": 1,
+              "blendMode": "normal",
+              "volume": 1,
+              "muted": true,
+              "cornerRadius": { "bl": 0, "br": 0, "mixed": false, "tl": 0, "tr": 0, "uniform": 0 },
+              "effects": [],
+              "animations": [
+                {
+                  "property": "offsetY",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 28,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.16, "x2": 0.3, "y1": 1, "y2": 1 },
+                      "id": "5f39d406-32e6-426e-830e-3b610698dd44"
+                    },
+                    {
+                      "time": 0.55,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "d0c34e13-3333-409b-ab44-adb9537e03ac"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "0a23374e-2d26-4d21-b34c-8d2dfa3f0f4b"
+                },
+                {
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 0,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "0f9b0de6-c35a-4276-b7b0-ad44fa60c144"
+                    },
+                    {
+                      "time": 0.3,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "c53e75d0-594f-4adc-b54f-26689d885f44"
+                    },
+                    {
+                      "time": 2.8,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "3539424a-9528-437c-bef1-608e54a35093"
+                    },
+                    {
+                      "time": 3,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "a062acc7-9d24-4938-9ae5-969abd2e717a"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "17408a12-cac9-4b3e-80d6-a40ba2bde679"
+                }
+              ],
+              "presetAnimations": [],
+              "mask": null,
+              "locked": false,
+              "hidden": false,
+              "origin": { "column": 15, "file": "motion.js", "line": 16 },
+              "preservePitch": true
+            },
+            {
+              "id": "a0913863-c223-4566-a834-818319ff99bb",
+              "kind": "media",
+              "name": "reel-es-scene-4",
+              "assetId": "c5fe86d7-44c2-1e3d-cf7b-4b68dfa2bcc2",
+              "timeRange": { "start": 9, "duration": 3 },
+              "trim": { "start": 0, "end": 3 },
+              "speed": 1,
+              "transform": {
+                "x": 0,
+                "y": 0,
+                "scaleX": 1,
+                "scaleY": 1,
+                "rotation": 0,
+                "anchorX": 0,
+                "anchorY": 0,
+                "flipX": false,
+                "flipY": false,
+                "skewX": 0,
+                "skewY": 0
+              },
+              "size": { "width": 1080, "height": 1920 },
+              "opacity": 1,
+              "blendMode": "normal",
+              "volume": 1,
+              "muted": true,
+              "cornerRadius": { "bl": 0, "br": 0, "mixed": false, "tl": 0, "tr": 0, "uniform": 0 },
+              "effects": [],
+              "animations": [
+                {
+                  "property": "offsetY",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 28,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.16, "x2": 0.3, "y1": 1, "y2": 1 },
+                      "id": "2a325a2f-4688-4c88-b93d-b9d64bb5ad60"
+                    },
+                    {
+                      "time": 0.55,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "f9dfddc6-7e4f-49f1-8c26-e071ecde7eb3"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "3d0d7984-3f8c-49c3-8174-2bc13cc6d850"
+                },
+                {
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 0,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "d0260c9a-d5d3-484f-801d-39feafbca694"
+                    },
+                    {
+                      "time": 0.3,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "1c0e67a1-f508-4f8c-91f0-06e539bed69f"
+                    },
+                    {
+                      "time": 2.8,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "988f47e3-7fa5-49c6-85f5-ecdb0df68a5c"
+                    },
+                    {
+                      "time": 3,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "8c884329-9bef-49e1-b5ff-d733ce1d5d81"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "ff0661fc-d6a4-4f16-aadb-5f3e6c768a47"
+                }
+              ],
+              "presetAnimations": [],
+              "mask": null,
+              "locked": false,
+              "hidden": false,
+              "origin": { "column": 15, "file": "motion.js", "line": 16 },
+              "preservePitch": true
+            },
+            {
+              "id": "c90c7e8b-53b8-44d6-854a-4f93642259bb",
+              "kind": "media",
+              "name": "reel-es-scene-5",
+              "assetId": "62e3ea18-5c1c-e377-385b-462f73189752",
+              "timeRange": { "start": 12, "duration": 3 },
+              "trim": { "start": 0, "end": 3 },
+              "speed": 1,
+              "transform": {
+                "x": 0,
+                "y": 0,
+                "scaleX": 1,
+                "scaleY": 1,
+                "rotation": 0,
+                "anchorX": 0,
+                "anchorY": 0,
+                "flipX": false,
+                "flipY": false,
+                "skewX": 0,
+                "skewY": 0
+              },
+              "size": { "width": 1080, "height": 1920 },
+              "opacity": 1,
+              "blendMode": "normal",
+              "volume": 1,
+              "muted": true,
+              "cornerRadius": { "bl": 0, "br": 0, "mixed": false, "tl": 0, "tr": 0, "uniform": 0 },
+              "effects": [],
+              "animations": [
+                {
+                  "property": "offsetY",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 28,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.16, "x2": 0.3, "y1": 1, "y2": 1 },
+                      "id": "bf83012d-5d9d-483b-8804-2758525ddf18"
+                    },
+                    {
+                      "time": 0.55,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "6a39f455-2aa6-4779-9a6d-8415d7b43197"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "0d4408e0-8fd0-421b-9431-8e180cc28954"
+                },
+                {
+                  "property": "opacity",
+                  "keyframes": [
+                    {
+                      "time": 0,
+                      "value": 0,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "af01149c-4cdc-4f1c-af87-df103449b896"
+                    },
+                    {
+                      "time": 0.3,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "a1c2d97c-0ce7-4578-ba0a-e9f8f28aea8d"
+                    },
+                    {
+                      "time": 2.8,
+                      "value": 1,
+                      "easing": { "kind": "cubic-bezier", "x1": 0.215, "x2": 0.355, "y1": 0.61, "y2": 1 },
+                      "id": "28134c1f-38d1-48ea-bb10-ac1484f084c5"
+                    },
+                    {
+                      "time": 3,
+                      "value": 0,
+                      "easing": { "kind": "linear" },
+                      "id": "70e47b10-e5be-45e7-92cb-977954f97136"
+                    }
+                  ],
+                  "effectId": null,
+                  "effectParam": null,
+                  "gradientStopIndex": null,
+                  "id": "6b1b3163-4752-45be-a12c-7249678f73f1"
+                }
+              ],
+              "presetAnimations": [],
+              "mask": null,
+              "locked": false,
+              "hidden": false,
+              "origin": { "column": 15, "file": "motion.js", "line": 16 },
+              "preservePitch": true
+            }
+          ],
+          "locked": false,
+          "hidden": false,
+          "muted": false,
+          "solo": false,
+          "volume": 1
+        },
+        {
+          "id": "a113b72a-da2c-4b22-b1cc-4b0fab892f99",
+          "name": "Track 2",
+          "mode": "default",
+          "clips": [
+            {
+              "id": "18b2581b-b3f1-4def-bb8f-834b61e8c459",
+              "kind": "group",
+              "name": "brand-point-progress",
+              "timeRange": { "start": 0, "duration": 15 },
+              "transform": {
+                "x": 0,
+                "y": 0,
+                "scaleX": 1,
+                "scaleY": 1,
+                "rotation": 0,
+                "anchorX": 0,
+                "anchorY": 0,
+                "flipX": false,
+                "flipY": false,
+                "skewX": 0,
+                "skewY": 0
+              },
+              "size": { "width": 1080, "height": 1920 },
+              "opacity": 1,
+              "blendMode": "normal",
+              "effects": [],
+              "animations": [],
+              "presetAnimations": [],
+              "mask": null,
+              "locked": false,
+              "hidden": false,
+              "children": [
+                {
+                  "id": "87e49bc6-46ed-447d-a269-5eba46c2b875",
+                  "kind": "rect",
+                  "name": "Rect",
+                  "timeRange": { "start": 0, "duration": 15 },
+                  "transform": {
+                    "x": 104,
+                    "y": 1540,
+                    "scaleX": 1,
+                    "scaleY": 1,
+                    "rotation": 0,
+                    "anchorX": 0,
+                    "anchorY": 0,
+                    "flipX": false,
+                    "flipY": false,
+                    "skewX": 0,
+                    "skewY": 0
+                  },
+                  "size": { "width": 872, "height": 2 },
+                  "opacity": 1,
+                  "blendMode": "normal",
+                  "fill": { "type": "solid", "color": "#DDCBA8" },
+                  "stroke": { "width": 0, "color": "#ffffff" },
+                  "cornerRadius": { "bl": 0, "br": 0, "mixed": false, "tl": 0, "tr": 0, "uniform": 0 },
+                  "effects": [],
+                  "animations": [],
+                  "presetAnimations": [],
+                  "mask": null,
+                  "locked": false,
+                  "hidden": false,
+                  "origin": { "column": 5, "file": "motion.js", "line": 24 }
+                },
+                {
+                  "id": "8f6c83c1-d6b7-49ab-ac49-d6526377075c",
+                  "kind": "rect",
+                  "name": "Rect",
+                  "timeRange": { "start": 0, "duration": 15 },
+                  "transform": {
+                    "x": 92,
+                    "y": 1530,
+                    "scaleX": 1,
+                    "scaleY": 1,
+                    "rotation": 0,
+                    "anchorX": 0,
+                    "anchorY": 0,
+                    "flipX": false,
+                    "flipY": false,
+                    "skewX": 0,
+                    "skewY": 0
+                  },
+                  "size": { "width": 24, "height": 24 },
+                  "opacity": 1,
+                  "blendMode": "normal",
+                  "fill": { "type": "solid", "color": "#D7684F" },
+                  "stroke": { "width": 0, "color": "#ffffff" },
+                  "cornerRadius": { "bl": 12, "br": 12, "mixed": false, "tl": 12, "tr": 12, "uniform": 12 },
+                  "effects": [],
+                  "animations": [
+                    {
+                      "property": "offsetX",
+                      "keyframes": [
+                        {
+                          "time": 0,
+                          "value": 0,
+                          "easing": { "kind": "linear" },
+                          "id": "9a901a2e-49ef-4d81-be41-bbfd0a15c15a"
+                        },
+                        {
+                          "time": 15,
+                          "value": 872,
+                          "easing": { "kind": "linear" },
+                          "id": "fa9966e5-131f-4607-ba84-c6b564b592fe"
+                        }
+                      ],
+                      "effectId": null,
+                      "effectParam": null,
+                      "gradientStopIndex": null,
+                      "id": "3549a856-ad5c-4efd-b3c9-3e66612681c8"
+                    }
+                  ],
+                  "presetAnimations": [],
+                  "mask": null,
+                  "locked": false,
+                  "hidden": false,
+                  "origin": { "column": 5, "file": "motion.js", "line": 25 }
+                }
+              ],
+              "origin": { "column": 5, "file": "motion.js", "line": 23 }
+            }
+          ],
+          "locked": false,
+          "hidden": false,
+          "muted": false,
+          "solo": false,
+          "volume": 1
+        }
+      ],
+      "markers": []
+    }
+  ],
+  "activeSceneId": "2bd1ffd4-815f-4d02-8d69-c1e6afa5363e",
+  "assets": [
+    {
+      "id": "5b85cfd0-e8a4-e7fa-40de-46741142aff2",
+      "name": "reel-es-00.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 56482,
+      "duration": null,
+      "width": 1080,
+      "height": 1920,
+      "uri": "fs:media/5b85cfd0e8a4e7fa40de46741142aff22aa05a68f2009263300b1b245d8cf661.png",
+      "hash": "5b85cfd0e8a4e7fa40de46741142aff22aa05a68f2009263300b1b245d8cf661"
+    },
+    {
+      "id": "d2e8ecb9-6567-1055-65fd-802a6aa94a9f",
+      "name": "reel-es-01.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 63928,
+      "duration": null,
+      "width": 1080,
+      "height": 1920,
+      "uri": "fs:media/d2e8ecb96567105565fd802a6aa94a9fe44e0c8c66116afeab0a4ec39b1bbe38.png",
+      "hash": "d2e8ecb96567105565fd802a6aa94a9fe44e0c8c66116afeab0a4ec39b1bbe38"
+    },
+    {
+      "id": "4676ed79-21bb-546f-737a-30b99e593aa9",
+      "name": "reel-es-02.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 67878,
+      "duration": null,
+      "width": 1080,
+      "height": 1920,
+      "uri": "fs:media/4676ed7921bb546f737a30b99e593aa9106a895d46899abb2fe7189a7571da75.png",
+      "hash": "4676ed7921bb546f737a30b99e593aa9106a895d46899abb2fe7189a7571da75"
+    },
+    {
+      "id": "856971c0-1511-316d-39e2-3d5fb9c71284",
+      "name": "reel-es-03.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 72188,
+      "duration": null,
+      "width": 1080,
+      "height": 1920,
+      "uri": "fs:media/856971c01511316d39e23d5fb9c71284bcd0f83a516b7f1474d1defee305b50c.png",
+      "hash": "856971c01511316d39e23d5fb9c71284bcd0f83a516b7f1474d1defee305b50c"
+    },
+    {
+      "id": "01489e73-8454-4ba4-846d-e3843e1f2286",
+      "name": "reel-es-04.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 64172,
+      "duration": null,
+      "width": 1080,
+      "height": 1920,
+      "uri": "fs:media/01489e7384544ba4846de3843e1f2286b3e1e85faada16c5286c4932788f73e3.png",
+      "hash": "01489e7384544ba4846de3843e1f2286b3e1e85faada16c5286c4932788f73e3"
+    },
+    {
+      "id": "e13a5be6-2f45-d2d7-e18b-d65fbd5b8b29",
+      "name": "reel-es-00.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 59473,
+      "duration": null,
+      "width": 1080,
+      "height": 1920,
+      "uri": "fs:media/e13a5be62f45d2d7e18bd65fbd5b8b2975c3f71f3e5812d2b15ad60b8c386d22.png",
+      "hash": "e13a5be62f45d2d7e18bd65fbd5b8b2975c3f71f3e5812d2b15ad60b8c386d22"
+    },
+    {
+      "id": "85643849-d86f-dfd4-3b2e-0fbe6e505c8c",
+      "name": "reel-es-01.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 64655,
+      "duration": null,
+      "width": 1080,
+      "height": 1920,
+      "uri": "fs:media/85643849d86fdfd43b2e0fbe6e505c8c7ec013c1c09e4f6a7322ccf67e86853d.png",
+      "hash": "85643849d86fdfd43b2e0fbe6e505c8c7ec013c1c09e4f6a7322ccf67e86853d"
+    },
+    {
+      "id": "f341e9a4-c097-a360-c356-cfcd8f8612e3",
+      "name": "reel-es-02.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 68570,
+      "duration": null,
+      "width": 1080,
+      "height": 1920,
+      "uri": "fs:media/f341e9a4c097a360c356cfcd8f8612e30d6327f40a09a42e5b7151808be2b9a0.png",
+      "hash": "f341e9a4c097a360c356cfcd8f8612e30d6327f40a09a42e5b7151808be2b9a0"
+    },
+    {
+      "id": "c5fe86d7-44c2-1e3d-cf7b-4b68dfa2bcc2",
+      "name": "reel-es-03.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 72803,
+      "duration": null,
+      "width": 1080,
+      "height": 1920,
+      "uri": "fs:media/c5fe86d744c21e3dcf7b4b68dfa2bcc2c3da0bc7fe76e3f417746574abaf5632.png",
+      "hash": "c5fe86d744c21e3dcf7b4b68dfa2bcc2c3da0bc7fe76e3f417746574abaf5632"
+    },
+    {
+      "id": "62e3ea18-5c1c-e377-385b-462f73189752",
+      "name": "reel-es-04.png",
+      "kind": "image",
+      "mimeType": "image/png",
+      "byteSize": 67114,
+      "duration": null,
+      "width": 1080,
+      "height": 1920,
+      "uri": "fs:media/62e3ea185c1ce377385b462f73189752f379e4034ad1847eea8849ef08646b27.png",
+      "hash": "62e3ea185c1ce377385b462f73189752f379e4034ad1847eea8849ef08646b27"
+    }
+  ],
+  "createdAt": 1789554373158,
+  "modifiedAt": 1789554875994
+}
