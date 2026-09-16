@@ -27,7 +27,8 @@ import {
   type Round,
 } from '../lib/tournament';
 
-const STORAGE_KEY = 'taula-de-butifarra-v1';
+import { TOURNAMENT_STORAGE_KEY as STORAGE_KEY } from '../lib/tournament-storage';
+
 const MAX_ROUNDS = 99;
 
 type SaveState = 'saved' | 'error' | 'protected' | 'recovered';
@@ -572,7 +573,7 @@ export function mountTournament(root: HTMLElement): void {
       </aside>`;
     }
     return `<section class="setup card" aria-labelledby="setup-title">
-      <div class="section-heading"><div><p class="eyebrow">Preparació</p><h2 id="setup-title">Obre la taula</h2></div><button class="text-button" type="button" data-action="example">Carrega un exemple</button></div>
+      <div class="section-heading"><div><p class="eyebrow">Preparació</p><h2 id="setup-title">El teu torneig</h2></div><button class="text-button" type="button" data-action="example">Carrega un exemple</button></div>
       <p class="quiet">Inscriu un nombre parell de parelles. No hi ha descansos ni partides contra el rellotge.</p>
       <form class="setup-form" novalidate>
         <div class="setup-grid">
@@ -994,10 +995,10 @@ export function mountTournament(root: HTMLElement): void {
   function render(): void {
     disposePairingDialog(false);
     root.innerHTML = `<div class="app-shell">
-      <header class="masthead"><div><p class="brand"><span aria-hidden="true">♣</span> Taula de Butifarra</p><p class="masthead__sub">Campionat de cartes, ordenat i a punt.</p></div><div class="save-box"><span data-save-dot class="save-dot save-dot--${saveState}" aria-hidden="true"></span><span data-save-message aria-live="polite">${escapeHtml(saveMessage)}</span><button class="text-button" type="button" data-action="save" ${storageLocked ? 'disabled' : ''}>Desa ara</button></div></header>
+      <header class="masthead"><div><a class="app-brand-link" href="/" aria-label="ButiPunt · Inici"><img src="/brand/logo.svg" alt="ButiPunt" width="1150" height="260"></a><p class="masthead__sub">Cada punt, al seu lloc.</p></div><div class="save-box"><span data-save-dot class="save-dot save-dot--${saveState}" aria-hidden="true"></span><span data-save-message aria-live="polite">${escapeHtml(saveMessage)}</span><button class="text-button" type="button" data-action="save" ${storageLocked ? 'disabled' : ''}>Desa ara</button></div></header>
       <p data-notice class="notice" role="status" ${notice ? '' : 'hidden'}>${escapeHtml(notice)}</p>
-      ${state.started ? renderPlay() : `<div class="start-layout"><div class="intro"><p class="eyebrow">Club de cartes</p><h1>Un campionat ben portat comença amb una bona taula.</h1><p>Prepara les parelles, sorteja l’obertura i anota cada mà sense perdre el fil.</p><div class="intro__motif" aria-hidden="true">♠ &nbsp; ♥ &nbsp; ♦ &nbsp; ♣</div></div>${renderSetup()}</div>`}
-      <footer>Les dades es desen només en aquest navegador. Cap compte, cap servidor.</footer>
+      ${state.started ? renderPlay() : `<main class="start-layout"><div class="intro"><p class="eyebrow">Ja teniu les parelles?</p><h1>Prepara el torneig.</h1><p>Tria el nom i les rondes, inscriu les parelles i sorteja la primera ronda. A partir d’aquí, anota els resultats i segueix la classificació.</p><p>La preparació es desa automàticament en aquest navegador.</p><div class="intro__motif" aria-hidden="true">♠ &nbsp; ♥ &nbsp; ♦ &nbsp; ♣</div></div>${renderSetup()}</main>`}
+      <footer class="app-footer"><span>Les dades es desen només en aquest navegador.</span><a href="/">Torna a l’inici</a></footer>
     </div>`;
     bindEvents();
         bindRepeatProposalButtons();

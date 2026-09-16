@@ -1,0 +1,23 @@
+---
+import '../styles/global.css';
+---
+<!doctype html>
+<html lang="ca">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Prepara les parelles i les rondes del teu torneig de butifarra amb ButiPunt." />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>El teu torneig · ButiPunt</title>
+  </head>
+  <body>
+    <div id="tournament-app"></div>
+    <noscript><p class="app-shell">Activa JavaScript per preparar el torneig i desar-ne els resultats en aquest navegador. <a href="/">Torna a l’inici</a>.</p></noscript>
+    <script>
+      import { mountTournament } from '../scripts/tournament';
+      const root = document.querySelector<HTMLElement>('#tournament-app');
+      if (root) mountTournament(root);
+    </script>
+  </body>
+</html>

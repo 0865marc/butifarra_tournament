@@ -1,5 +1,16 @@
 ---
-import '../styles/global.css';
+import '../styles/landing.css';
+const steps = [
+  { number: '01', title: 'Prepara el torneig', text: 'Posa-hi nom, tria quantes rondes fareu i inscriu els dos jugadors de cada parella.' },
+  { number: '02', title: 'Que comenci la partida', text: 'Sorteja la primera ronda i consulta qui juga a cada taula. Anota i confirma els resultats.' },
+  { number: '03', title: 'Segueix cada punt', text: 'La classificació s’actualitza amb els resultats. Les rondes següents segueixen l’ordre de victòries i punts.' },
+];
+const tabs = [{ id: 'taules', label: 'Les taules' }, { id: 'resultats', label: 'Els resultats' }, { id: 'classificacio', label: 'La classificació' }];
+const matches = [
+  { table: '01', home: 'Parella 1', away: 'Parella 2', homeScore: 101, awayScore: 83 },
+  { table: '02', home: 'Parella 3', away: 'Parella 4', homeScore: 73, awayScore: 101 },
+];
+const rankings = [{ pair: 'Parella 1', wins: 1, points: 101 }, { pair: 'Parella 4', wins: 1, points: 101 }, { pair: 'Parella 2', wins: 0, points: 83 }, { pair: 'Parella 3', wins: 0, points: 73 }];
 ---
 
 <!doctype html>
@@ -7,17 +18,64 @@ import '../styles/global.css';
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Gestor local de campionats de Butifarra." />
+    <meta name="description" content="Organitza el teu torneig de butifarra amb ButiPunt. Inscriu les parelles, segueix les rondes i consulta els resultats i la classificació. Sense crear cap compte." />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>Taula de Butifarra</title>
+    <link rel="preload" href="/fonts/Fraunces-700.ttf" as="font" type="font/ttf" crossorigin />
+    <title>ButiPunt · El torneig, a punt</title>
   </head>
   <body>
-    <div id="tournament-app"></div>
-    <script>
-      import { mountTournament } from '../scripts/tournament';
-
-      const root = document.querySelector<HTMLElement>('#tournament-app');
-      if (root) mountTournament(root);
-    </script>
+    <a class="skip-link" href="#principal">Salta al contingut</a>
+    <header class="site-header"><div class="site-width header-inner">
+      <a class="brand-link" href="/" aria-label="ButiPunt, inici"><img src="/brand/logo.svg" width="1150" height="260" alt="ButiPunt" /></a>
+      <nav aria-label="Navegació principal"><a class="nav-how" href="#com-funciona">Com funciona</a><a class="nav-cta" href="/torneig/" data-tournament-link>Crea un torneig <span aria-hidden="true">↗</span></a></nav>
+    </div></header>
+    <main id="principal">
+      <section class="hero site-width" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow"><span aria-hidden="true"></span> Per a tornejos de butifarra</p>
+          <h1 id="hero-title">El torneig,<br />a punt<span class="coral">.</span></h1>
+          <p class="hero-intro">Les parelles, les rondes i cada resultat.<br class="desktop-break" /> Organitza el torneig i segueix-lo de principi a fi, des d’un mateix lloc.</p>
+          <a class="start-link" href="/torneig/" data-tournament-link>Crea un torneig <span aria-hidden="true">↗</span></a>
+          <p class="hero-note">Sense registre. Directament al navegador.</p>
+          <p class="saved-note" data-saved-note hidden>Ja tens un torneig desat en aquest navegador.</p>
+        </div>
+        <div class="product-preview" aria-label="Exemple de seguiment d’un torneig">
+          <div class="preview-top"><span class="preview-caption">Així seguiràs el torneig</span><span class="example-tag">Exemple</span></div>
+          <div class="preview-heading"><div><p>Torneig de dissabte</p><h2>Ronda 1 <span>de 3</span></h2></div><span class="round-mark" aria-hidden="true">1<span>/3</span></span></div>
+          <div class="preview-tabs" role="tablist" aria-label="Explora el torneig">{tabs.map((tab, i) => <button type="button" role="tab" id={`tab-${tab.id}`} aria-controls={`panel-${tab.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} data-preview-tab={tab.id}>{tab.label}</button>)}</div>
+          <section class="preview-panel" id="panel-taules" role="tabpanel" aria-labelledby="tab-taules" tabindex="0">
+            {matches.map(match => <div class="preview-match"><span class="table-number">Taula <strong>{match.table}</strong></span><div class="preview-pairs"><span>{match.home}</span><span class="versus">amb</span><span>{match.away}</span></div><span class="match-dot" aria-hidden="true"></span></div>)}
+            <p class="preview-helper">Cada parella sap on li toca jugar.</p>
+          </section>
+          <section class="preview-panel" id="panel-resultats" role="tabpanel" aria-labelledby="tab-resultats" tabindex="0" hidden>
+            {matches.map(match => <div class="preview-result"><span class="table-number">Taula <strong>{match.table}</strong></span><div><span>{match.home}<strong>{match.homeScore}</strong></span><span>{match.away}<strong>{match.awayScore}</strong></span></div><span class="confirmed" aria-label="Resultat confirmat">✓</span></div>)}
+            <p class="preview-helper">Anota els punts i confirma el resultat.</p>
+          </section>
+          <section class="preview-panel" id="panel-classificacio" role="tabpanel" aria-labelledby="tab-classificacio" tabindex="0" hidden>
+            <table class="preview-ranking"><caption class="sr-only">Classificació d’exemple després de la primera ronda</caption><thead><tr><th scope="col">Pos.</th><th scope="col">Parella</th><th scope="col"><abbr title="Victòries">V</abbr></th><th scope="col">Punts</th></tr></thead><tbody>{rankings.map((rank, i) => <tr><td>{i + 1}</td><th scope="row">{rank.pair}</th><td>{rank.wins}</td><td>{rank.points}</td></tr>)}</tbody></table>
+            <p class="preview-helper">Les victòries i els punts, sempre a la vista.</p>
+          </section>
+          <div class="preview-bottom"><span class="mini-dot" aria-hidden="true"></span> Parelles, taules i classificació. Tot connectat.</div>
+        </div>
+      </section>
+      <div class="value-strip"><div class="site-width"><p>El joc, a la taula.</p><p>L’organització, a ButiPunt<span class="coral">.</span></p></div></div>
+      <section id="com-funciona" class="how-section site-width" aria-labelledby="how-title">
+        <div class="section-intro"><p class="eyebrow">De la primera parella a l’últim punt</p><h2 id="how-title">Tres passos.<br />Un torneig ben portat.</h2></div>
+        <ol class="steps">{steps.map(step => <li><span class="step-number" aria-hidden="true">{step.number}</span><div><h3>{step.title}</h3><p>{step.text}</p></div></li>)}</ol>
+      </section>
+      <section class="detail-section" aria-labelledby="details-title"><div class="site-width detail-inner">
+        <div class="detail-copy"><p class="eyebrow">Durant el torneig</p><h2 id="details-title">Tu portes la taula.<br />ButiPunt, els punts.</h2><p>Consulta les rondes anteriors, corregeix el resultat de la ronda actual i mostra les parelles i les taules a pantalla completa.</p><a class="text-link" href="/torneig/" data-tournament-link>Prepara el teu torneig <span aria-hidden="true">↗</span></a></div>
+        <figure class="video-demo"><video controls playsinline preload="none" width="1920" height="1080" poster="/media/butipunt-en-30-segons.png" aria-label="ButiPunt en 30 segons: vídeo explicatiu en català, amb textos en pantalla i música"><source src="/media/butipunt-en-30-segons.mp4" type="video/mp4" />El navegador no pot reproduir el vídeo. <a href="/media/butipunt-en-30-segons.mp4">Descarrega’l</a>.</video><figcaption>ButiPunt en 30 segons · També s’entén sense so.</figcaption></figure>
+      </div></section>
+      <section class="faq-section site-width" aria-labelledby="faq-title"><div><p class="eyebrow">Abans de començar</p><h2 id="faq-title">Les coses clares.</h2></div><div class="questions">
+        <details><summary>Es juga a butifarra dins de l’aplicació?<span aria-hidden="true">+</span></summary><p>ButiPunt organitza el torneig: parelles, rondes, resultats i classificació. Les partides les jugueu a la taula, fora de l’aplicació.</p></details>
+        <details><summary>Què necessito per preparar un torneig?<span aria-hidden="true">+</span></summary><p>Un nom, el nombre de rondes i els jugadors de cada parella. Cal un nombre parell de parelles, amb un mínim de dues.</p></details>
+        <details><summary>Com es decideixen els emparellaments?<span aria-hidden="true">+</span></summary><p>La primera ronda se sorteja. Les següents aparellen posicions consecutives de la classificació: 1–2, 3–4… L’ordre es calcula per victòries, punts anotats i, si encara hi ha empat, ordre d’inscripció. Els rivals es poden repetir.</p></details>
+        <details><summary>On es desa el torneig?<span aria-hidden="true">+</span></summary><p>En aquest navegador, al dispositiu que fas servir. Pots tornar-hi per continuar. No se sincronitza amb altres dispositius: si esborres les dades del navegador o fas servir una sessió privada, pots perdre el torneig.</p></details>
+      </div></section>
+      <section class="closing site-width" aria-labelledby="closing-title"><img src="/brand/symbol.svg" width="512" height="512" alt="" loading="lazy" /><div><h2 id="closing-title">Ja teniu les parelles?</h2><p>Deixa el torneig a punt abans de repartir.</p></div><a class="start-link" href="/torneig/" data-tournament-link>Crea un torneig <span aria-hidden="true">↗</span></a></section>
+    </main>
+    <footer class="site-footer site-width"><p>ButiPunt <span aria-hidden="true">·</span> Cada punt, al seu lloc.</p><a href="/marca/">Recursos de marca</a></footer>
+    <script>import '../scripts/landing';</script>
   </body>
 </html>
