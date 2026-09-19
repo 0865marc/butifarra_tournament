@@ -49,7 +49,7 @@ export interface PreviousOpponent {
 export interface Standing {
   pair: Pair;
   wins: number;
-  points: number;
+  pointDifference: number;
 }
 
 export const cleanText = (value: string) => value.trim().replace(/\s+/g, ' ');
@@ -109,7 +109,7 @@ export function scoreIssue(draft: ScoreDraft): string | null {
 }
 
 export function getStandings(pairs: Pair[], rounds: Round[]): Standing[] {
-  const standings = pairs.map((pair) => ({ pair, wins: 0, points: 0 }));
+  const standings = pairs.map((pair) => ({ pair, wins: 0, pointDifference: 0 }));
   const byId = new Map(standings.map((standing) => [standing.pair.id, standing]));
 
   for (const round of rounds) {
@@ -118,8 +118,8 @@ export function getStandings(pairs: Pair[], rounds: Round[]): Standing[] {
       const home = byId.get(match.homeId);
       const away = byId.get(match.awayId);
       if (!home || !away) continue;
-      home.points += match.result.home;
-      away.points += match.result.away;
+      home.pointDifference += match.result.home - match.result.away;
+      away.pointDifference += match.result.away - match.result.home;
       if (match.result.home > match.result.away) home.wins += 1;
       else away.wins += 1;
     }
@@ -127,7 +127,7 @@ export function getStandings(pairs: Pair[], rounds: Round[]): Standing[] {
 
   return standings.sort((left, right) =>
     right.wins - left.wins ||
-    right.points - left.points ||
+    right.pointDifference - left.pointDifference ||
     left.pair.registrationOrder - right.pair.registrationOrder,
   );
 }
