@@ -43,7 +43,7 @@ export interface PairPosition {
 export interface PreviousOpponent {
   roundNumber: number;
   opponentId: string;
-  won: boolean;
+  outcome: 'win' | 'draw' | 'loss';
 }
 
 export interface Standing {
@@ -105,7 +105,6 @@ export function scoreIssue(draft: ScoreDraft): string | null {
   if (!validInteger(draft.home) || !validInteger(draft.away)) {
     return 'Els punts han de ser nombres enters no negatius i segurs.';
   }
-  if (Number(draft.home) === Number(draft.away)) return 'A Butifarra no hi ha empats: els dos marcadors han de diferir.';
   return null;
 }
 
@@ -124,7 +123,11 @@ export function getStandings(pairs: Pair[], rounds: Round[]): Standing[] {
       home.points += match.result.home;
       away.points += match.result.away;
       if (match.result.home > match.result.away) home.wins += 1;
-      else away.wins += 1;
+      else if (match.result.away > match.result.home) away.wins += 1;
+      else {
+        home.wins += 0.5;
+        away.wins += 0.5;
+      }
     }
   }
 
@@ -151,13 +154,13 @@ export function previousOpponentsForPair(rounds: Round[], viewedRound: number, p
         opponents.push({
           roundNumber: round.number,
           opponentId: match.awayId,
-          won: match.result.home > match.result.away,
+          outcome: match.result.home > match.result.away ? 'win' : match.result.home === match.result.away ? 'draw' : 'loss',
         });
       } else if (match.awayId === pairId) {
         opponents.push({
           roundNumber: round.number,
           opponentId: match.homeId,
-          won: match.result.away > match.result.home,
+          outcome: match.result.away > match.result.home ? 'win' : match.result.away === match.result.home ? 'draw' : 'loss',
         });
       }
     }

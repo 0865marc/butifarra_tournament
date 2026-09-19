@@ -170,6 +170,7 @@ h2 { margin-bottom: .3rem; font-size: 1.6rem; }
 .pair-history__title { margin-bottom: .25rem !important; color: var(--green); font-weight: 800; }
 .pair-history ul { display: grid; gap: .15rem; margin: 0; padding: 0; list-style: none; }
 .pair-history__result--win { color: #277342; }
+.pair-history__result--draw { color: var(--gold); }
 .pair-history__result--loss { color: #a6463a; }
 .score-field { min-width: 0; }
 .score-field input { min-width: 0; height: 2.25rem; padding: .35rem .2rem; text-align: center; font-weight: 800; }

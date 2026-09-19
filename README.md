@@ -22,7 +22,7 @@ npm run build
 - There are at least two fixed pairs and always an even number of them, so there are no byes.
 - By default, round one uses a Fisher–Yates shuffle. Later rounds order pairs by wins, then accumulated point difference (points scored minus points conceded), then total points scored, then original registration order as a stable fallback, and pair positions 1–2, 3–4, and so on. The current round's assignments can be entered manually before any scores are recorded.
 - Opponents may repeat. The registration-order fallback is deterministic only; it is not an additional sporting tiebreaker.
-- A match needs two non-negative safe integer scores that differ. The higher score gets one win; each pair adds its score minus its opponent's score to its point difference, which can be positive, zero or negative. Its own score also contributes to total points scored (PF), used only when wins and point difference are tied.
+- A match needs two non-negative safe integer scores. The higher score gets one win; an equal score gives both pairs half a win. Each pair adds its score minus its opponent's score to its point difference, which can be positive, zero or negative. Its own score also contributes to total points scored (PF), used only when wins and point difference are tied.
 - Only confirmed, valid results appear in the standings. Current-round results can be edited until the next round is generated; older rounds are read-only.
 
 ## Manual table assignments

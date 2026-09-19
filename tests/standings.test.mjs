@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { manualPairingSource, recoverManualPairingDraft } from '../src/lib/manual-pairings.ts';
 import { savedTournamentEntry, TOURNAMENT_STORAGE_KEY } from '../src/lib/tournament-storage.ts';
-import { createPairs, getStandings, makeRound } from '../src/lib/tournament.ts';
+import { createPairs, getStandings, makeRound, scoreIssue } from '../src/lib/tournament.ts';
 
 const pairDrafts = [17, 4, 29, 8].map((number) => ({
   number, playerOne: `Jugador ${number} A`, playerTwo: `Jugador ${number} B`,
@@ -32,6 +32,14 @@ test('wins remain the first criterion even for a pair with a worse negative diff
   const second = scoredRound(2, [[0, 100], [1, 0]], [pairs[0], pairs[2], pairs[1], pairs[3]]);
   assert.deepEqual(summary([first, second]), [
     ['pair-3', 2, 140, 140], ['pair-2', 1, -9, 1], ['pair-1', 1, -90, 10], ['pair-4', 0, -41, 0],
+  ]);
+});
+
+test('equal scores are valid and award half a win to each pair', () => {
+  assert.equal(scoreIssue({ home: '75', away: '75' }), null);
+  const round = scoredRound(1, [[75, 75], [20, 10]]);
+  assert.deepEqual(summary([round]), [
+    ['pair-3', 1, 10, 20], ['pair-1', 0.5, 0, 75], ['pair-2', 0.5, 0, 75], ['pair-4', 0, -10, 10],
   ]);
 });
 

@@ -980,7 +980,7 @@ export function mountTournament(root: HTMLElement): void {
     const isSelected = selectedSwap !== null && samePosition(selectedSwap, { matchId: match.id, side });
     const history = previousOpponentsForPair(state.rounds, round.number, pair.id);
     const historyItems = history.length
-      ? `<ul>${history.map((entry) => `<li>R${entry.roundNumber} · P${pairFor(entry.opponentId).number} · <b class="pair-history__result pair-history__result--${entry.won ? 'win' : 'loss'}">${entry.won ? 'Victòria ✓' : 'Derrota ✕'}</b></li>`).join('')}</ul>`
+      ? `<ul>${history.map((entry) => `<li>R${entry.roundNumber} · P${pairFor(entry.opponentId).number} · <b class="pair-history__result pair-history__result--${entry.outcome}">${entry.outcome === 'win' ? 'Victòria ✓' : entry.outcome === 'draw' ? 'Empat ½' : 'Derrota ✕'}</b></li>`).join('')}</ul>`
       : '<p>Encara no hi ha rivals anteriors confirmats.</p>';
     const swapDescriptionId = `swap-${match.id}-${side}`;
     return `<div class="team ${openHistory === historyId ? 'team--history-open' : ''}" data-history-region="${historyId}">
@@ -1117,7 +1117,7 @@ export function mountTournament(root: HTMLElement): void {
           ? tournamentComplete
             ? '<div><strong>Campionat complet</strong><p>Classificació final calculada amb victòries, diferència de punts, punts totals a favor i ordre d’inscripció com a últim criteri estable.</p></div>'
             : `<div><strong>Ronda completa</strong><p>Ja pots crear els emparellaments següents. Les parelles es poden tornar a trobar.</p></div><button class="button" type="button" data-action="next-round">Genera la ronda ${latest.number + 1}</button>`
-          : '<div><strong>Resultats pendents</strong><p>Confirma cada partida amb dos punts enters, no negatius i diferents.</p></div>'}</div>` : ''}
+          : '<div><strong>Resultats pendents</strong><p>Confirma cada partida amb dos punts enters no negatius; un empat dona mitja victòria a cada parella.</p></div>'}</div>` : ''}
       </section>
       <div class="secondary-column">
         <aside class="standings card" aria-labelledby="standings-title">
