@@ -706,7 +706,7 @@ export function mountTournament(root: HTMLElement): void {
         <p class="eyebrow">Fitxa del campionat</p>
         <h2>${escapeHtml(state.setup.name)}</h2>
         <dl><div><dt>Rondes</dt><dd>${configuredRounds()}</dd></div><div><dt>Parelles</dt><dd>${state.pairs.length}</dd></div></dl>
-        <p class="quiet">La primera ronda és un sorteig. Després, 1–2, 3–4… segons victòries i diferència de punts; si empaten, preval l’ordre d’inscripció.</p>
+        <p class="quiet">La primera ronda és un sorteig. Després, 1–2, 3–4… segons victòries, diferència de punts i punts totals a favor; si encara empaten, preval l’ordre d’inscripció.</p>
         <button class="button button--quiet" type="button" data-action="reset">Comença un campionat nou</button>
       </aside>`;
     }
@@ -1115,15 +1115,15 @@ export function mountTournament(root: HTMLElement): void {
             <div class="matches">${selected.matches.map((match, index) => renderMatch(match, selected, editable, index + 1, analysis, latest)).join('')}</div>
         ${selected.number === latest?.number ? `<div class="round-action card ${complete ? 'round-action--ready' : ''}">${complete
           ? tournamentComplete
-            ? '<div><strong>Campionat complet</strong><p>Classificació final calculada amb victòries, diferència de punts i ordre d’inscripció com a últim criteri estable.</p></div>'
+            ? '<div><strong>Campionat complet</strong><p>Classificació final calculada amb victòries, diferència de punts, punts totals a favor i ordre d’inscripció com a últim criteri estable.</p></div>'
             : `<div><strong>Ronda completa</strong><p>Ja pots crear els emparellaments següents. Les parelles es poden tornar a trobar.</p></div><button class="button" type="button" data-action="next-round">Genera la ronda ${latest.number + 1}</button>`
           : '<div><strong>Resultats pendents</strong><p>Confirma cada partida amb dos punts enters, no negatius i diferents.</p></div>'}</div>` : ''}
       </section>
       <div class="secondary-column">
         <aside class="standings card" aria-labelledby="standings-title">
           <div class="section-heading"><div><p class="eyebrow">${tournamentComplete ? 'Resultat final' : 'En directe'}</p><h2 id="standings-title">Classificació</h2></div><span class="suit-mark" aria-hidden="true">♠</span></div>
-          <table><thead><tr><th>Pos.</th><th>Parella</th><th>V</th><th><abbr title="Diferència de punts (a favor − en contra)">Dif.</abbr></th></tr></thead><tbody>${standings.map((standing, index) => `<tr><td>${index + 1}</td><th scope="row">${escapeHtml(pairLabel(standing.pair))}<span class="standing-players">${escapeHtml(standing.pair.players[0])} · ${escapeHtml(standing.pair.players[1])}</span></th><td>${standing.wins}</td><td>${standing.pointDifference > 0 ? '+' : ''}${standing.pointDifference}</td></tr>`).join('')}</tbody></table>
-          <p class="quiet">Ordre: victòries, diferència de punts (a favor − en contra) i, només si coincideixen, ordre d’inscripció. No és cap desempat esportiu addicional.</p>
+          <table><thead><tr><th>Pos.</th><th>Parella</th><th>V</th><th><abbr title="Diferència de punts (a favor − en contra)">Dif.</abbr></th><th><abbr title="Punts totals a favor">PF</abbr></th></tr></thead><tbody>${standings.map((standing, index) => `<tr><td>${index + 1}</td><th scope="row">${escapeHtml(pairLabel(standing.pair))}<span class="standing-players">${escapeHtml(standing.pair.players[0])} · ${escapeHtml(standing.pair.players[1])}</span></th><td>${standing.wins}</td><td>${standing.pointDifference > 0 ? '+' : ''}${standing.pointDifference}</td><td>${standing.points}</td></tr>`).join('')}</tbody></table>
+          <p class="quiet">Ordre: victòries, diferència de punts (a favor − en contra), punts totals a favor (PF) i, només si coincideixen, ordre d’inscripció. No és cap desempat esportiu addicional.</p>
         </aside>
         ${renderSetup()}
       </div>

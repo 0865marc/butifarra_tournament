@@ -3,14 +3,14 @@ import '../styles/landing.css';
 const steps = [
   { number: '01', title: 'Prepara el torneig', text: 'Posa-hi nom, tria quantes rondes fareu i inscriu els dos jugadors de cada parella.' },
   { number: '02', title: 'Que comenci la partida', text: 'Sorteja la primera ronda i consulta qui juga a cada taula. Anota i confirma els resultats.' },
-  { number: '03', title: 'Segueix cada punt', text: 'La classificació s’actualitza amb els resultats. Les rondes següents segueixen l’ordre de victòries i diferència de punts.' },
+  { number: '03', title: 'Segueix cada punt', text: 'La classificació s’actualitza amb els resultats. Les rondes següents segueixen l’ordre de victòries, diferència de punts i punts totals a favor.' },
 ];
 const tabs = [{ id: 'taules', label: 'Les taules' }, { id: 'resultats', label: 'Els resultats' }, { id: 'classificacio', label: 'La classificació' }];
 const matches = [
   { table: '01', home: 'Parella 1', away: 'Parella 2', homeScore: 101, awayScore: 83 },
   { table: '02', home: 'Parella 3', away: 'Parella 4', homeScore: 73, awayScore: 101 },
 ];
-const rankings = [{ pair: 'Parella 4', wins: 1, pointDifference: 28 }, { pair: 'Parella 1', wins: 1, pointDifference: 18 }, { pair: 'Parella 2', wins: 0, pointDifference: -18 }, { pair: 'Parella 3', wins: 0, pointDifference: -28 }];
+const rankings = [{ pair: 'Parella 4', wins: 1, pointDifference: 28, points: 101 }, { pair: 'Parella 1', wins: 1, pointDifference: 18, points: 101 }, { pair: 'Parella 2', wins: 0, pointDifference: -18, points: 83 }, { pair: 'Parella 3', wins: 0, pointDifference: -28, points: 73 }];
 ---
 
 <!doctype html>
@@ -53,8 +53,8 @@ const rankings = [{ pair: 'Parella 4', wins: 1, pointDifference: 28 }, { pair: '
             <p class="preview-helper">Anota els punts i confirma el resultat.</p>
           </section>
           <section class="preview-panel" id="panel-classificacio" role="tabpanel" aria-labelledby="tab-classificacio" tabindex="0" hidden>
-            <table class="preview-ranking"><caption class="sr-only">Classificació d’exemple després de la primera ronda</caption><thead><tr><th scope="col">Pos.</th><th scope="col">Parella</th><th scope="col"><abbr title="Victòries">V</abbr></th><th scope="col"><abbr title="Diferència de punts (a favor − en contra)">Dif.</abbr></th></tr></thead><tbody>{rankings.map((rank, i) => <tr><td>{i + 1}</td><th scope="row">{rank.pair}</th><td>{rank.wins}</td><td>{rank.pointDifference > 0 ? '+' : ''}{rank.pointDifference}</td></tr>)}</tbody></table>
-            <p class="preview-helper">Les victòries i la diferència de punts (a favor − en contra), sempre a la vista.</p>
+            <table class="preview-ranking"><caption class="sr-only">Classificació d’exemple després de la primera ronda</caption><thead><tr><th scope="col">Pos.</th><th scope="col">Parella</th><th scope="col"><abbr title="Victòries">V</abbr></th><th scope="col"><abbr title="Diferència de punts (a favor − en contra)">Dif.</abbr></th><th scope="col"><abbr title="Punts totals a favor">PF</abbr></th></tr></thead><tbody>{rankings.map((rank, i) => <tr><td>{i + 1}</td><th scope="row">{rank.pair}</th><td>{rank.wins}</td><td>{rank.pointDifference > 0 ? '+' : ''}{rank.pointDifference}</td><td>{rank.points}</td></tr>)}</tbody></table>
+            <p class="preview-helper">Desempat: diferència de punts (a favor − en contra) i, després, punts totals a favor (PF).</p>
           </section>
           <div class="preview-bottom"><span class="mini-dot" aria-hidden="true"></span> Parelles, taules i classificació. Tot connectat.</div>
         </div>
@@ -71,7 +71,7 @@ const rankings = [{ pair: 'Parella 4', wins: 1, pointDifference: 28 }, { pair: '
       <section class="faq-section site-width" aria-labelledby="faq-title"><div><p class="eyebrow">Abans de començar</p><h2 id="faq-title">Les coses clares.</h2></div><div class="questions">
         <details><summary>Es juga a butifarra dins de l’aplicació?<span aria-hidden="true">+</span></summary><p>ButiPunt organitza el torneig: parelles, rondes, resultats i classificació. Les partides les jugueu a la taula, fora de l’aplicació.</p></details>
         <details><summary>Què necessito per preparar un torneig?<span aria-hidden="true">+</span></summary><p>Un nom, el nombre de rondes i els jugadors de cada parella. Cal un nombre parell de parelles, amb un mínim de dues.</p></details>
-        <details><summary>Com es decideixen els emparellaments?<span aria-hidden="true">+</span></summary><p>La primera ronda se sorteja. Les següents aparellen posicions consecutives de la classificació: 1–2, 3–4… L’ordre es calcula per victòries, diferència de punts (a favor − en contra) i, si encara hi ha empat, ordre d’inscripció. Els rivals es poden repetir.</p></details>
+        <details><summary>Com es decideixen els emparellaments?<span aria-hidden="true">+</span></summary><p>La primera ronda se sorteja. Les següents aparellen posicions consecutives de la classificació: 1–2, 3–4… L’ordre es calcula per victòries, diferència de punts (a favor − en contra), punts totals a favor i, si encara hi ha empat, ordre d’inscripció. Els rivals es poden repetir.</p></details>
         <details><summary>On es desa el torneig?<span aria-hidden="true">+</span></summary><p>En aquest navegador, al dispositiu que fas servir. Pots tornar-hi per continuar. No se sincronitza amb altres dispositius: si esborres les dades del navegador o fas servir una sessió privada, pots perdre el torneig.</p></details>
       </div></section>
       <section class="closing site-width" aria-labelledby="closing-title"><img src="/brand/symbol.svg" width="512" height="512" alt="" loading="lazy" /><div><h2 id="closing-title">Ja teniu les parelles?</h2><p>Deixa el torneig a punt abans de repartir.</p></div><a class="start-link" href="/torneig/" data-tournament-link>Crea un torneig <span aria-hidden="true">↗</span></a></section>

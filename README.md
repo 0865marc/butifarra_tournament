@@ -20,9 +20,9 @@ npm run build
 ## Tournament rules in this MVP
 
 - There are at least two fixed pairs and always an even number of them, so there are no byes.
-- By default, round one uses a Fisher–Yates shuffle. Later rounds order pairs by wins, then accumulated point difference (points scored minus points conceded), then original registration order as a stable fallback, and pair positions 1–2, 3–4, and so on. The current round's assignments can be entered manually before any scores are recorded.
+- By default, round one uses a Fisher–Yates shuffle. Later rounds order pairs by wins, then accumulated point difference (points scored minus points conceded), then total points scored, then original registration order as a stable fallback, and pair positions 1–2, 3–4, and so on. The current round's assignments can be entered manually before any scores are recorded.
 - Opponents may repeat. The registration-order fallback is deterministic only; it is not an additional sporting tiebreaker.
-- A match needs two non-negative safe integer scores that differ. The higher score gets one win; each pair adds its score minus its opponent's score to its point difference, which can be positive, zero or negative.
+- A match needs two non-negative safe integer scores that differ. The higher score gets one win; each pair adds its score minus its opponent's score to its point difference, which can be positive, zero or negative. Its own score also contributes to total points scored (PF), used only when wins and point difference are tied.
 - Only confirmed, valid results appear in the standings. Current-round results can be edited until the next round is generated; older rounds are read-only.
 
 ## Manual table assignments
@@ -37,7 +37,7 @@ The unfinished editor draft is saved separately from the live assignments in the
 
 The original `taula-de-butifarra-v1` storage key and data format are retained. Moving the interface to `/torneig/` preserves existing data on the same origin. The landing only reads saved state to offer a continue link; it never modifies tournament data. Different origins have separate browser storage.
 
-Standings are recalculated from confirmed match scores, not stored separately. Updating the tiebreaker from points scored to point difference requires no saved-data migration: existing pairs, scores, rounds and table assignments are preserved. Already generated rounds keep their assignments; only newly generated rounds use the updated ranking.
+Standings are recalculated from confirmed match scores, not stored separately. Using point difference and then total points scored as tiebreakers requires no saved-data migration: existing pairs, scores, rounds and table assignments are preserved. Already generated rounds keep their assignments; only newly generated rounds use the updated ranking.
 
 The app stores setup edits, score drafts, confirmed results, round history, and the selected round in this browser's `localStorage`. It has no account, server, sync, import, or export feature. Private-browsing policies, cleared browser data, storage quotas, and another device can therefore prevent recovery. Corrupted or unsupported saved data is left untouched rather than erased automatically; use the confirmed new-tournament action only when you choose to clear it.
 
