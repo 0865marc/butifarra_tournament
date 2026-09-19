@@ -28,6 +28,13 @@ import {
 } from '../lib/tournament';
 
 import { TOURNAMENT_STORAGE_KEY as STORAGE_KEY } from '../lib/tournament-storage';
+import {
+  canManuallyPairRound,
+  manualPairingSource,
+  recoverManualPairingDraft,
+  validateManualPairings,
+  type ManualPairingDraft,
+} from '../lib/manual-pairings';
 
 const MAX_ROUNDS = 99;
 
@@ -47,6 +54,7 @@ interface AppState {
   rounds: Round[];
   selectedRound: number;
   started: boolean;
+  manualPairingDraft?: ManualPairingDraft;
 }
 
 function emptyState(): AppState {
@@ -128,7 +136,7 @@ function isSavedState(value: unknown): value is AppState {
   if (!saved.started) return saved.pairs.length === 0 && saved.rounds.length === 0 && saved.selectedRound === 0;
   if (!hasRoundCount || (hasRoundDraft && roundCount(savedSetup.roundsDraft) !== savedSetup.rounds) ||
     saved.pairs.length < 2 || saved.pairs.length % 2 !== 0 || saved.rounds.length < 1 ||
-    saved.rounds.length > savedSetup.rounds || saved.selectedRound < 1 || saved.selectedRound > saved.rounds.length) return false;
+    saved.rounds.length > savedSetup.rounds! || saved.selectedRound < 1 || saved.selectedRound > saved.rounds.length) return false;
   const pairIds = new Set(saved.pairs.map((pair) => pair.id));
   const registrationOrders = new Set(saved.pairs.map((pair) => pair.registrationOrder));
   const pairNumbers = new Set(saved.pairs.map((pair) => pair.number));
@@ -175,6 +183,9 @@ function normalizeRecoveredState(saved: AppState): void {
     delete (pair as Pair & { name?: string }).name;
   });
   saved.rounds.forEach((round) => { round.manuallyAdjusted ??= false; });
+  const manualDraft = recoverManualPairingDraft(saved.manualPairingDraft, saved.pairs, saved.rounds.at(-1));
+  if (manualDraft) saved.manualPairingDraft = manualDraft;
+  else delete saved.manualPairingDraft;
   if (!saved.started) delete saved.setup.rounds;
 }
 
@@ -207,6 +218,7 @@ export function mountTournament(root: HTMLElement): void {
   let selectedSwap: PairPosition | null = null;
   let openHistory: string | null = null;
   let dismissedHistory: string | null = null;
+  let editingPairings = false;
 
   let storageRead = false;
   try {
@@ -217,6 +229,8 @@ export function mountTournament(root: HTMLElement): void {
       if (!isSavedState(parsed)) throw new Error('Unsupported saved format');
       normalizeRecoveredState(parsed);
       state = parsed;
+      editingPairings = Boolean(state.manualPairingDraft);
+      if (state.manualPairingDraft) state.selectedRound = state.manualPairingDraft.roundNumber;
       saveState = 'recovered';
       saveMessage = 'Partida recuperada del navegador.';
     }
@@ -233,6 +247,9 @@ export function mountTournament(root: HTMLElement): void {
       saveState = 'protected';
       saveMessage = 'No s’ha desat per protegir les dades antigues que no es poden llegir.';
       return;
+    }
+    if (state.manualPairingDraft && !recoverManualPairingDraft(state.manualPairingDraft, state.pairs, currentRound())) {
+      delete state.manualPairingDraft;
     }
     try {
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
@@ -279,6 +296,125 @@ export function mountTournament(root: HTMLElement): void {
     return state.rounds.at(-1);
   }
 
+  function openManualPairings(): void {
+    const round = currentRound();
+    if (!canManuallyPairRound(round) || state.selectedRound !== round.number) {
+      notice = 'Només pots definir els emparellaments de la ronda actual abans d’anotar cap marcador.';
+      render();
+      return;
+    }
+    state.manualPairingDraft = recoverManualPairingDraft(state.manualPairingDraft, state.pairs, round) ?? {
+      roundNumber: round.number,
+      source: manualPairingSource(state.pairs, round),
+      rows: round.matches.map(() => ({ home: '', away: '' })),
+    };
+    editingPairings = true;
+    clearSwapSelection();
+    openHistory = null;
+    notice = '';
+    update();
+    root.querySelector<HTMLInputElement>('[data-manual-index]')?.focus();
+  }
+
+  function applyManualPairings(): void {
+    const round = currentRound();
+    const draft = recoverManualPairingDraft(state.manualPairingDraft, state.pairs, round);
+    if (!draft || !canManuallyPairRound(round) || state.selectedRound !== round.number) {
+      notice = 'La ronda ha canviat. Revisa les taules abans de definir els emparellaments.';
+      editingPairings = false;
+      render();
+      return;
+    }
+    const { orderedPairs } = validateManualPairings(state.pairs, draft.rows);
+    if (!orderedPairs) {
+      notice = 'Assigna totes les parelles una sola vegada i corregeix les caselles marcades.';
+      paintNotice();
+      return;
+    }
+    round.matches = makeRound(round.number, orderedPairs).matches;
+    round.manuallyAdjusted = true;
+    delete state.manualPairingDraft;
+    editingPairings = false;
+    notice = `Emparellaments de la ronda ${round.number} aplicats: ${round.matches.length} taules.`;
+    update();
+    root.querySelector<HTMLButtonElement>('[data-action="edit-pairings"]')?.focus();
+  }
+
+  function fillManualPairings(fromCurrent: boolean): void {
+    const round = currentRound();
+    const draft = recoverManualPairingDraft(state.manualPairingDraft, state.pairs, round);
+    if (!draft || !round) return;
+    if (draft.rows.some((row) => row.home || row.away) &&
+      !window.confirm(fromCurrent ? 'Vols substituir l’esborrany pels emparellaments actuals?' : 'Vols buidar totes les caselles de l’esborrany?')) return;
+    draft.rows = round.matches.map((match) => ({
+      home: fromCurrent ? String(pairFor(match.homeId).number) : '',
+      away: fromCurrent ? String(pairFor(match.awayId).number) : '',
+    }));
+    notice = '';
+    update();
+    root.querySelector<HTMLInputElement>('[data-manual-index]')?.focus();
+  }
+
+  function renderManualPairings(): string {
+    const draft = state.manualPairingDraft!;
+    return `<main class="manual-pairings" aria-labelledby="manual-title">
+      <div class="manual-pairings__heading"><div><p class="eyebrow">Ronda ${draft.roundNumber} · ${state.pairs.length} parelles · ${draft.rows.length} taules</p><h1 id="manual-title">Defineix els emparellaments</h1></div><button class="text-button" type="button" data-action="close-manual-pairings">Torna a la ronda</button></div>
+      <p class="quiet">Escriu els números de les parelles inscrites. Prem Tab o Retorn per passar a la casella següent.</p>
+      <form class="manual-pairings__form" novalidate>
+        <div class="manual-pairings__layout">
+          <section class="manual-pairings__tables card" aria-label="Emparellaments per taula">
+            <div class="manual-pairings__tools"><button class="text-button" type="button" data-action="load-current-pairings">Carrega els emparellaments actuals</button><button class="text-button" type="button" data-action="clear-manual-pairings">Buida les caselles</button></div>
+            <table class="manual-pairings__table"><thead><tr><th scope="col">Taula</th><th scope="col">Parella A</th><th scope="col">Parella B</th></tr></thead><tbody>${draft.rows.map((row, tableIndex) => `<tr><th scope="row">${tableIndex + 1}</th>${(['home', 'away'] as const).map((side, sideIndex) => {
+              const index = tableIndex * 2 + sideIndex;
+              return `<td><label class="sr-only" for="manual-pair-${index}">Taula ${tableIndex + 1}, parella ${side === 'home' ? 'A' : 'B'}</label><input id="manual-pair-${index}" data-manual-index="${index}" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" value="${escapeHtml(row[side])}" placeholder="Núm." aria-describedby="manual-help-${index}" aria-invalid="false"><p class="manual-pairings__help" id="manual-help-${index}" data-manual-help="${index}"></p></td>`;
+            }).join('')}</tr>`).join('')}</tbody></table>
+          </section>
+          <aside class="manual-pairings__summary card" aria-label="Estat dels emparellaments">
+            <p class="eyebrow">Parelles inscrites</p><p class="manual-pairings__progress" data-manual-progress role="status"></p>
+            <p class="quiet" data-manual-status></p>
+            <h2>Pendents d’assignar</h2><div class="manual-pairings__pending" data-manual-pending></div>
+          </aside>
+        </div>
+        <div class="manual-pairings__footer card"><p class="quiet">L’esborrany es desa automàticament. Les taules només canvien quan apliques els emparellaments.</p><button class="button" type="submit" data-apply-manual disabled>Aplica els emparellaments</button></div>
+      </form>
+    </main>`;
+  }
+
+  function refreshManualPairings(): void {
+    if (!editingPairings || !state.manualPairingDraft) return;
+    const validation = validateManualPairings(state.pairs, state.manualPairingDraft.rows);
+    const progress = root.querySelector<HTMLElement>('[data-manual-progress]');
+    if (progress) progress.textContent = `${validation.assigned} de ${state.pairs.length} parelles assignades`;
+    const status = root.querySelector<HTMLElement>('[data-manual-status]');
+    if (status) status.textContent = validation.issues.some(Boolean)
+      ? 'Corregeix les caselles marcades abans d’aplicar.'
+      : validation.orderedPairs ? 'Tot a punt per aplicar els emparellaments.' : 'Cada parella ha d’aparèixer una sola vegada.';
+    const pending = root.querySelector<HTMLElement>('[data-manual-pending]');
+    if (pending) pending.innerHTML = validation.pending.length
+      ? validation.pending.map((pair) => `<span class="manual-pairings__chip" title="${escapeHtml(pair.players.join(' · '))}">${pair.number}</span>`).join('')
+      : '<p class="quiet">Totes les parelles estan assignades.</p>';
+    root.querySelectorAll<HTMLInputElement>('[data-manual-index]').forEach((input) => {
+      const index = Number(input.dataset.manualIndex);
+      const issue = validation.issues[index];
+      input.setAttribute('aria-invalid', String(Boolean(issue)));
+      const help = root.querySelector<HTMLElement>(`[data-manual-help="${index}"]`);
+      if (help) {
+        help.textContent = issue || validation.entries[index].pair?.players.join(' · ') || '';
+        help.classList.toggle('field-message--error', Boolean(issue));
+      }
+    });
+    const apply = root.querySelector<HTMLButtonElement>('[data-apply-manual]');
+    if (apply) apply.disabled = !validation.orderedPairs;
+  }
+
+  function syncManualPairingAvailability(): void {
+    const disabled = !canManuallyPairRound(currentRound());
+    const button = root.querySelector<HTMLButtonElement>('[data-action="edit-pairings"]');
+    if (button) button.disabled = disabled;
+    const reason = root.querySelector<HTMLElement>('[data-manual-lock-reason]');
+    if (reason) reason.hidden = !disabled;
+  }
+
   function samePosition(left: PairPosition, right: PairPosition): boolean {
     return left.matchId === right.matchId && left.side === right.side;
   }
@@ -322,7 +458,7 @@ export function mountTournament(root: HTMLElement): void {
     root.querySelectorAll<HTMLButtonElement>('[data-action="swap-pair"]').forEach((button) => {
       const side = button.dataset.pairSide;
       if (side !== 'homeId' && side !== 'awayId') return;
-      const position = { matchId: button.dataset.matchId ?? '', side };
+      const position: PairPosition = { matchId: button.dataset.matchId ?? '', side };
       const issue = swapPositionIssue(position);
       const isSelected = selectedSwap !== null && samePosition(selectedSwap, position);
       const pairLabel = button.dataset.pairLabel ?? 'Parella';
@@ -478,6 +614,7 @@ export function mountTournament(root: HTMLElement): void {
     match.result = null;
     notice = '';
     syncSwapSelection();
+    syncManualPairingAvailability();
     paintNotice();
 
     if (wasConfirmed) {
@@ -538,6 +675,7 @@ export function mountTournament(root: HTMLElement): void {
       return;
     }
     state = emptyState();
+    editingPairings = false;
     clearSwapSelection();
     openHistory = null;
     notice = 'Ja pots preparar un campionat nou.';
@@ -803,7 +941,7 @@ export function mountTournament(root: HTMLElement): void {
       const image = document.createElement('img');
       image.alt = `Pòster de les parelles i taules de la ronda ${selected.number} de ${state.setup.name}.`;
       image.addEventListener('error', () => {
-        if (posterImage === image && pairingPosterRevision === revision && isCurrentPairingDialog(dialog, viewer)) {
+        if (viewer && posterImage === image && pairingPosterRevision === revision && isCurrentPairingDialog(dialog, viewer)) {
           showPosterFallback(dialog, viewer, 'No s’ha pogut carregar el pòster. Pots obrir la imatge en una pestanya nova.');
         }
       });
@@ -971,7 +1109,7 @@ export function mountTournament(root: HTMLElement): void {
         <div class="round-nav" aria-label="Historial de rondes">
           ${state.rounds.map((round) => `<button type="button" data-action="select-round" data-round="${round.number}" class="round-tab ${round.number === selected.number ? 'round-tab--active' : ''}">Ronda ${round.number}</button>`).join('')}
         </div>
-        <div class="round-heading"><div><p class="eyebrow">${editable ? 'Ronda actual' : 'Historial · Només lectura'}</p><h1>Ronda ${selected.number}</h1></div><div class="round-heading__actions"><button class="button button--small" type="button" data-action="view-pairings" aria-label="Veure els emparellaments de la ronda ${selected.number}">Veure emparellaments</button>${selected.manuallyAdjusted ? '<p class="manual-adjustment">Emparellaments ajustats manualment.</p>' : ''}</div></div>
+        <div class="round-heading"><div><p class="eyebrow">${editable ? 'Ronda actual' : 'Historial · Només lectura'}</p><h1>Ronda ${selected.number}</h1></div><div class="round-heading__actions"><div class="round-heading__buttons">${editable ? `<button class="button button--small button--quiet" type="button" data-action="edit-pairings" aria-describedby="manual-lock-reason" ${canManuallyPairRound(latest) ? '' : 'disabled'}>Defineix els emparellaments</button>` : ''}<button class="button button--small" type="button" data-action="view-pairings" aria-label="Veure els emparellaments de la ronda ${selected.number}">Veure emparellaments</button></div>${editable ? `<p id="manual-lock-reason" data-manual-lock-reason class="manual-adjustment" ${canManuallyPairRound(latest) ? 'hidden' : ''}>L’edició de totes les taules es bloqueja quan hi ha marcadors escrits.</p>` : ''}${selected.manuallyAdjusted ? '<p class="manual-adjustment">Emparellaments ajustats manualment.</p>' : ''}</div></div>
         ${selectedSwap ? '<div class="swap-status" data-swap-status role="status">Parella seleccionada: tria una altra parella per intercanviar-la.<button class="text-button" type="button" data-action="cancel-swap">Cancel·la</button></div>' : ''}
         <section class="repeat-alert" data-repeat-alert data-repeat-alert-signature="${escapeHtml(repeatAlertSignature(selected, latest, analysis))}" aria-label="Avisos d’enfrontaments repetits" ${analysis.repeats.length ? '' : 'hidden'}>${renderRepeatAlert(selected, latest, analysis)}</section>
             <div class="matches">${selected.matches.map((match, index) => renderMatch(match, selected, editable, index + 1, analysis, latest)).join('')}</div>
@@ -994,13 +1132,15 @@ export function mountTournament(root: HTMLElement): void {
 
   function render(): void {
     disposePairingDialog(false);
+    if (!state.manualPairingDraft) editingPairings = false;
     root.innerHTML = `<div class="app-shell">
       <header class="masthead"><div><a class="app-brand-link" href="/" aria-label="ButiPunt · Inici" data-transition-brand><img src="/brand/logo.svg" alt="ButiPunt" width="1150" height="260"></a><p class="masthead__sub">Cada punt, al seu lloc.</p></div><div class="save-box"><span data-save-dot class="save-dot save-dot--${saveState}" aria-hidden="true"></span><span data-save-message aria-live="polite">${escapeHtml(saveMessage)}</span><button class="text-button" type="button" data-action="save" ${storageLocked ? 'disabled' : ''}>Desa ara</button></div></header>
       <p data-notice class="notice" role="status" ${notice ? '' : 'hidden'}>${escapeHtml(notice)}</p>
-      ${state.started ? renderPlay() : `<main class="start-layout"><div class="intro"><p class="eyebrow">Ja teniu les parelles?</p><h1>Prepara el torneig.</h1><p>Tria el nom i les rondes, inscriu les parelles i sorteja la primera ronda. A partir d’aquí, anota els resultats i segueix la classificació.</p><p>La preparació es desa automàticament en aquest navegador.</p><div class="intro__motif" aria-hidden="true">♠ &nbsp; ♥ &nbsp; ♦ &nbsp; ♣</div></div>${renderSetup()}</main>`}
+      ${editingPairings ? renderManualPairings() : state.started ? renderPlay() : `<main class="start-layout"><div class="intro"><p class="eyebrow">Ja teniu les parelles?</p><h1>Prepara el torneig.</h1><p>Tria el nom i les rondes, inscriu les parelles i sorteja la primera ronda. A partir d’aquí, anota els resultats i segueix la classificació.</p><p>La preparació es desa automàticament en aquest navegador.</p><div class="intro__motif" aria-hidden="true">♠ &nbsp; ♥ &nbsp; ♦ &nbsp; ♣</div></div>${renderSetup()}</main>`}
       <footer class="app-footer"><span>Les dades es desen només en aquest navegador.</span><a href="/">Torna a l’inici</a></footer>
     </div>`;
     bindEvents();
+    refreshManualPairings();
         bindRepeatProposalButtons();
   }
 
@@ -1012,6 +1152,31 @@ export function mountTournament(root: HTMLElement): void {
       }
 
       function bindEvents(): void {
+    root.querySelector('.manual-pairings__form')?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      applyManualPairings();
+    });
+    root.querySelectorAll<HTMLInputElement>('[data-manual-index]').forEach((input) => {
+      input.addEventListener('focus', () => input.select());
+      input.addEventListener('input', () => {
+        const draft = state.manualPairingDraft;
+        if (!draft) return;
+        const index = Number(input.dataset.manualIndex);
+        draft.rows[Math.floor(index / 2)][index % 2 === 0 ? 'home' : 'away'] = input.value;
+        notice = '';
+        paintNotice();
+        saveDraft();
+        refreshManualPairings();
+      });
+      input.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' || event.isComposing) return;
+        event.preventDefault();
+        const nextIndex = Number(input.dataset.manualIndex) + (event.shiftKey ? -1 : 1);
+        const next = root.querySelector<HTMLInputElement>(`[data-manual-index="${nextIndex}"]`);
+        if (next) next.focus();
+        else if (!event.shiftKey) root.querySelector<HTMLButtonElement>('[data-apply-manual]')?.focus();
+      });
+    });
     root.querySelector('.setup-form')?.addEventListener('submit', (event) => {
       event.preventDefault();
       startTournament();
@@ -1049,6 +1214,15 @@ export function mountTournament(root: HTMLElement): void {
     });
     root.querySelectorAll<HTMLButtonElement>('[data-action]').forEach((button) => button.addEventListener('click', () => {
       const action = button.dataset.action;
+      if (action === 'edit-pairings') openManualPairings();
+      if (action === 'load-current-pairings') fillManualPairings(true);
+      if (action === 'clear-manual-pairings') fillManualPairings(false);
+      if (action === 'close-manual-pairings') {
+        editingPairings = false;
+        notice = 'Pots continuar l’esborrany des de «Defineix els emparellaments». Encara no s’ha aplicat.';
+        render();
+        root.querySelector<HTMLButtonElement>('[data-action="edit-pairings"]')?.focus();
+      }
       if (action === 'save') { persist(true); render(); }
       if (action === 'example') { state.setup = { name: 'Copa del Casino', roundsDraft: '3' }; state.pairDrafts = exampleDrafts.map((pair) => ({ ...pair })); notice = 'Exemple carregat. El pots adaptar abans de sortejar.'; update(); }
       if (action === 'add-pair') { state.pairDrafts.push({ number: nextPairNumber(), playerOne: '', playerTwo: '' }); notice = ''; update(); }
