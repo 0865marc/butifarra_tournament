@@ -55,6 +55,12 @@ h2 { margin-bottom: .3rem; font-size: 1.6rem; }
 .text-button:hover { color: var(--coral); }
 .setup-grid, .player-fields { display: grid; grid-template-columns: 1fr 1fr; gap: .85rem; }
 .setup-grid { margin: 1.2rem 0; }
+.setup-rules { display: grid; gap: .65rem; min-width: 0; margin: 0 0 1.2rem; padding: .85rem; border: 1px solid var(--line); border-radius: 9px; }
+.setup-rules legend { padding: 0 .35rem; color: var(--green); font-weight: 700; }
+.setup-rules .quiet { margin: 0; }
+.setup-option { display: flex; align-items: center; gap: .6rem; cursor: pointer; }
+.setup-option input { width: 1.1rem; height: 1.1rem; flex: none; margin: 0; accent-color: var(--green); }
+.setup-rules input:disabled { opacity: .55; }
 .pair-list { display: grid; gap: .7rem; max-height: min(52dvh, 34rem); overflow-y: auto; padding-right: .35rem; }
 .pair-editor { min-width: 0; margin: 0; padding: .85rem; border: 1px solid var(--line); border-radius: 9px; }
 .pair-editor legend { padding: 0 .35rem; color: var(--gold); font-family: 'Source Sans 3', ui-sans-serif, system-ui, sans-serif; font-size: .7rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }

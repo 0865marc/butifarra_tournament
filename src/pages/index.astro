@@ -1,8 +1,8 @@
 ---
 import '../styles/landing.css';
 const steps = [
-  { number: '01', title: 'Prepara el torneig', text: 'Posa-hi nom, tria quantes rondes fareu i inscriu els dos jugadors de cada parella.' },
-  { number: '02', title: 'Que comenci la partida', text: 'Sorteja la primera ronda i consulta qui juga a cada taula. Anota i confirma els resultats, també els empats.' },
+  { number: '01', title: 'Prepara el torneig', text: 'Posa-hi nom, tria les rondes i les regles de puntuació i inscriu els dos jugadors de cada parella.' },
+  { number: '02', title: 'Que comenci la partida', text: 'Sorteja la primera ronda i consulta qui juga a cada taula. Anota i confirma els resultats segons les regles triades.' },
   { number: '03', title: 'Segueix cada punt', text: 'La classificació s’actualitza amb els resultats. Les rondes següents segueixen l’ordre de victòries, diferència de punts i punts totals a favor.' },
 ];
 const tabs = [{ id: 'taules', label: 'Les taules' }, { id: 'resultats', label: 'Els resultats' }, { id: 'classificacio', label: 'La classificació' }];
@@ -71,6 +71,7 @@ const rankings = [{ pair: 'Parella 4', wins: 1, pointDifference: 28, points: 101
       <section class="faq-section site-width" aria-labelledby="faq-title"><div><p class="eyebrow">Abans de començar</p><h2 id="faq-title">Les coses clares.</h2></div><div class="questions">
         <details><summary>Es juga a butifarra dins de l’aplicació?<span aria-hidden="true">+</span></summary><p>ButiPunt organitza el torneig: parelles, rondes, resultats i classificació. Les partides les jugueu a la taula, fora de l’aplicació.</p></details>
         <details><summary>Què necessito per preparar un torneig?<span aria-hidden="true">+</span></summary><p>Un nom, el nombre de rondes i els jugadors de cada parella. Cal un nombre parell de parelles, amb un mínim de dues.</p></details>
+        <details><summary>Puc configurar els empats i el màxim de punts?<span aria-hidden="true">+</span></summary><p>Sí, abans de sortejar la primera ronda. Per defecte es permeten empats, amb mitja victòria per parella, i un màxim de 121 punts per parella i partida. Pots canviar o desactivar el límit i impedir els empats. Els marcadors superiors al màxim s’ajusten al límit abans de comprovar si hi ha empat.</p></details>
         <details><summary>Com es decideixen els emparellaments?<span aria-hidden="true">+</span></summary><p>La primera ronda se sorteja. Les següents aparellen posicions consecutives de la classificació: 1–2, 3–4… L’ordre es calcula per victòries, diferència de punts (a favor − en contra), punts totals a favor i, si encara hi ha empat, ordre d’inscripció. Els rivals es poden repetir.</p></details>
         <details><summary>On es desa el torneig?<span aria-hidden="true">+</span></summary><p>En aquest navegador, al dispositiu que fas servir. Pots tornar-hi per continuar. No se sincronitza amb altres dispositius: si esborres les dades del navegador o fas servir una sessió privada, pots perdre el torneig.</p></details>
       </div></section>

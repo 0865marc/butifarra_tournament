@@ -14,6 +14,8 @@ export function savedTournamentEntry(raw: string | null): 'tournament' | 'draft'
       return (typeof playerOne === 'string' && playerOne.trim()) || (typeof playerTwo === 'string' && playerTwo.trim());
     });
     return hasPlayers || (typeof state.setup.name === 'string' && state.setup.name !== 'Campionat de Butifarra')
-      || (typeof state.setup.roundsDraft === 'string' && state.setup.roundsDraft !== '3') ? 'draft' : null;
+      || (typeof state.setup.roundsDraft === 'string' && state.setup.roundsDraft !== '3')
+      || state.setup.allowDraws === false || state.setup.limitScore === false
+      || (typeof state.setup.maxScoreDraft === 'string' && state.setup.maxScoreDraft !== '121') ? 'draft' : null;
   } catch { return null; }
 }

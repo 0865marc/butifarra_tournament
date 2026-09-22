@@ -22,7 +22,9 @@ npm run build
 - There are at least two fixed pairs and always an even number of them, so there are no byes.
 - By default, round one uses a Fisher–Yates shuffle. Later rounds order pairs by wins, then accumulated point difference (points scored minus points conceded), then total points scored, then original registration order as a stable fallback, and pair positions 1–2, 3–4, and so on. The current round's assignments can be entered manually before any scores are recorded.
 - Opponents may repeat. The registration-order fallback is deterministic only; it is not an additional sporting tiebreaker.
-- A match needs two non-negative safe integer scores. The higher score gets one win; an equal score gives both pairs half a win. Each pair adds its score minus its opponent's score to its point difference, which can be positive, zero or negative. Its own score also contributes to total points scored (PF), used only when wins and point difference are tied.
+- Before drawing the first round, choose whether to allow draws and whether to cap each pair's match score. New tournaments allow draws and enable a 121-point cap by default. The cap can be changed to any positive safe integer or disabled. These rules are saved with the tournament and fixed after the first draw.
+- A match needs two non-negative safe integer scores. Scores above the configured cap are adjusted to the cap when entered and confirmed; for example, 130–90 becomes 121–90 with the default limit. Validation and standings use the capped scores. If both scores reach the cap, this is a draw too.
+- The higher score gets one win. When draws are allowed, an equal score gives both pairs half a win; otherwise it displays an error and cannot be confirmed. Each pair adds its score minus its opponent's score to its point difference, which can be positive, zero or negative. Its own score also contributes to total points scored (PF), used only when wins and point difference are tied.
 - Only confirmed, valid results appear in the standings. Current-round results can be edited until the next round is generated; older rounds are read-only.
 
 ## Manual table assignments
@@ -39,8 +41,10 @@ The original `taula-de-butifarra-v1` storage key and data format are retained. M
 
 Standings are recalculated from confirmed match scores, not stored separately. Using point difference and then total points scored as tiebreakers requires no saved-data migration: existing pairs, scores, rounds and table assignments are preserved. Already generated rounds keep their assignments; only newly generated rounds use the updated ranking.
 
+Scoring settings are additional setup fields in the same schema 1 record. Previously started tournaments without those fields retain unlimited scores and allow draws, preserving all existing results, including scores above 121. Unstarted preparations receive the new defaults. Reloading does not rewrite the stored record; the recovered settings are persisted on the next edit or save.
+
 The app stores setup edits, score drafts, confirmed results, round history, and the selected round in this browser's `localStorage`. It has no account, server, sync, import, or export feature. Private-browsing policies, cleared browser data, storage quotas, and another device can therefore prevent recovery. Corrupted or unsupported saved data is left untouched rather than erased automatically; use the confirmed new-tournament action only when you choose to clear it.
 
 ## Verification
 
-Run `npm test` (Node with TypeScript stripping support) for standings, manual-pairing validation and recovery tests, and `npm run build` to check the Astro production bundle after installing dependencies.
+Run `npm test` (Node with TypeScript stripping support) for scoring rules, standings, saved-entry detection, manual-pairing validation and recovery tests, and `npm run build` to check the Astro production bundle after installing dependencies.

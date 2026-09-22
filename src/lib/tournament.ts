@@ -1,3 +1,5 @@
+export { scoringIssue as scoreIssue } from './scoring-rules.ts';
+
 export interface PairDraft {
   number: number;
   playerOne: string;
@@ -97,15 +99,6 @@ export function makeRound(number: number, orderedPairs: Pair[]): Round {
       result: null,
     })),
   };
-}
-
-export function scoreIssue(draft: ScoreDraft): string | null {
-  const validInteger = (value: string) => /^(0|[1-9]\d*)$/.test(value) && Number.isSafeInteger(Number(value));
-  if (!draft.home || !draft.away) return 'Introdueix els dos punts per confirmar el resultat.';
-  if (!validInteger(draft.home) || !validInteger(draft.away)) {
-    return 'Els punts han de ser nombres enters no negatius i segurs.';
-  }
-  return null;
 }
 
 export function getStandings(pairs: Pair[], rounds: Round[]): Standing[] {

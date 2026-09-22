@@ -29,6 +29,13 @@ import {
 
 import { TOURNAMENT_STORAGE_KEY as STORAGE_KEY } from '../lib/tournament-storage';
 import {
+  capScoreDraft,
+  DEFAULT_MAX_SCORE,
+  LEGACY_SCORING_RULES,
+  parseMaxScore,
+  type ScoringRules,
+} from '../lib/scoring-rules';
+import {
   canManuallyPairRound,
   manualPairingSource,
   recoverManualPairingDraft,
@@ -44,6 +51,10 @@ interface SetupState {
   name: string;
   roundsDraft: string;
   rounds?: number;
+  allowDraws: boolean;
+  limitScore: boolean;
+  maxScoreDraft: string;
+  maxScore?: number | null;
 }
 
 interface AppState {
@@ -57,10 +68,17 @@ interface AppState {
   manualPairingDraft?: ManualPairingDraft;
 }
 
+function defaultSetup(): SetupState {
+  return {
+    name: 'Campionat de Butifarra', roundsDraft: '3',
+    allowDraws: true, limitScore: true, maxScoreDraft: String(DEFAULT_MAX_SCORE),
+  };
+}
+
 function emptyState(): AppState {
   return {
     schema: 1,
-    setup: { name: 'Campionat de Butifarra', roundsDraft: '3' },
+    setup: defaultSetup(),
     pairDrafts: [
       { number: 1, playerOne: '', playerTwo: '' },
       { number: 2, playerOne: '', playerTwo: '' },
@@ -119,12 +137,25 @@ function isSavedState(value: unknown): value is AppState {
   if (!value || typeof value !== 'object') return false;
   const saved = value as AppState;
   const savedSetup = saved.setup as SetupState & { roundsDraft?: unknown; rounds?: unknown };
+  if (!savedSetup || typeof savedSetup !== 'object') return false;
   const hasRoundDraft = isString(savedSetup.roundsDraft);
   const hasRoundCount = isRoundCount(savedSetup.rounds);
   if (saved.schema !== 1 || !saved.setup || !isString(saved.setup.name) ||
     (!hasRoundDraft && !hasRoundCount) || !Array.isArray(saved.pairDrafts) || !saved.pairDrafts.every(isPairDraft) ||
     !Array.isArray(saved.pairs) || !Array.isArray(saved.rounds) ||
     !Number.isSafeInteger(saved.selectedRound) || typeof saved.started !== 'boolean') return false;
+  const legacyScoring = ['allowDraws', 'limitScore', 'maxScoreDraft', 'maxScore']
+    .every((field) => !(field in savedSetup));
+  if (!legacyScoring) {
+    if (typeof savedSetup.allowDraws !== 'boolean' || typeof savedSetup.limitScore !== 'boolean' ||
+      !isString(savedSetup.maxScoreDraft)) return false;
+    if (saved.started && (savedSetup.limitScore
+      ? !isPositiveSafeInteger(savedSetup.maxScore) || parseMaxScore(savedSetup.maxScoreDraft) !== savedSetup.maxScore
+      : savedSetup.maxScore !== null)) return false;
+  }
+  const rules: ScoringRules = legacyScoring
+    ? LEGACY_SCORING_RULES
+    : { allowDraws: savedSetup.allowDraws, maxScore: savedSetup.maxScore ?? null };
   const legacyDrafts = saved.pairDrafts.every((draft) => draft.number === undefined);
   const numberedDrafts = saved.pairDrafts.every((draft) => isPositiveSafeInteger(draft.number));
   const draftNumbers = new Set(saved.pairDrafts.map((draft) => draft.number));
@@ -147,7 +178,7 @@ function isSavedState(value: unknown): value is AppState {
     if (!round || round.number !== roundIndex + 1 ||
       (round.manuallyAdjusted !== undefined && typeof round.manuallyAdjusted !== 'boolean') ||
       !Array.isArray(round.matches) || round.matches.length !== saved.pairs.length / 2 ||
-      !round.matches.every(isMatch)) return false;
+      !round.matches.every((match) => isMatch(match, rules))) return false;
     const participants = new Set<string>();
     return round.matches.every((match, matchIndex) => {
       if (match.id !== `round-${round.number}-match-${matchIndex + 1}` || !pairIds.has(match.homeId) ||
@@ -160,19 +191,27 @@ function isSavedState(value: unknown): value is AppState {
   });
 }
 
-function isMatch(value: unknown): value is Match {
+function isMatch(value: unknown, rules: ScoringRules): value is Match {
   if (!value || typeof value !== 'object') return false;
   const match = value as Match;
   const validDraft = !!match.draft && isString(match.draft.home) && isString(match.draft.away);
   const validResult = match.result === null || (validDraft && !!match.result &&
     Number.isSafeInteger(match.result.home) && Number.isSafeInteger(match.result.away) &&
-    scoreIssue(match.draft) === null &&
+    scoreIssue(match.draft, rules) === null &&
+    (rules.maxScore === null || (match.result.home <= rules.maxScore && match.result.away <= rules.maxScore)) &&
     match.result.home === Number(match.draft.home) && match.result.away === Number(match.draft.away));
   return isString(match.id) && isString(match.homeId) && isString(match.awayId) && validDraft && validResult;
 }
 
 function normalizeRecoveredState(saved: AppState): void {
   if (!isString(saved.setup.roundsDraft)) saved.setup.roundsDraft = String(saved.setup.rounds);
+  // Existing tournaments keep their original unlimited scoring, including past results.
+  if (saved.setup.allowDraws === undefined) {
+    saved.setup.allowDraws = true;
+    saved.setup.limitScore = !saved.started;
+    saved.setup.maxScoreDraft = String(DEFAULT_MAX_SCORE);
+    if (saved.started) saved.setup.maxScore = null;
+  }
   saved.pairDrafts = saved.pairDrafts.map((draft, index) => ({
     number: draft.number ?? index + 1,
     playerOne: draft.playerOne,
@@ -186,7 +225,10 @@ function normalizeRecoveredState(saved: AppState): void {
   const manualDraft = recoverManualPairingDraft(saved.manualPairingDraft, saved.pairs, saved.rounds.at(-1));
   if (manualDraft) saved.manualPairingDraft = manualDraft;
   else delete saved.manualPairingDraft;
-  if (!saved.started) delete saved.setup.rounds;
+  if (!saved.started) {
+    delete saved.setup.rounds;
+    delete saved.setup.maxScore;
+  }
 }
 
 function escapeHtml(value: string | number): string {
@@ -555,11 +597,27 @@ export function mountTournament(root: HTMLElement): void {
     return state.setup.rounds;
   }
 
+  function scoringRules(): ScoringRules {
+    return { allowDraws: state.setup.allowDraws, maxScore: state.setup.maxScore ?? null };
+  }
+
+  function scoringInstructions(): string {
+    const rules = scoringRules();
+    return `${rules.allowDraws ? 'Un empat dona mitja victòria a cada parella.' : 'No es permeten empats: els dos marcadors han de ser diferents.'} ${rules.maxScore === null ? 'Sense límit de punts per parella i partida.' : `Màxim de ${rules.maxScore} punts per parella i partida; els marcadors superiors s’ajusten al límit.`}`;
+  }
+
   function startTournament(): void {
     const rounds = roundCount(state.setup.roundsDraft);
     if (rounds === null) {
       notice = `Indica un nombre de rondes enter entre 1 i ${MAX_ROUNDS}.`;
       render();
+      return;
+    }
+    const maxScore = state.setup.limitScore ? parseMaxScore(state.setup.maxScoreDraft) : null;
+    if (state.setup.limitScore && maxScore === null) {
+      notice = 'Indica un màxim de punts enter positiu i segur.';
+      render();
+      root.querySelector<HTMLInputElement>('[data-setup-field="maxScore"]')?.focus();
       return;
     }
     const issue = validatePairDrafts(state.pairDrafts);
@@ -571,6 +629,7 @@ export function mountTournament(root: HTMLElement): void {
     clearSwapSelection();
     openHistory = null;
     state.setup.rounds = rounds;
+    state.setup.maxScore = maxScore;
     state.pairs = createPairs(state.pairDrafts);
     state.rounds = [makeRound(1, shufflePairs(state.pairs))];
     state.selectedRound = 1;
@@ -610,9 +669,11 @@ export function mountTournament(root: HTMLElement): void {
     const selectionStart = activeInput?.selectionStart;
     const selectionEnd = activeInput?.selectionEnd;
     clearSwapSelection();
-    match.draft[field] = value;
+    match.draft = capScoreDraft({ ...match.draft, [field]: value }, scoringRules());
+    const input = root.querySelector<HTMLInputElement>(`[data-match-id="${matchId}"][data-score="${field}"]`);
+    if (input && input.value !== match.draft[field]) input.value = match.draft[field];
     match.result = null;
-    notice = '';
+    notice = value !== match.draft[field] ? `Marcador ajustat al màxim de ${state.setup.maxScore} punts.` : '';
     syncSwapSelection();
     syncManualPairingAvailability();
     paintNotice();
@@ -632,7 +693,7 @@ export function mountTournament(root: HTMLElement): void {
     const card = root.querySelector<HTMLElement>(`.match:has([data-match-id="${matchId}"])`);
     const message = card?.querySelector<HTMLElement>('[data-match-message]');
     const button = card?.querySelector<HTMLButtonElement>('[data-action="confirm-match"]');
-    const issue = scoreIssue(match.draft);
+    const issue = scoreIssue(match.draft, scoringRules());
     const visibleIssue = match.draft.home && match.draft.away ? issue : null;
     card?.classList.remove('match--confirmed');
     if (message) {
@@ -651,13 +712,15 @@ export function mountTournament(root: HTMLElement): void {
     const round = currentRound();
     const match = round?.matches.find((item) => item.id === matchId);
     if (!match) return;
-    const issue = scoreIssue(match.draft);
+    const draft = capScoreDraft(match.draft, scoringRules());
+    const issue = scoreIssue(draft, scoringRules());
     if (issue) {
       notice = issue;
       render();
       return;
     }
     clearSwapSelection();
+    match.draft = draft;
     match.result = { home: Number(match.draft.home), away: Number(match.draft.away) };
     notice = '';
     update();
@@ -706,6 +769,7 @@ export function mountTournament(root: HTMLElement): void {
         <p class="eyebrow">Fitxa del campionat</p>
         <h2>${escapeHtml(state.setup.name)}</h2>
         <dl><div><dt>Rondes</dt><dd>${configuredRounds()}</dd></div><div><dt>Parelles</dt><dd>${state.pairs.length}</dd></div></dl>
+        <p class="quiet" data-scoring-rules>${scoringInstructions()}</p>
         <p class="quiet">La primera ronda és un sorteig. Després, 1–2, 3–4… segons victòries, diferència de punts i punts totals a favor; si encara empaten, preval l’ordre d’inscripció.</p>
         <button class="button button--quiet" type="button" data-action="reset">Comença un campionat nou</button>
       </aside>`;
@@ -722,6 +786,16 @@ export function mountTournament(root: HTMLElement): void {
             <input data-setup-field="rounds" type="number" min="1" max="${MAX_ROUNDS}" step="1" value="${escapeHtml(state.setup.roundsDraft)}" inputmode="numeric" required>
           </label>
         </div>
+        <fieldset class="setup-rules">
+          <legend>Regles de puntuació</legend>
+          <label class="setup-option"><input type="checkbox" data-setup-field="allowDraws" ${state.setup.allowDraws ? 'checked' : ''} aria-describedby="draws-help">Permet empats</label>
+          <p id="draws-help" class="quiet">Si es permeten, cada parella rep mitja victòria. Si no, calen dos marcadors diferents.</p>
+          <label class="setup-option"><input type="checkbox" data-setup-field="limitScore" ${state.setup.limitScore ? 'checked' : ''} aria-controls="setup-max-score">Limita els punts per parella i partida</label>
+          <label for="setup-max-score">Puntuació màxima
+            <input id="setup-max-score" data-setup-field="maxScore" type="number" min="1" step="1" value="${escapeHtml(state.setup.maxScoreDraft)}" inputmode="numeric" aria-describedby="max-score-help" ${state.setup.limitScore ? 'required' : 'disabled'}>
+          </label>
+          <p id="max-score-help" class="quiet">Si un marcador supera el màxim, s’anota el límit. Si tots dos hi arriben, només es pot confirmar si es permeten empats. Aquestes regles queden fixades en sortejar la primera ronda.</p>
+        </fieldset>
         <div class="pair-list">${renderPairFields()}</div>
         <div class="setup-actions"><button class="button button--quiet" type="button" data-action="add-pair">+ Afegeix una parella</button><button class="button" type="submit">Sorteja la primera ronda</button></div>
         <button class="text-button" type="button" data-action="reset">Reinicia les dades locals</button>
@@ -1075,7 +1149,7 @@ export function mountTournament(root: HTMLElement): void {
   function renderMatch(match: Match, round: Round, editable: boolean, tableNumber: number, analysis: RepeatAnalysis, latest: Round | undefined): string {
     const home = pairFor(match.homeId);
     const away = pairFor(match.awayId);
-    const issue = scoreIssue(match.draft);
+    const issue = scoreIssue(match.draft, scoringRules());
     const visibleIssue = editable && match.draft.home && match.draft.away ? issue : null;
     const messageId = `score-issue-${match.id}`;
     const confirmLabel = match.result ? 'Resultat confirmat' : 'Confirma el resultat';
@@ -1117,7 +1191,7 @@ export function mountTournament(root: HTMLElement): void {
           ? tournamentComplete
             ? '<div><strong>Campionat complet</strong><p>Classificació final calculada amb victòries, diferència de punts, punts totals a favor i ordre d’inscripció com a últim criteri estable.</p></div>'
             : `<div><strong>Ronda completa</strong><p>Ja pots crear els emparellaments següents. Les parelles es poden tornar a trobar.</p></div><button class="button" type="button" data-action="next-round">Genera la ronda ${latest.number + 1}</button>`
-          : '<div><strong>Resultats pendents</strong><p>Confirma cada partida amb dos punts enters no negatius; un empat dona mitja victòria a cada parella.</p></div>'}</div>` : ''}
+          : `<div><strong>Resultats pendents</strong><p>Confirma cada partida amb dos punts enters no negatius. ${scoringInstructions()}</p></div>`}</div>` : ''}
       </section>
       <div class="secondary-column">
         <aside class="standings card" aria-labelledby="standings-title">
@@ -1187,7 +1261,18 @@ export function mountTournament(root: HTMLElement): void {
       if (field === 'rounds') {
         state.setup.roundsDraft = input.value;
       }
+      if (field === 'allowDraws') state.setup.allowDraws = input.checked;
+      if (field === 'limitScore') {
+        state.setup.limitScore = input.checked;
+        const maxInput = root.querySelector<HTMLInputElement>('[data-setup-field="maxScore"]');
+        if (maxInput) {
+          maxInput.disabled = !input.checked;
+          maxInput.required = input.checked;
+        }
+      }
+      if (field === 'maxScore') state.setup.maxScoreDraft = input.value;
       notice = '';
+      paintNotice();
       saveDraft();
     }));
     root.querySelectorAll<HTMLInputElement>('[data-pair-field]').forEach((input) => input.addEventListener('input', () => {
@@ -1224,7 +1309,7 @@ export function mountTournament(root: HTMLElement): void {
         root.querySelector<HTMLButtonElement>('[data-action="edit-pairings"]')?.focus();
       }
       if (action === 'save') { persist(true); render(); }
-      if (action === 'example') { state.setup = { name: 'Copa del Casino', roundsDraft: '3' }; state.pairDrafts = exampleDrafts.map((pair) => ({ ...pair })); notice = 'Exemple carregat. El pots adaptar abans de sortejar.'; update(); }
+      if (action === 'example') { state.setup = { ...defaultSetup(), name: 'Copa del Casino' }; state.pairDrafts = exampleDrafts.map((pair) => ({ ...pair })); notice = 'Exemple carregat. El pots adaptar abans de sortejar.'; update(); }
       if (action === 'add-pair') { state.pairDrafts.push({ number: nextPairNumber(), playerOne: '', playerTwo: '' }); notice = ''; update(); }
       if (action === 'remove-pair') { const index = Number(button.dataset.pairIndex); if (state.pairDrafts.length > 2) { state.pairDrafts.splice(index, 1); notice = ''; update(); } }
       if (action === 'confirm-match') confirmMatch(button.dataset.matchId ?? '');
